@@ -1,12 +1,12 @@
 Package: iddoverse
-Title: What the Package Does (One Line, Title Case)
+Title: Transforms IDDO customised SDTM domains into analysis datasets
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Rhys", "Peploe", , "rhys.peploe@iddo.org", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0001-1669-3716"))
+Description: Functions to convert IDDO-curated SDTM domains into analysis datasets, 
+    similar to the Analysis Data Model (ADaM).
+License: CC BY 4.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
