@@ -10,7 +10,7 @@
 #'   values.
 #' @export
 #'
-#' @author Rhys Peploe
+#' @author Rhys Peploe ** Rhysndm
 #'
 #'
 DERIVE_AGE_YEARS = function(DATA){
