@@ -15,3 +15,7 @@ Suggests:
 Config/testthat/edition: 3
 URL: https://github.com/RhysPeploe/iddoverse
 BugReports: https://github.com/RhysPeploe/iddoverse/issues
+Imports: 
+    anthro,
+    dplyr,
+    magrittr
