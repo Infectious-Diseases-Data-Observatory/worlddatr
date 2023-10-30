@@ -5,7 +5,8 @@
 #'
 #' @param DATA_IN The IN domain data frame, as named in the global environment.
 #'
-#' @return
+#' @return Data frame which has been standardised in columns: INTRT, INPRESP,
+#'   INOCCUR
 #'
 #' @export
 #'

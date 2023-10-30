@@ -5,7 +5,7 @@
 #'
 #' @param DATA_MB The SA domain data frame, as named in the global environment.
 #'
-#' @return
+#' @return Data frame which has been standardised in MBSTRESC and MBORRESU
 #'
 #' @export
 #'

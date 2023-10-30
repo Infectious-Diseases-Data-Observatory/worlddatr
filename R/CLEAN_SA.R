@@ -5,7 +5,7 @@
 #'
 #' @param DATA_SA The SA domain data frame, as named in the global environment.
 #'
-#' @return
+#' @return Data frame which has been standardised in columns: SATERM, SAPRESP, SAOCCUR
 #'
 #' @export
 #'
