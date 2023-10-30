@@ -1,14 +1,31 @@
-#' Derive BMI and replace contributor provided result if HEIGHT and WEIGHT are given.
+#' Derive BMI and replace contributor provided result if HEIGHT and WEIGHT are
+#' given.
 #'
-#' Calculates the Body Mass Index of subjects if WEIGHT and HEIGHT are in the data frame. Initially creates a new variable which calculates the BMI of those with valid WEIGHT and HEIGHT variables, then where NAs exist, the variable is populated with existing BMI results. This new variable then replaces the existing BMI column.
+#' Calculates the Body Mass Index of subjects if WEIGHT and HEIGHT are in the
+#' data frame. Initially creates a new variable which calculates the BMI of
+#' those with valid WEIGHT and HEIGHT variables, then where NAs exist, the
+#' variable is populated with existing BMI results. This new variable then
+#' replaces the existing BMI column.
 #'
-#' @param DATA Data frame containing HEIGHT and WEIGHT variables, typically the Vital Signs (VS) domain.
+#' @param DATA Data frame containing HEIGHT and WEIGHT variables, typically the
+#'   Vital Signs (VS) domain.
 #'
-#' @return
+#' @return Data frame with additional column for BMI, if BMI did not previously
+#'   exist. If BMI existed previously, the BMI is recalculated using the WEIGHT
+#'   and HEIGHT provided. The existing value will only be used if there is an NA
+#'   value in the recalculated column, the existing column is then discarded.
 #'
 #' @export
 #'
 #' @author Rhys Peploe
+#'
+#' @importFrom admiral compute_bmi
+#'
+#' @examples
+#' df <- data.frame(WEIGHT = c(30), HEIGHT = c(150), AGE = c(34))
+#'
+#' DERIVE_BMI(df)
+#'
 #'
 DERIVE_BMI = function(DATA){
   if(("HEIGHT" %in% names(DATA)) & ("WEIGHT" %in% names(DATA))){
@@ -22,11 +39,11 @@ DERIVE_BMI = function(DATA){
       mutate(BMI_c = round(compute_bmi(height = HEIGHT, weight = WEIGHT), 2))
 
     DATA = left_join(DATA, DATA_BMI) %>%
-      mutate(BMI_c = as.character(BMI_c))
+      mutate(BMI_c = as.numeric(BMI_c))
 
     if("BMI" %in% names(DATA)){
       DATA[which(is.na(DATA$BMI_c)), "BMI_c"] =
-        DATA[which(is.na(DATA$BMI_c)), "BMI"]
+        as.numeric(DATA[which(is.na(DATA$BMI_c)), "BMI"])
 
       DATA = DATA %>%
         dplyr::select(-BMI)
