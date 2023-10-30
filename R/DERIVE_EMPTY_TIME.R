@@ -11,7 +11,7 @@
 #'
 #' @param DATA Data frame which contains a SDTM domain.
 #'
-#' @return
+#' @return Data frame with additional column for EMPTY_TIME
 #'
 #' @export
 #'
