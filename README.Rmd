@@ -26,7 +26,14 @@ The IDDOverse contains R functions to convert IDDO-curated SDTM domains into ana
 
 You can install the development version of IDDOverse from [GitHub](https://github.com/) with:
 
-``` r
+```{r}
 # install.packages("devtools")
 devtools::install_github("RhysPeploe/iddoverse")
 ```
+
+Alternatively:
+```{r}
+pkg = c('RhysPeploe/iddoverse')
+pacman::p_load_current_gh(char = pkg)
+```
+
