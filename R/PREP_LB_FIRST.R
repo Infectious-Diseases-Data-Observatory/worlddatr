@@ -1,11 +1,11 @@
-#' Prepare the IN domain for analysis on the first occurrence of events.
+#' Prepare the LB domain for analysis on the first occurrence of events.
 #'
-#' Prepare the Treatments and Interventions (IN) domain for use in first occurrence
-#' analysis data sets. Takes a IDDO-SDTM curated IN domain, transforms and
+#' Prepare the Laboratory (LB) domain for use in first occurrence
+#' analysis data sets. Takes a IDDO-SDTM curated LB domain, transforms and
 #' pivots it in order to merge it into a first occurrence analysis data set with other
 #' domains using the ANALYSE_FIRST() function.
 #'
-#' @param DATA_IN The IN domain data frame, as named in the global environment.
+#' @param DATA_LB The LB domain data frame, as named in the global environment.
 #' @param DISEASE The name of the disease theme being analysed. Character
 #'   string. Default is empty (selects base variables). Select from: "MALARIA",
 #'   "VL" or "EBOLA". If selection is missing or misspelt, then the base
