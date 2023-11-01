@@ -16,7 +16,7 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_MB_VL_BL = function(DATA_MB){
+PREP_MB_BL_VL = function(DATA_MB){
   MB_VARS = c("LSHMANIA", "LDONOV", "LMAJOR")
 
   DATA = DATA_MB %>%

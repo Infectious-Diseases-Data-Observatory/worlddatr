@@ -16,7 +16,7 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_MB_MAL_FU = function(DATA_MB){
+PREP_MB_FU_MAL = function(DATA_MB){
   MB_VARS = c("PFALCIPA", "PFALCIPS", "PFALCIP",
               "PVIVAXA", "PVIVAXS", "PVIVAX",
               "PLSMDMA", "PLSMDMS", "PLSMDM",
