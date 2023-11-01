@@ -22,6 +22,7 @@
 #' @importFrom stringr str_replace_all
 #' @importFrom stringr str_to_upper
 #' @importFrom tidyr pivot_wider
+#' @importFrom tidyr unite
 #' @importFrom tidyselect ends_with
 #' @importFrom tidyselect everything
 #' @importFrom tidyselect starts_with
