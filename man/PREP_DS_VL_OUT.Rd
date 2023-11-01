@@ -10,7 +10,7 @@ PREP_DS_VL_OUT(DATA_DS)
 \item{DATA_DS}{The DS domain data frame, as named in the global environment.}
 }
 \value{
-Two functions which each create a data frame focussing on outcome
+Two functions which each create a data frame focusing on outcome
 measures for VL
 }
 \description{

@@ -7,14 +7,14 @@
 #'
 #' @param DATA_DS The DS domain data frame, as named in the global environment.
 #'
-#' @return Two functions which each create a data frame focussing on outcome
+#' @return Two functions which each create a data frame focusing on outcome
 #'   measures for VL
 #'
 #' @export
 #'
 #' @author Rhys Peploe
 #'
-PREP_DS_VL_OUT = function(DATA_DS){
+PREP_DS_OUT_VL = function(DATA_DS){
   DATA = DATA_DS %>%
     convert_blanks_to_na() %>%
     group_by(USUBJID) %>%
@@ -30,7 +30,7 @@ PREP_DS_VL_OUT = function(DATA_DS){
 }
 
 ################################################################################
-PREP_DS_VL_OUT2 = function(DATA_DS){
+PREP_DS_OUT_VL2 = function(DATA_DS){
   DATA_DS = DATA_DS %>%
     convert_blanks_to_na() %>%
     mutate(DSDECOD = as.character(DSDECOD),
