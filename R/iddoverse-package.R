@@ -5,6 +5,7 @@
 #' @importFrom admiral compute_bmi
 #' @importFrom admiral convert_blanks_to_na
 #' @importFrom anthro anthro_zscores
+#' @importFrom dplyr distinct
 #' @importFrom dplyr filter
 #' @importFrom dplyr first
 #' @importFrom dplyr full_join
@@ -21,6 +22,8 @@
 #' @importFrom stringr str_replace_all
 #' @importFrom stringr str_to_upper
 #' @importFrom tidyr pivot_wider
+#' @importFrom tidyselect ends_with
+#' @importFrom tidyselect everything
 #' @importFrom tidyselect starts_with
 ## usethis namespace: end
 NULL
