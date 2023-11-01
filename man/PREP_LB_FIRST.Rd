@@ -2,11 +2,13 @@
 % Please edit documentation in R/PREP_LB_FIRST.R
 \name{PREP_LB_FIRST}
 \alias{PREP_LB_FIRST}
-\title{Prepare the IN domain for analysis on the first occurrence of events.}
+\title{Prepare the LB domain for analysis on the first occurrence of events.}
 \usage{
 PREP_LB_FIRST(DATA_LB, DISEASE = "", VARS = NULL)
 }
 \arguments{
+\item{DATA_LB}{The LB domain data frame, as named in the global environment.}
+
 \item{DISEASE}{The name of the disease theme being analysed. Character
 string. Default is empty (selects base variables). Select from: "MALARIA",
 "VL" or "EBOLA". If selection is missing or misspelt, then the base
@@ -16,16 +18,14 @@ variables will be used.}
 dataset. Character string. Use controlled terminology for LBTESTCD as
 specified in the LB section of the 'IDDO SDTM Implementation Manual'. i.e.
 c("CHOL").}
-
-\item{DATA_IN}{The IN domain data frame, as named in the global environment.}
 }
 \value{
 Dataframe containing a row per USUBJID/subject, with LBTESTCDs and the
 day of first occurrence of each as columns.
 }
 \description{
-Prepare the Treatments and Interventions (IN) domain for use in first occurrence
-analysis data sets. Takes a IDDO-SDTM curated IN domain, transforms and
+Prepare the Laboratory (LB) domain for use in first occurrence
+analysis data sets. Takes a IDDO-SDTM curated LB domain, transforms and
 pivots it in order to merge it into a first occurrence analysis data set with other
 domains using the ANALYSE_FIRST() function.
 }
