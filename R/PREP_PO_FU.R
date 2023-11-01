@@ -7,7 +7,7 @@
 #'
 #' @param DATA_PO The PO domain data frame, as named in the global environment.
 #' @param VARS Specify additional variables to be included in the output
-#'   dataset. Character string. Use controlled terminology for PODECOD/POTERM as
+#'   dataset. Character string. Use controlled terminology for POTERM as
 #'   specified in the PO section of the 'IDDO SDTM Implementation Manual'. i.e.
 #'   c("ADEVAIND").
 #'
