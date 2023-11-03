@@ -16,6 +16,7 @@
 #' @importFrom dplyr rename
 #' @importFrom dplyr right_join
 #' @importFrom dplyr row_number
+#' @importFrom dplyr select
 #' @importFrom janitor clean_names
 #' @importFrom lubridate month
 #' @importFrom magrittr %>%
