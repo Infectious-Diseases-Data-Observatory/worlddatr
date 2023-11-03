@@ -162,7 +162,13 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
     relocate(ends_with("DAY"), .after = VISITDY) %>%
     DERIVE_BMI()
 
-  FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY, FU$START_DAY, FU$END_DAY), ]
+  if("START_DAY" %in% names(FU)){
+    FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY, FU$START_DAY, FU$END_DAY), ]
+  }
+
+  else{
+    FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY), ]
+  }
 
   return(FU)
 }
