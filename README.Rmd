@@ -21,7 +21,7 @@ The {iddoverse} contains R functions to convert IDDO-curated SDTM domains into a
     create analysable data.
     
 This package takes inspiration from the Pharmaverse, specifically the
-    [{admiral}](https://github.com/pharmaverse/admiral)R package, however, IDDO SDTM formats are not
+    [{admiral}](https://github.com/pharmaverse/admiral)R package, however, IDDO-SDTM formats are not
     strictly compliant with standards required by pharma companies, as a result, the purpose for the
     {iddoverse} is to map the IDDO-SDTM format to IDDO-ADaM datasets. 
     
@@ -44,11 +44,33 @@ pkg = c('RhysPeploe/iddoverse')
 pacman::p_load_current_gh(char = pkg)
 ```
 
-We recommend updating the install regularly as the package is developing constantly. Version 1.0 will be released in the next few months.
+We recommend updating the install regularly as the package is developing constantly. Version 1.0 will be released in the next few months. Until then, versions starting with '0.' should be expected to change without notification. 
 
 ## Why is this useful?
 
 The code will speed up the time taken to produce analysis datasets and provide consistent outputs. The user should be able to simply input their domains and the code should create an analysis dataset.
+
+
+## Citation
+
+To cite iddoverse in publications use:
+
+  R. Peploe (2023), 'Welcome to the iddoverse: An R package
+  for converting IDDO-SDTM data to analyse datasets',
+  Infectious Disease Data Observatory, University of Oxford.
+  Available: https://github.com/RhysPeploe/iddoverse
+
+A BibTeX entry for LaTeX users is
+
+  @Unpublished{,
+    title = {Welcome to the iddoverse: An R package for converting IDDO-SDTM data to analyse datasets},
+    author = {Rhys Peploe},
+    institution = {Infectious Disease Data Observatory (IDDO), University of Oxford, Oxford, UK},
+    year = {2023},
+    url = {https://github.com/RhysPeploe/iddoverse},
+    note = {Paper in development Nov 2023 - Jan 2024},
+  }
+
 
 ## Issues
 
