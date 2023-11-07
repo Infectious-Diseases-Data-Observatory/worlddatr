@@ -19,8 +19,7 @@
 #' @author Rhys Peploe
 #'
 PREP_SC_FU = function(DATA_SC, VARS = NULL){
-  SC_VARS = c("EDULEVEL", "EDUYRNUM", "MARISTAT", "ADEVAIND", "GSTABRTH",
-              "INCMDEC", "PREMBRTH", "SMGAIND", str_to_upper(VARS))
+  SC_VARS = c(str_to_upper(VARS))
 
   DATA_SC = DATA_SC %>%
     convert_blanks_to_na() %>%
@@ -67,4 +66,3 @@ PREP_SC_FU = function(DATA_SC, VARS = NULL){
 
   return(DATA)
 }
-# "EDULEVEL", "EDUYRNUM", "MARISTAT", "ADEVAIND", "GSTABRTH", "INCMDEC", "PREMBRTH", "SMGAIND"
