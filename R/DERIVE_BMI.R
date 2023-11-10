@@ -50,7 +50,8 @@ DERIVE_BMI = function(DATA){
     }
 
     DATA = DATA %>%
-      rename("BMI" = "BMI_c")
+      rename("BMI" = "BMI_c") %>%
+      relocate("BMI", .after = "WEIGHT")
   }
 
   return(DATA)
