@@ -160,7 +160,9 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
   FU = right_join(DM, FU) %>%
     relocate(ends_with("DY"), .after = VISITNUM) %>%
     relocate(ends_with("DAY"), .after = VISITDY) %>%
-    DERIVE_BMI()
+    DERIVE_BMI() %>%
+    JOIN_PREGNANT() %>%
+    JOIN_HIV()
 
   if("START_DAY" %in% names(FU)){
     FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY, FU$START_DAY, FU$END_DAY), ]
