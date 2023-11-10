@@ -96,7 +96,9 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
       dplyr::select(STUDYID, DISEASE, everything())
   }
 
-  FU = PREP_LB_FU(DATA_LB, DISEASE = DISEASE_THEME, VARS = LB_VARS)
+  FU = PREP_LB_FU(DATA_LB, DISEASE = DISEASE_THEME, VARS = LB_VARS) %>%
+    mutate(START_DAY = NA,
+           END_DAY = NA)
 
   if(is.null(DATA_MB) == FALSE){
     MB_JOIN = PREP_MB_FU(DATA_MB, DISEASE = DISEASE_THEME, VARS = MB_VARS) %>%
@@ -123,17 +125,6 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
       full_join(PREP_MP_FU(DATA_MP, MPTEST = MP_TESTCD, VARS = MP_VARS))
   }
 
-  if(is.null(DATA_SA) == FALSE){
-    FU = FU %>%
-      full_join(PREP_SA_FU(DATA_SA, DISEASE = DISEASE_THEME, VARS = SA_VARS)) %>%
-      full_join(PREP_SA_MV_FU(DATA_SA))
-  }
-
-  if(is.null(DATA_RP) == FALSE){
-    FU = FU %>%
-      full_join(PREP_RP_FU(DATA_RP, VARS = RP_VARS))
-  }
-
   if(is.null(DATA_IN) == FALSE){
     FU = FU %>%
       full_join(PREP_IN_B_FU(DATA_IN)) %>%
@@ -147,9 +138,15 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
       relocate(TEMP_LOC, .after = TEMP)
   }
 
-  if(is.null(DATA_SC) == FALSE){
+  if(is.null(DATA_SA) == FALSE){
     FU = FU %>%
-      full_join(PREP_SC_FU(DATA_SC, VARS = SC_VARS))
+      full_join(PREP_SA_FU(DATA_SA, DISEASE = DISEASE_THEME, VARS = SA_VARS)) %>%
+      full_join(PREP_SA_MV_FU(DATA_SA))
+  }
+
+  if(is.null(DATA_RP) == FALSE){
+    FU = FU %>%
+      full_join(PREP_RP_FU(DATA_RP, VARS = RP_VARS))
   }
 
   if(is.null(DATA_PO) == FALSE){
