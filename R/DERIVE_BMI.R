@@ -36,14 +36,14 @@ DERIVE_BMI = function(DATA){
     DATA_BMI = DATA %>%
       filter(AGE >= 18) %>%
       filter(is.na(HEIGHT) == FALSE & is.na(WEIGHT) == FALSE) %>%
-      mutate(BMI_c = round(compute_bmi(height = HEIGHT, weight = WEIGHT), 2))
+      mutate(BMI_c = as.character(round(compute_bmi(height = HEIGHT,
+                                                    weight = WEIGHT), 2)))
 
-    DATA = left_join(DATA, DATA_BMI) %>%
-      mutate(BMI_c = as.numeric(BMI_c))
+    DATA = left_join(DATA, DATA_BMI)
 
     if("BMI" %in% names(DATA)){
       DATA[which(is.na(DATA$BMI_c)), "BMI_c"] =
-        as.numeric(DATA[which(is.na(DATA$BMI_c)), "BMI"])
+        DATA[which(is.na(DATA$BMI_c)), "BMI"]
 
       DATA = DATA %>%
         dplyr::select(-BMI)
