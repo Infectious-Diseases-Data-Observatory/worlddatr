@@ -1,4 +1,6 @@
 # iddoverse 0.1.1
+* Resolved coercing error in DERIVE_BMI by removing as.numeric
+* Added JOIN_ functions into ANALYSE_FOLLOW_UP
 
 # iddoverse 0.1.0
 
