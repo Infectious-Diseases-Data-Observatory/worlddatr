@@ -1,6 +1,6 @@
 Package: iddoverse
 Title: Transforms IDDO customised SDTM domains into analysis datasets
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     person("Rhys", "Peploe", , "rhys.peploe@iddo.org", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0001-1669-3716"))
