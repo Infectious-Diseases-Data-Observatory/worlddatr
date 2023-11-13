@@ -35,11 +35,11 @@ PREP_DM = function(DATA_DM, DISEASE = NULL, VARS = NULL){
 
   else if(DISEASE == "EBOLA"){
     COLUMNS = c("STUDYID", "USUBJID", "SUBJID", "SITEID", "AGE", "SEX", "ARMCD",
-                "ARM", "COUNTRY", "RFSTDTC", "RACE", "ETHNIC", "DTHFL" , str_to_upper(VARS))
+                "ARM", "COUNTRY", "RFSTDTC", "RACE", "ETHNIC", "DTHFL", str_to_upper(VARS))
   }
 
   else{
-    COLUMNS = c("STUDYID", "USUBJID", "SUBJID", "SITEID", "AGE", "SEX", "ARMCD",
+    COLUMNS = c("STUDYID", "USUBJID", "SUBJID", "SITEID", "AGE", "AGE_DAYS", "SEX", "ARMCD",
                 "ARM", "COUNTRY", "RFSTDTC", "RACE", "ETHNIC", str_to_upper(VARS))
   }
 
