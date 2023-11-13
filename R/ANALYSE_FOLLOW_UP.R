@@ -5,7 +5,7 @@
 #' IDDO-SDTM domains and finally merges them into a single dataset, which can be
 #' used for research and analysis. The choice of DISEASE preselects a number of
 #' variables which have been chosen with input from Subject Matter Experts. The
-#' DM and LB domains are the only two which is required for the code to run, the
+#' DM domain is the only one which is required for the code to run, the
 #' rest can be optional.
 #'
 #' If issues are found with the code, please log them at:
@@ -18,7 +18,6 @@
 #' @param DATA_DM The DM domain data frame, as named in the global environment.
 #'   Required.
 #' @param DATA_LB The LB domain data frame, as named in the global environment.
-#'   Required.
 #' @param DATA_IN The IN domain data frame, as named in the global environment.
 #' @param DATA_MB The MB domain data frame, as named in the global environment.
 #' @param DATA_MP The MP domain data frame, as named in the global environment.
@@ -96,9 +95,17 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
       dplyr::select(STUDYID, DISEASE, everything())
   }
 
-  FU = PREP_LB_FU(DATA_LB, DISEASE = DISEASE_THEME, VARS = LB_VARS) %>%
-    mutate(START_DAY = NA,
-           END_DAY = NA)
+  if(is.null(DATA_LB) == FALSE){
+    FU = PREP_LB_FU(DATA_LB, DISEASE = DISEASE_THEME, VARS = LB_VARS) %>%
+      mutate(START_DAY = NA,
+             END_DAY = NA)
+  }
+
+  else{
+    FU = data.frame(STUDYID = NA) %>%
+      mutate(START_DAY = NA,
+             END_DAY = NA)
+  }
 
   if(is.null(DATA_MB) == FALSE){
     MB_JOIN = PREP_MB_FU(DATA_MB, DISEASE = DISEASE_THEME, VARS = MB_VARS) %>%
@@ -159,7 +166,8 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
     relocate(ends_with("DAY"), .after = VISITDY) %>%
     DERIVE_BMI() %>%
     JOIN_PREGNANT() %>%
-    JOIN_HIV()
+    JOIN_HIV() %>%
+    filter(is.na(STUDYID) == FALSE & is.na(USUBJID) == FALSE)
 
   if("START_DAY" %in% names(FU)){
     FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY, FU$START_DAY, FU$END_DAY), ]
