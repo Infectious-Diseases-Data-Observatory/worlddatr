@@ -25,8 +25,8 @@ PREP_MB_FU_VL = function(DATA_MB){
     mutate(MBSTRES = as.character(MBSTRESN),
            MBUNITS = as.character(MBSTRESU),
            MBSTRESC = as.character(MBSTRESC),
-           MBMODIFY = as.character(MBMODIFY),
-           MBORRES = as.character(MBORRES),
+           MBMODIFY = str_to_upper(as.character(MBMODIFY)),
+           MBORRES = str_to_upper(as.character(MBORRES)),
            DAY = MBDY) %>%
     CLEAN_MB_VL()
 
