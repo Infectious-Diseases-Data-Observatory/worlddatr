@@ -27,30 +27,26 @@
 #'
 #' @export
 #'
-#' @author Rhys Peploe (`rhys.peploe@iddo.org`, `rhyspeploe1998@gmail.com`)
+#' @author Rhys Peploe
 #'
 ANALYSE_OUTCOME_VL = function(DATA_DM, DATA_DS, DATA_RS, DATA_MB,
 
                               DM_VARS = NULL){
-  RS = DATA_RS %>%
-    filter(is.na(RSSCAT) | (RSSCAT != "ADDITIONAL OUTCOME PROVIDED" &
-                              RSSCAT != "ADDITIONAL OUTCOMES PROVIDED" &
-                              RSSCAT != "MEDICAL HISTORY"))
 
-  FIRST = left_join(PREP_RS_OUT_VL2(RS, "FIRST"),
+  TOC = left_join(PREP_RS_XTRM_OUT_VL(DATA_RS, "TOC"),
                     (PREP_MB_FU_VL(DATA_MB) %>% select(-VISITDY, -VISITNUM, -EMPTY_TIME)),
-                    by = c("USUBJID", "STUDYID", "INITIAL_TOC_DAY" = "DAY"), na_matches = "never")
+                    by = c("USUBJID", "STUDYID", "INITIAL_TOC_DAY" = "DAY"))
 
 
-  LAST = left_join(PREP_RS_OUT_VL2(RS, "LAST"),
+  OVRLRESP = left_join(PREP_RS_XTRM_OUT_VL(DATA_RS, "OVRLRESP"),
                    (PREP_MB_FU_VL(DATA_MB) %>% select(-VISITDY, -VISITNUM, -EMPTY_TIME)),
-                   by = c("USUBJID", "STUDYID", "FINAL_OVERALL_RESP_DAY" = "DAY"), na_matches = "never")
+                   by = c("USUBJID", "STUDYID", "FINAL_OVERALL_RESP_DAY" = "DAY"))
 
 
-  left_join(PREP_DM(DATA_DM, DISEASE = "", VARS = c("DTHFL", "DTHDTC", str_to_upper(DM_VARS))),
-            PREP_DS_VL_OUT2(DATA_DS)) %>%
-    left_join(FIRST) %>%
-    left_join(LAST) %>%
-    left_join(PREP_DS_OUT_VL(DATA_DS)) %>%
-    left_join(PREP_RS_OUT_VL(DATA_RS))
+  # left_join(PREP_DM(DATA_DM, DISEASE = "", VARS = c("DTHFL", "DTHDTC", str_to_upper(DM_VARS))),
+  #           PREP_DS_OUT_VL2(DATA_DS)) %>%
+  #   left_join(FIRST) %>%
+  #   left_join(LAST) %>%
+  #   left_join(PREP_DS_OUT_VL(DATA_DS)) %>%
+  #   left_join(PREP_RS_OUT_VL(DATA_RS))
 }
