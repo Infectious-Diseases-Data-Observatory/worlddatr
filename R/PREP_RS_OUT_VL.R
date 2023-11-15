@@ -1,4 +1,30 @@
-PREP_RS_OUT_VL = function(DATA_RS, TOC_OVRLRESP = "TOC"){
+#' Prepare the RS Domain for VL outcome analysis.
+#'
+#' Prepare the Disease Response and Clinical Classification (RS) domain for use
+#' in outcome analysis data sets studying Visceral Leishmaniasis. Takes a
+#' IDDO-SDTM curated RS domain, transforms and pivots it in order to merge it
+#' into an outcome analysis data set with other domains using the
+#' ANALYSE_OUTCOME() function.
+#'
+#' @param DATA_RS The RS domain data frame, as named in the global environment.
+#' @param TOC_OVRLRESP Character, choice between displaying the Test of Cure
+#'   (TOC) or Overall Response (OVRLRESP). Values are thus either "TOC" or
+#'   "OVRLRESP"
+#' @param expand_cols Boolean option to include all RS entries for each subject.
+#'   Default is FALSE, which will display the first recorded TOC or OVRLRESP
+#'   event and the associated VISITNUM, VISITDY and DAY. If TRUE, all TOCs or
+#'   OVRLRESPs will be listed as RPTESTCD_NUMBER_, along with the associated
+#'   VISITNUM, VISITDY and DAY.
+#'
+#' @return
+#'
+#' @export
+#'
+#' @author Rhys Peploe
+#'
+PREP_RS_OUT_VL = function(DATA_RS, TOC_OVRLRESP = "TOC", expand_cols = FALSE){
+  TOC_OVRLRESP = str_to_upper(TOC_OVRLRESP)
+
   DATA_RS = DATA_RS %>%
     convert_blanks_to_na() %>%
     filter(is.na(RSSCAT) | (RSSCAT != "ADDITIONAL OUTCOME PROVIDED" &
@@ -19,37 +45,50 @@ PREP_RS_OUT_VL = function(DATA_RS, TOC_OVRLRESP = "TOC"){
   DATA_RS[which(is.na(DATA_RS$RSSTRES)), "RSSTRES"] =
     DATA_RS[which(is.na(DATA_RS$RSSTRES)), "RSORRES"]
 
-  if(TOC_OVRLRESP == "TOC"){
-    DATA = DATA_RS %>%
-      filter(RSTESTCD == "TOC") %>%
-      pivot_wider(id_cols = c(STUDYID, USUBJID),
-                  names_from = RSTESTCD,
-                  values_from = c(RSSTRES, VISITNUM, VISITDY, DAY),
-                  values_fn = first) %>% #set to be the first inital test of cure done, given the filters
-      rename("INITIAL_TOC" =  "RSSTRES_TOC",
-             "INITIAL_TOC_VISITNUM" =  "VISITNUM_TOC",
-             "INITIAL_TOC_VISITDY" =  "VISITDY_TOC",
-             "INITIAL_TOC_DAY" = "DAY_TOC")
+  if(expand_cols == FALSE){
+    if(TOC_OVRLRESP == "TOC"){
+      DATA = DATA_RS %>%
+        filter(RSTESTCD == "TOC") %>%
+        pivot_wider(id_cols = c(STUDYID, USUBJID),
+                    names_from = RSTESTCD,
+                    values_from = c(RSSTRES, VISITNUM, VISITDY, DAY),
+                    values_fn = first) %>%
+        rename("INITIAL_TOC" =  "RSSTRES_TOC",
+               "INITIAL_TOC_VISITNUM" =  "VISITNUM_TOC",
+               "INITIAL_TOC_VISITDY" =  "VISITDY_TOC",
+               "INITIAL_TOC_DAY" = "DAY_TOC")
+    }
+
+    else if(TOC_OVRLRESP == "OVRLRESP"){
+      DATA = DATA_RS %>%
+        filter(RSTESTCD == "OVRLRESP") %>%
+        pivot_wider(id_cols = c(STUDYID, USUBJID),
+                    names_from = RSTESTCD,
+                    values_from = c(RSSTRES, VISITNUM, VISITDY, DAY),
+                    values_fn = first) %>%
+        rename("INITIAL_OVRLRESP" =  "RSSTRES_OVRLRESP",
+               "INITIAL_OVRLRESP_VISITNUM" = "VISITNUM_OVRLRESP",
+               "INITIAL_OVRLRESP_VISITDY" = "VISITDY_OVRLRESP",
+               "INITIAL_OVRLRESP_DAY" = "DAY_OVRLRESP")
+    }
   }
 
-  else if(TOC_OVRLRESP == "OVRLRESP"){
+  else if(expand_cols == TRUE){
     DATA = DATA_RS %>%
-      filter(RSTESTCD == "OVRLRESP") %>%
+      group_by(STUDYID, USUBJID, RSTESTCD) %>%
+      mutate(ROWN = row_number()) %>%
       pivot_wider(id_cols = c(STUDYID, USUBJID),
-                  names_from = RSTESTCD,
-                  values_from = c(RSSTRES, VISITNUM, VISITDY, DAY),
-                  values_fn = first) %>%
-      rename("OVERALL_RESP" =  "RSSTRES_OVRLRESP",
-             "OVERALL_RESP_VISITNUM" = "VISITNUM_OVRLRESP",
-             "OVERALL_RESP_VISITDY" = "VISITDY_OVRLRESP",
-             "OVERALL_RESP_DAY" = "DAY_OVRLRESP")
+                  names_from = c(RSTESTCD, ROWN), names_glue = "{RSTESTCD}_{ROWN}_{.value}",
+                  values_from = c(RSSTRES, VISITNUM, VISITDY, DAY), names_vary = "slowest")
+
+    colnames(DATA) = str_replace_all(colnames(DATA), "RSDY", "DAY")
+    colnames(DATA) = str_replace_all(colnames(DATA), "_RSSTRES", "")
+    colnames(DATA) = str_replace_all(colnames(DATA), "OVRLRESP", "OVERALL_RESP")
+
+    DATA = DATA %>%
+      dplyr::select(STUDYID, USUBJID, starts_with("TOC"), starts_with("OVERALL_RESP"), everything())
+
   }
 
   return(DATA)
 }
-
-# PREP_RS_OUT_VL(RS_PULL, TOC_OVRLRESP = "TOC") %>% View
-# PREP_RS_OUT_VL(RS_PULL, TOC_OVRLRESP = "OVRLRESP") %>% View
-#
-# left_join(PREP_DM(DM_PULL, "VL"), PREP_RS_OUT_VL(RS_PULL, TOC_OVRLRESP = "TOC")) %>%
-#   left_join(PREP_RS_OUT_VL(RS_PULL, TOC_OVRLRESP = "OVRLRESP"))
