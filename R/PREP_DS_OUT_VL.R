@@ -43,7 +43,7 @@ PREP_DS_OUT_VL = function(DATA_DS, expand_cols = FALSE){
       pivot_wider(id_cols = c(STUDYID, USUBJID),
                   names_from = DOMAIN,
                   values_from = c(DSSTRES, VISITNUM, VISITDY, DAY, START_DAY),
-                  values_fn = last) %>% #set to be the last disposition collected, LTFU may have occurred in earlier entry on small handful of cases
+                  values_fn = last) %>%
       rename("FINAL_DISP" = "DSSTRES_DS",
              "FINAL_DISP_VISITDY" = "VISITDY_DS",
              "FINAL_DISP_VISITNUM" = "VISITNUM_DS",
