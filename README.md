@@ -26,7 +26,7 @@ You can install the development version of IDDOverse from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
+# install.packages("devtools") #if you have not previously installed 'devtools' on your machine
 devtools::install_github("RhysPeploe/iddoverse")
 ```
 
@@ -50,21 +50,8 @@ their domains and the code should create an analysis dataset.
 
 ## Citation
 
-To cite iddoverse in publications use:
-
-R. Peploe (2023), ‘Welcome to the iddoverse: An R package for converting
-IDDO-SDTM data to analyse datasets’, Infectious Disease Data
-Observatory, University of Oxford. Available:
-<https://github.com/RhysPeploe/iddoverse>
-
-A BibTeX entry for LaTeX users is
-
-@Unpublished{, title = {Welcome to the iddoverse: An R package for
-converting IDDO-SDTM data to analyse datasets}, author = {Rhys Peploe},
-institution = {Infectious Disease Data Observatory (IDDO), University of
-Oxford, Oxford, UK}, year = {2023}, url =
-{<https://github.com/RhysPeploe/iddoverse>}, note = {Paper in
-development Nov 2023 - Jan 2024}, }
+To cite iddoverse in publications, see
+[CITATION](https://github.com/RhysPeploe/iddoverse/blob/main/inst/CITATION)
 
 ## Issues
 
