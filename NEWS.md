@@ -1,3 +1,7 @@
+# iddoverse 0.2.0
+* Significant changes to VL outcome including function name changes, rewriting of code to match other PREP functions, removal of domain dependency and generally a clear look
+* Documentation updates to reflect change
+
 # iddoverse 0.1.2
 * Enhanced ANALYSE_FOLLOW_UP by not depending on LB domain. Fixed by creating a empty dataset in the absence of LB, and removing empty rows at the end of merging
 * Uploaded test data STUDYID: RPTESTB
