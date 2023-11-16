@@ -13,44 +13,79 @@
 #' @param DATA_DM The DM domain data frame, as named in the global environment.
 #'   Required.
 #' @param DATA_DS The DS domain data frame, as named in the global environment.
-#'   Required.
 #' @param DATA_RS The RS domain data frame, as named in the global environment.
-#'   Required.
 #' @param DATA_MB The MB domain data frame, as named in the global environment.
-#'   Required.
 #' @param DM_VARS Specify additional variables to be included in the output
 #'   dataset. Character string. Use column names as specified in the DM section
 #'   of the 'IDDO SDTM Implementation Manual'. i.e. c("AGE").
+#' @param expand_cols Boolean option to include all DS and RS entries for each
+#'   subject. Default is FALSE, which will display the first recorded RS events
+#'   and last DS event, along with the associated VISITNUM, VISITDY and DAY. If
+#'   TRUE, all RS and DS events will be provided, along with the associated
+#'   VISITNUM, VISITDY and DAY.
 #'
 #' @return A dataset with one row per subject, and variables from each of the
 #'   domains listed in the parameters above.
 #'
 #' @export
 #'
-#' @author Rhys Peploe (`rhys.peploe@iddo.org`, `rhyspeploe1998@gmail.com`)
+#' @author Rhys Peploe
 #'
-ANALYSE_OUTCOME_VL = function(DATA_DM, DATA_DS, DATA_RS, DATA_MB,
+ANALYSE_OUTCOME_VL = function(DATA_DM, DATA_DS = NULL, DATA_RS = NULL, DATA_MB = NULL,
+                              DM_VARS = NULL, expand_cols = FALSE){
+  if(is.null(DATA_DS) == FALSE){
+    OUT = PREP_DM(DATA_DM, DISEASE = "VL", VARS = c("DTHFL", "DTHDTC", str_to_upper(DM_VARS))) %>%
+      left_join(PREP_DS_OUT_VL(DATA_DS, expand_cols = FALSE))
+  }
+  else if(is.null(DATA_DS)){
+    OUT = PREP_DM(DATA_DM, DISEASE = "VL", VARS = c("DTHFL", "DTHDTC", str_to_upper(DM_VARS)))
+  }
 
-                              DM_VARS = NULL){
-  RS = DATA_RS %>%
-    filter(is.na(RSSCAT) | (RSSCAT != "ADDITIONAL OUTCOME PROVIDED" &
-                              RSSCAT != "ADDITIONAL OUTCOMES PROVIDED" &
-                              RSSCAT != "MEDICAL HISTORY"))
+  if(is.null(DATA_RS) == FALSE){
+    TOC = PREP_RS_OUT_VL(DATA_RS, TOC_OVRLRESP = "TOC", expand_cols = FALSE)
 
-  FIRST = left_join(PREP_RS_OUT_VL2(RS, "FIRST"),
-                    (PREP_MB_FU_VL(DATA_MB) %>% select(-VISITDY, -VISITNUM, -EMPTY_TIME)),
-                    by = c("USUBJID", "STUDYID", "INITIAL_TOC_DAY" = "DAY"), na_matches = "never")
+    OVRLRESP = PREP_RS_OUT_VL(DATA_RS, TOC_OVRLRESP = "OVRLRESP", expand_cols = FALSE)
 
+    if(is.null(DATA_MB) == FALSE){
+      TOC = TOC %>%
+        left_join(PREP_MB_FU_VL(DATA_MB) %>%
+                    rename("INITIAL_TOC_VISITDY" = "VISITDY",
+                           "INITIAL_TOC_VISITNUM" = "VISITNUM",
+                           "INITIAL_TOC_DAY" = "DAY") %>%
+                    select(-EMPTY_TIME) %>%
+                    dplyr::rename_with(.fn = function(.x){paste0("INITIAL_TOC_", .x)},
+                                       .cols = c(SPECIES,
+                                                 starts_with("LDONOV"),
+                                                 starts_with("LSHMANIA"))))
 
-  LAST = left_join(PREP_RS_OUT_VL2(RS, "LAST"),
-                   (PREP_MB_FU_VL(DATA_MB) %>% select(-VISITDY, -VISITNUM, -EMPTY_TIME)),
-                   by = c("USUBJID", "STUDYID", "FINAL_OVERALL_RESP_DAY" = "DAY"), na_matches = "never")
+      OVRLRESP = OVRLRESP %>%
+        left_join(PREP_MB_FU_VL(DATA_MB) %>%
+                    rename("INITIAL_OVRLRESP_VISITDY" = "VISITDY",
+                           "INITIAL_OVRLRESP_VISITNUM" = "VISITNUM",
+                           "INITIAL_OVRLRESP_DAY" = "DAY") %>%
+                    select(-EMPTY_TIME) %>%
+                    dplyr::rename_with(.fn = function(.x){paste0("INITIAL_OVRLRESP_", .x)},
+                                       .cols = c(SPECIES,
+                                                 starts_with("LDONOV"),
+                                                 starts_with("LSHMANIA"))))
+    }
 
+    OUT = OUT %>%
+      left_join(TOC) %>%
+      left_join(OVRLRESP)
+  }
 
-  left_join(PREP_DM(DATA_DM, DISEASE = "", VARS = c("DTHFL", "DTHDTC", str_to_upper(DM_VARS))),
-            PREP_DS_VL_OUT2(DATA_DS)) %>%
-    left_join(FIRST) %>%
-    left_join(LAST) %>%
-    left_join(PREP_DS_OUT_VL(DATA_DS)) %>%
-    left_join(PREP_RS_OUT_VL(DATA_RS))
+  if(expand_cols == TRUE){
+    if(is.null(DATA_DS) == FALSE){
+      OUT = OUT %>%
+        left_join(PREP_DS_OUT_VL(DATA_DS, expand_cols = expand_cols))
+    }
+
+    if(is.null(DATA_RS) == FALSE){
+      OUT = OUT %>%
+        left_join(PREP_RS_OUT_VL(DATA_RS, expand_cols = expand_cols))
+    }
+  }
+
+  return(OUT)
 }
