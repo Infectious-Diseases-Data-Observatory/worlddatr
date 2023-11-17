@@ -23,6 +23,11 @@ PREP_ER_FIRST = function(DATA_ER){
            DAY = ERDY) %>%
     filter(ERPRESP == "Y")
 
+  DATA[which(is.na(DATA$ERSTRES)), "ERSTRES"] =
+    DATA[which(is.na(DATA$ERSTRES)), "ERMODIFY"]
+  DATA[which(is.na(DATA$ERSTRES)), "ERSTRES"] =
+    DATA[which(is.na(DATA$ERSTRES)), "ERTERM"]
+
   DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$DAY), ]
 
   DATA = DATA %>%
