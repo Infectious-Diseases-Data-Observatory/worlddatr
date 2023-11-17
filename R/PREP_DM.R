@@ -24,13 +24,13 @@ PREP_DM = function(DATA_DM, DISEASE = NULL, VARS = NULL){
   DISEASE = str_to_upper(DISEASE)
 
   if(DISEASE == "MALARIA"){
-    COLUMNS = c("STUDYID", "USUBJID", "SUBJID", "SITEID", "AGE", "AGE_DAYS", "SEX", "ARMCD",
+    COLUMNS = c("STUDYID", "USUBJID", "SITEID", "AGE", "AGE_DAYS", "SEX", "ARMCD",
                 "ARM", "COUNTRY", "RFSTDTC", "RACE", "ETHNIC", str_to_upper(VARS))
   }
 
   else if(DISEASE == "VL"){
-    COLUMNS = c("STUDYID", "USUBJID", "SUBJID", "SITEID", "AGE", "AGE_DAYS", "SEX", "ARMCD",
-                "ARM", "COUNTRY", "RFSTDTC", "RACE", "ETHNIC", str_to_upper(VARS))
+    COLUMNS = c("STUDYID", "USUBJID", "SITEID", "AGE", "AGE_DAYS", "SEX", "ARMCD",
+                "ARM", "COUNTRY", "RFSTDTC", "ETHNIC", str_to_upper(VARS))
   }
 
   else if(DISEASE == "EBOLA"){
