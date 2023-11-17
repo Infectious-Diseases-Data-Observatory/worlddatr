@@ -53,7 +53,7 @@
 #'
 #' @export
 #'
-#' @author Rhys Peploe (`rhys.peploe@iddo.org`, `rhyspeploe1998@gmail.com`)
+#' @author Rhys Peploe
 #'
 ANALYSE_FIRST_OCCURRENCE = function(DISEASE_THEME = "",
                                     DATA_DM, DATA_LB = NULL, DATA_VS = NULL,
