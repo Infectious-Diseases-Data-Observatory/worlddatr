@@ -17,8 +17,8 @@ pharma companies, as a result, the purpose for the {iddoverse} is to map
 the IDDO-SDTM format to IDDO-ADaM datasets.
 
     IDDO - Infectious Disease Data Observatory
-    SDTM - Study Data Tabulation Model, an internation data storage model from CDISC.
-    ADaM - Analysis Data Model, an internation data analysis model from CDISC.
+    SDTM - Study Data Tabulation Model, an international data storage model from CDISC.
+    ADaM - Analysis Data Model, an international data analysis model from CDISC.
 
 ## Installation
 
