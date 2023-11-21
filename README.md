@@ -11,7 +11,7 @@ analysis dataset to their study-specific needs, speeding up the time it
 takes to create analysable data.
 
 This package takes inspiration from the Pharmaverse, specifically the
-[{admiral}](https://github.com/pharmaverse/admiral)R package, however,
+[{admiral}](https://github.com/pharmaverse/admiral) R package, however,
 IDDO-SDTM formats are not strictly compliant with standards required by
 pharma companies, as a result, the purpose for the {iddoverse} is to map
 the IDDO-SDTM format to IDDO-ADaM datasets.
