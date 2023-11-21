@@ -167,6 +167,7 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
     DERIVE_BMI() %>%
     JOIN_PREGNANT() %>%
     JOIN_HIV() %>%
+    DERIVE_ANTHRO() %>%
     filter(is.na("STUDYID") == FALSE & is.na("USUBJID") == FALSE)
 
   if("START_DAY" %in% names(FU)){
