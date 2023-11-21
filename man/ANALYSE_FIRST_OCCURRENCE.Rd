@@ -89,5 +89,5 @@ If issues are found with the code, please log them at:
 https://github.com/RhysPeploe/iddoverse/issues
 }
 \author{
-Rhys Peploe (\code{rhys.peploe@iddo.org}, \code{rhyspeploe1998@gmail.com})
+Rhys Peploe
 }

@@ -4,24 +4,34 @@
 \alias{ANALYSE_OUTCOME_VL}
 \title{Create outcome analysis dataset.}
 \usage{
-ANALYSE_OUTCOME_VL(DATA_DM, DATA_DS, DATA_RS, DATA_MB, DM_VARS = NULL)
+ANALYSE_OUTCOME_VL(
+  DATA_DM,
+  DATA_DS = NULL,
+  DATA_RS = NULL,
+  DATA_MB = NULL,
+  DM_VARS = NULL,
+  expand_cols = FALSE
+)
 }
 \arguments{
 \item{DATA_DM}{The DM domain data frame, as named in the global environment.
 Required.}
 
-\item{DATA_DS}{The DS domain data frame, as named in the global environment.
-Required.}
+\item{DATA_DS}{The DS domain data frame, as named in the global environment.}
 
-\item{DATA_RS}{The RS domain data frame, as named in the global environment.
-Required.}
+\item{DATA_RS}{The RS domain data frame, as named in the global environment.}
 
-\item{DATA_MB}{The MB domain data frame, as named in the global environment.
-Required.}
+\item{DATA_MB}{The MB domain data frame, as named in the global environment.}
 
 \item{DM_VARS}{Specify additional variables to be included in the output
 dataset. Character string. Use column names as specified in the DM section
 of the 'IDDO SDTM Implementation Manual'. i.e. c("AGE").}
+
+\item{expand_cols}{Boolean option to include all DS and RS entries for each
+subject. Default is FALSE, which will display the first recorded RS events
+and last DS event, along with the associated VISITNUM, VISITDY and DAY. If
+TRUE, all RS and DS events will be provided, along with the associated
+VISITNUM, VISITDY and DAY.}
 }
 \value{
 A dataset with one row per subject, and variables from each of the
@@ -40,5 +50,5 @@ If issues are found with the code, please log them at:
 https://github.com/RhysPeploe/iddoverse/issues
 }
 \author{
-Rhys Peploe (\code{rhys.peploe@iddo.org}, \code{rhyspeploe1998@gmail.com})
+Rhys Peploe
 }

@@ -75,7 +75,7 @@
 #'
 #' @export
 #'
-#' @author Rhys Peploe (`rhys.peploe@iddo.org`, `rhyspeploe1998@gmail.com`)
+#' @author Rhys Peploe
 #'
 ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
                              DATA_IN = NULL, DATA_MB = NULL, DATA_MP = NULL, DATA_RP = NULL,

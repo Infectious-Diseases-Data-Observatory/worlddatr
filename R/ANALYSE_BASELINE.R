@@ -79,7 +79,7 @@
 #'
 #' @export
 #'
-#' @author Rhys Peploe (`rhys.peploe@iddo.org`, `rhyspeploe1998@gmail.com`)
+#' @author Rhys Peploe
 #'
 ANALYSE_BASELINE = function(DISEASE_THEME = "", DATA_DM,
                             DATA_IN = NULL, DATA_LB = NULL, DATA_MB = NULL,

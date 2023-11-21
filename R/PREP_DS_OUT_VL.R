@@ -18,7 +18,7 @@
 #'   events will be listed as DISP_NUMBER_, along with the associated VISITNUM,
 #'   VISITDY and DAY.
 #'
-#' @return
+#' @return Dataframe containing a row per USUBJID, with DS terms as columns.
 #'
 #' @export
 #'

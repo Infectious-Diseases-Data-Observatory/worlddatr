@@ -39,8 +39,7 @@ variables will be used.}
 \item{DATA_DM}{The DM domain data frame, as named in the global environment.
 Required.}
 
-\item{DATA_LB}{The LB domain data frame, as named in the global environment.
-Required.}
+\item{DATA_LB}{The LB domain data frame, as named in the global environment.}
 
 \item{DATA_IN}{The IN domain data frame, as named in the global environment.}
 
@@ -122,7 +121,7 @@ each subject. This function prepares, cleans, filters and pivots multiple
 IDDO-SDTM domains and finally merges them into a single dataset, which can be
 used for research and analysis. The choice of DISEASE preselects a number of
 variables which have been chosen with input from Subject Matter Experts. The
-DM and LB domains are the only two which is required for the code to run, the
+DM domain is the only one which is required for the code to run, the
 rest can be optional.
 }
 \details{
@@ -130,5 +129,5 @@ If issues are found with the code, please log them at:
 https://github.com/RhysPeploe/iddoverse/issues
 }
 \author{
-Rhys Peploe (\code{rhys.peploe@iddo.org}, \code{rhyspeploe1998@gmail.com})
+Rhys Peploe
 }

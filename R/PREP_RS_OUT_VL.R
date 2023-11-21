@@ -16,7 +16,7 @@
 #'   OVRLRESPs will be listed as RPTESTCD_NUMBER_, along with the associated
 #'   VISITNUM, VISITDY and DAY.
 #'
-#' @return
+#' @return Dataframe containing a row per USUBJID, with RS terms as columns.
 #'
 #' @export
 #'
