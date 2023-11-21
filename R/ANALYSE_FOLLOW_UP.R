@@ -92,7 +92,7 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
   if(is.null(DATA_TS) == FALSE){
     DM = DM %>%
       left_join(PREP_TS(DATA_TS, DATA_DM)) %>%
-      dplyr::select(STUDYID, DISEASE, everything())
+      dplyr::select("STUDYID", "DISEASE", everything())
   }
 
   if(is.null(DATA_LB) == FALSE){
@@ -110,19 +110,19 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
   if(is.null(DATA_MB) == FALSE){
     MB_JOIN = PREP_MB_FU(DATA_MB, DISEASE = DISEASE_THEME, VARS = MB_VARS) %>%
       left_join(PREP_MBSPEC_FU(DATA_MB, DISEASE = DISEASE_THEME, VARS = MB_VARS)) %>%
-      dplyr::select(sort(names(.)))
+      dplyr::select(order(everything()))
 
     if("VISCERAL LEISHMANIASIS" %in% DM$DISEASE | DISEASE_THEME == "VL"){
       FU = FU %>%
         full_join(PREP_MB_FU_VL(DATA_MB)) %>%
-        dplyr::select(USUBJID, VISITDY, everything()) %>%
+        dplyr::select("USUBJID", "VISITDY", everything()) %>%
         full_join(MB_JOIN)
     }
 
     else if("MALARIA" %in% DM$DISEASE | DISEASE_THEME == "MALARIA"){
       FU = FU %>%
         full_join(PREP_MB_FU_MAL(DATA_MB))%>%
-        dplyr::select(USUBJID, VISITDY, everything()) %>%
+        dplyr::select("USUBJID", "VISITDY", everything()) %>%
         full_join(MB_JOIN)
     }
   }
@@ -142,7 +142,7 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
     FU = FU %>%
       full_join(PREP_VS_FU(DATA_VS, DISEASE = DISEASE_THEME, VARS = VS_VARS)) %>%
       full_join(PREP_VS_TEMP_FU(DATA_VS)) %>%
-      relocate(TEMP_LOC, .after = TEMP)
+      relocate("TEMP_LOC", .after = "TEMP")
   }
 
   if(is.null(DATA_SA) == FALSE){
@@ -162,12 +162,12 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
   }
 
   FU = right_join(DM, FU) %>%
-    relocate(ends_with("DY"), .after = VISITNUM) %>%
-    relocate(ends_with("DAY"), .after = VISITDY) %>%
+    relocate(ends_with("DY"), .after = "VISITNUM") %>%
+    relocate(ends_with("DAY"), .after = "VISITDY") %>%
     DERIVE_BMI() %>%
     JOIN_PREGNANT() %>%
     JOIN_HIV() %>%
-    filter(is.na(STUDYID) == FALSE & is.na(USUBJID) == FALSE)
+    filter(is.na("STUDYID") == FALSE & is.na("USUBJID") == FALSE)
 
   if("START_DAY" %in% names(FU)){
     FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY, FU$START_DAY, FU$END_DAY), ]
