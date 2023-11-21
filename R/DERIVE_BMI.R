@@ -23,7 +23,6 @@
 #'
 #' @examples
 #' df <- data.frame(WEIGHT = c(30), HEIGHT = c(150), AGE = c(34))
-#'
 #' DERIVE_BMI(df)
 #'
 #'
