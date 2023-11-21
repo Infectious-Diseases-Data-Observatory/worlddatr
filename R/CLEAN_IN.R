@@ -14,9 +14,9 @@
 #'
 CLEAN_IN = function(DATA_IN){
   DATA = DATA_IN %>%
-    mutate(INTRT = str_to_upper(INTRT),
-           INPRESP = str_to_upper(INPRESP),
-           INOCCUR = str_to_upper(INOCCUR))
+    mutate("INTRT" = str_to_upper("INTRT"),
+           "INPRESP" = str_to_upper("INPRESP"),
+           "INOCCUR" = str_to_upper("INOCCUR"))
 
   DATA$INTRT = str_replace_all(DATA$INTRT, "PACKED RED BLOOD CELLS", "BLOOD_TRANS")
   DATA$INTRT = str_replace_all(DATA$INTRT, "1 UNIT OF WHOLE BLOOD \\(450ML\\)", "BLOOD_TRANS")
