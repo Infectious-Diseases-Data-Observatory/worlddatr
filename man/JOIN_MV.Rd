@@ -7,11 +7,11 @@
 JOIN_MV(DATA)
 }
 \arguments{
-\item{DATA}{Data frame including --OCCUR, --DUR or --EVINTX.}
+\item{DATA}{Data frame including --OCCUR, --DUR or --EVINTX}
 }
 \value{
 Data frame with combined columns, with the constituent columns
-removed.
+removed
 }
 \description{
 Medical History of Malaria and VL can be represented as a Clinical and

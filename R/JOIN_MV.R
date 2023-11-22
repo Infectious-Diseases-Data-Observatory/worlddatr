@@ -6,10 +6,10 @@
 #' This is conducted for SADUR and INDUR, as well as SAEVINTX and INEVINTX, for
 #' both Malaria and VL separately
 #'
-#' @param DATA Data frame including --OCCUR, --DUR or --EVINTX.
+#' @param DATA Data frame including --OCCUR, --DUR or --EVINTX
 #'
 #' @return Data frame with combined columns, with the constituent columns
-#'   removed.
+#'   removed
 #'
 #' @author Rhys Peploe
 #'
