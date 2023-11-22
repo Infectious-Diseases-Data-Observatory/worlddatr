@@ -40,7 +40,7 @@ PREP_VS_TEMP_BL = function(DATA_VS){
     pivot_wider(id_cols = c(STUDYID, USUBJID), names_from = VSTESTCD,
                 values_from = c(VSSTRES, VSLOC),
                 names_sort = T, names_vary = "slowest",
-                values_fn = first)
+                values_fn = first, names_glue = "{.value}_TEMP")
 
   DATA = DATA %>%
     rename("TEMP" = "VSSTRES_TEMP",
