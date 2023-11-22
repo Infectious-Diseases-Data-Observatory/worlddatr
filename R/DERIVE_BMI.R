@@ -29,23 +29,25 @@
 DERIVE_BMI = function(DATA){
   if(("HEIGHT" %in% names(DATA)) & ("WEIGHT" %in% names(DATA))){
     DATA = DATA %>%
-      mutate(HEIGHT = as.numeric(HEIGHT),
-             WEIGHT = as.numeric(WEIGHT))
+      mutate(HEIGHT = as.numeric(DATA$HEIGHT),
+             WEIGHT = as.numeric(DATA$WEIGHT))
 
     DATA_BMI = DATA %>%
-      filter(AGE >= 18) %>%
-      filter(is.na(HEIGHT) == FALSE & is.na(WEIGHT) == FALSE) %>%
-      mutate(BMI_c = as.character(round(compute_bmi(height = HEIGHT,
-                                                    weight = WEIGHT), 2)))
+      filter(.data$AGE >= 18,
+             is.na(.data$HEIGHT) == FALSE & is.na(.data$WEIGHT) == FALSE) %>%
+      mutate(BMI_c = round(compute_bmi(height = .data$HEIGHT,
+                                       weight = .data$WEIGHT), 2))
 
     DATA = left_join(DATA, DATA_BMI)
 
     if("BMI" %in% names(DATA)){
+      DATA$BMI = ifelse(DATA$AGE < 18, NA, DATA$BMI)
+
       DATA[which(is.na(DATA$BMI_c)), "BMI_c"] =
         DATA[which(is.na(DATA$BMI_c)), "BMI"]
 
       DATA = DATA %>%
-        dplyr::select(-BMI)
+        dplyr::select(-"BMI")
     }
 
     DATA = DATA %>%

@@ -21,11 +21,11 @@ JOIN_PREGNANT = function(DATA){
       DATA[which(is.na(DATA$PREGNANT)), "PREGIND"]
 
     DATA = DATA %>%
-      dplyr::select(-PREGIND, -HCG)
+      dplyr::select(-"PREGIND", -"HCG")
 
     if("EGA" %in% names(DATA)){
       DATA = DATA %>%
-        relocate(EGA, .after = PREGNANT)
+        relocate("EGA", .after = "PREGNANT")
     }
   }
 

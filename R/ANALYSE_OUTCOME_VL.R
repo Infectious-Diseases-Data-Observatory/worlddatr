@@ -52,7 +52,7 @@ ANALYSE_OUTCOME_VL = function(DATA_DM, DATA_DS = NULL, DATA_RS = NULL, DATA_MB =
                     rename("INITIAL_TOC_VISITDY" = "VISITDY",
                            "INITIAL_TOC_VISITNUM" = "VISITNUM",
                            "INITIAL_TOC_DAY" = "DAY") %>%
-                    select(-"EMPTY_TIME") %>%
+                    dplyr::select(-"EMPTY_TIME") %>%
                     dplyr::rename_with(.fn = function(.x){paste0("INITIAL_TOC_", .x)},
                                        .cols = c("SPECIES",
                                                  starts_with("LDONOV"),
@@ -63,7 +63,7 @@ ANALYSE_OUTCOME_VL = function(DATA_DM, DATA_DS = NULL, DATA_RS = NULL, DATA_MB =
                     rename("INITIAL_OVRLRESP_VISITDY" = "VISITDY",
                            "INITIAL_OVRLRESP_VISITNUM" = "VISITNUM",
                            "INITIAL_OVRLRESP_DAY" = "DAY") %>%
-                    select(-"EMPTY_TIME") %>%
+                    dplyr::select(-"EMPTY_TIME") %>%
                     dplyr::rename_with(.fn = function(.x){paste0("INITIAL_OVRLRESP_", .x)},
                                        .cols = c("SPECIES",
                                                  starts_with("LDONOV"),

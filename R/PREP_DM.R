@@ -48,7 +48,7 @@ PREP_DM = function(DATA_DM, DISEASE = NULL, VARS = NULL){
       convert_blanks_to_na() %>%
       DERIVE_AGE_DAYS() %>%
       DERIVE_AGE_YEARS() %>%
-      relocate(AGE_DAYS, .after = AGE)
+      relocate("AGE_DAYS", .after = "AGE")
   }
 
   else{
@@ -64,7 +64,7 @@ PREP_DM = function(DATA_DM, DISEASE = NULL, VARS = NULL){
 
   if("ETHNIC" %in% names(DATA)){
     DATA = DATA %>%
-      mutate(ETHNIC = str_to_upper(ETHNIC))
+      mutate(ETHNIC = str_to_upper(.data$ETHNIC))
   }
 
   return(DATA)
