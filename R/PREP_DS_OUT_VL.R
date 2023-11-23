@@ -53,7 +53,7 @@ PREP_DS_OUT_VL = function(DATA_DS, expand_cols = FALSE){
 
   else if(expand_cols == TRUE){
     DATA = DATA_DS %>%
-      group_by(STUDYID, USUBJID) %>%
+      group_by(.data$STUDYID, .data$USUBJID) %>%
       mutate(ROWN = row_number()) %>%
       pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
                   names_from = c(.data$ROWN), names_glue = "DISP_{ROWN}_{.value}",

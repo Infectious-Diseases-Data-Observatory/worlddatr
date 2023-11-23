@@ -23,16 +23,16 @@ PREP_RP_FU = function(DATA_RP, VARS = NULL){
 
   DATA_RP = DATA_RP %>%
     convert_blanks_to_na() %>%
-    filter(RPTESTCD %in% RP_VARS) %>%
-    mutate(RPSTRES = as.character(RPSTRESN),
-           RPSTRESC = as.character(RPSTRESC),
-           RPORRES = as.character(RPORRES),
-           DAY = RPDY)
+    filter(.data$RPTESTCD %in% RP_VARS) %>%
+    mutate(RPSTRES = as.character(.data$RPSTRESN),
+           RPSTRESC = as.character(.data$RPSTRESC),
+           RPORRES = as.character(.data$RPORRES),
+           DAY = .data$RPDY)
 
   DATA_RP$RPSTRESC = str_replace_all(DATA_RP$RPSTRESC, "NEGATIVE", "N")
 
   DATA_EMPTY = DATA_RP %>%
-    filter(is.na(VISITDY) & is.na(VISITNUM) & is.na(DAY)) %>%
+    filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
     DERIVE_EMPTY_TIME()
 
   DATA = DATA_RP %>%
@@ -44,8 +44,9 @@ PREP_RP_FU = function(DATA_RP, VARS = NULL){
     DATA[which(is.na(DATA$RPSTRES)), "RPORRES"]
 
   DATA = DATA %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, EMPTY_TIME), names_from = RPTESTCD,
-                values_from = RPSTRES, names_vary = "slowest",
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
+                            .data$DAY, .data$EMPTY_TIME), names_from = .data$RPTESTCD,
+                values_from = .data$RPSTRES, names_vary = "slowest",
                 names_sort = T, values_fn = first)
 
   if("EGESTAGE" %in% names(DATA)){

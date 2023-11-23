@@ -23,11 +23,11 @@ PREP_RP_BL = function(DATA_RP, VARS = NULL){
 
   DATA = DATA_RP %>%
     convert_blanks_to_na() %>%
-    filter(RPTESTCD %in% RP_VARS) %>%
+    filter(.data$RPTESTCD %in% RP_VARS) %>%
     DERIVE_TIMING() %>%
-    mutate(RPSTRES = as.character(RPSTRESN),
-           RPSTRESC = as.character(RPSTRESC),
-           RPORRES = as.character(RPORRES))
+    mutate(RPSTRES = as.character(.data$RPSTRESN),
+           RPSTRESC = as.character(.data$RPSTRESC),
+           RPORRES = as.character(.data$RPORRES))
 
   DATA$RPSTRESC = str_replace_all(DATA$RPSTRESC, "NEGATIVE", "N")
 
@@ -38,8 +38,8 @@ PREP_RP_BL = function(DATA_RP, VARS = NULL){
 
   DATA = DATA %>%
     filter(TIMING == 1 | TIMING == "BASELINE") %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID), names_from = RPTESTCD,
-                values_from = RPSTRES, names_vary = "slowest",
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$RPTESTCD,
+                values_from = .data$RPSTRES, names_vary = "slowest",
                 names_sort = T,
                 values_fn = first)
 

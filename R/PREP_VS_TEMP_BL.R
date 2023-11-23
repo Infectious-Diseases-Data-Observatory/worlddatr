@@ -22,11 +22,11 @@
 PREP_VS_TEMP_BL = function(DATA_VS){
   DATA = DATA_VS %>%
     convert_blanks_to_na() %>%
-    filter(VSTESTCD == "TEMP") %>%
+    filter(.data$VSTESTCD == "TEMP") %>%
     DERIVE_TIMING() %>%
-    mutate(VSSTRES = as.character(VSSTRESN),
-           VSSTRESC = as.character(VSSTRESC),
-           VSORRES = as.character(VSORRES))
+    mutate(VSSTRES = as.character(.data$VSSTRESN),
+           VSSTRESC = as.character(.data$VSSTRESC),
+           VSORRES = as.character(.data$VSORRES))
 
   DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$VSDY), ]
 
@@ -36,9 +36,9 @@ PREP_VS_TEMP_BL = function(DATA_VS){
     DATA[which(is.na(DATA$VSSTRES)), "VSORRES"]
 
   DATA = DATA %>%
-    filter(TIMING == 1 | TIMING == "BASELINE") %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID), names_from = VSTESTCD,
-                values_from = c(VSSTRES, VSLOC),
+    filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$VSTESTCD,
+                values_from = c(.data$VSSTRES, .data$VSLOC),
                 names_sort = T, names_vary = "slowest",
                 values_fn = first, names_glue = "{.value}_TEMP")
 
