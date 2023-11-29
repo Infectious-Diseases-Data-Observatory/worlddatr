@@ -11,6 +11,8 @@
 #'
 #' @return Data frame with a PREGNANT column, and PREGIND & HCG removed.
 #'
+#' @export
+#'
 #' @author Rhys Peploe
 #'
 JOIN_PREGNANT = function(DATA){

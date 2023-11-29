@@ -11,6 +11,8 @@
 #' @return Data frame with combined columns, with the constituent columns
 #'   removed
 #'
+#' @export
+#'
 #' @author Rhys Peploe
 #'
 JOIN_MV = function(DATA){

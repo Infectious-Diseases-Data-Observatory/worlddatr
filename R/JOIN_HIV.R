@@ -14,6 +14,8 @@
 #' @return Data frame with a combined HIV column and the HIV_SAOCCUR column
 #'   removed
 #'
+#' @export
+#'
 #' @author Rhys Peploe
 #'
 JOIN_HIV = function(DATA, SA_TIME = FALSE, SA_DUR = FALSE){
