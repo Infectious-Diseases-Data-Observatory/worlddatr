@@ -52,9 +52,9 @@ PREP_SA_BL = function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_T
 
   DATA_SA = DATA_SA %>%
     convert_blanks_to_na() %>%
-    mutate(SASTRES = str_to_upper(SADECOD),
-           SAMODIFY = as.character(SAMODIFY),
-           SATERM = as.character(SATERM))
+    mutate(SASTRES = str_to_upper(.data$SADECOD),
+           SAMODIFY = as.character(.data$SAMODIFY),
+           SATERM = as.character(.data$SATERM))
 
   DATA_SA[which(is.na(DATA_SA$SASTRES)), "SASTRES"] =
     DATA_SA[which(is.na(DATA_SA$SASTRES)), "SAMODIFY"]
@@ -62,10 +62,10 @@ PREP_SA_BL = function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_T
     DATA_SA[which(is.na(DATA_SA$SASTRES)), "SATERM"]
 
   DATA_SA = DATA_SA %>%
-    filter(SASTRES %in% SA_VARS) %>%
+    filter(.data$SASTRES %in% SA_VARS) %>%
     DERIVE_TIMING() %>%
-    mutate(SAPRESP = str_to_upper(SAPRESP),
-           SAOCCUR = str_to_upper(SAOCCUR))
+    mutate(SAPRESP = str_to_upper(.data$SAPRESP),
+           SAOCCUR = str_to_upper(.data$SAOCCUR))
 
   DATA_SA$SAPRESP = str_replace_all(DATA_SA$SAPRESP, "TRUE", "Y")
   DATA_SA$SAOCCUR = str_replace_all(DATA_SA$SAOCCUR, "TRUE", "Y")
@@ -75,19 +75,20 @@ PREP_SA_BL = function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_T
   if(inc_DUR == FALSE & inc_TIME == FALSE){
     if("SACAT" %in% names(DATA_SA)){
       DATA_HIST = DATA_SA %>%
-        filter(SACAT == "MEDICAL HISTORY") %>%
-        mutate(SAOCCUR = as.factor(SAOCCUR)) %>%
-        pivot_wider(id_cols = c(STUDYID, USUBJID),
-                    names_from = SASTRES, names_glue = "HISTORY_{SASTRES}_{.value}",
-                    values_from = c(SAOCCUR, SAPRESP), names_vary = "slowest",
+        filter(.data$SACAT == "MEDICAL HISTORY") %>%
+        mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
+        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
+                    names_from = .data$SASTRES, names_glue = "HISTORY_{SASTRES}_{.value}",
+                    values_from = c(.data$SAOCCUR, .data$SAPRESP), names_vary = "slowest",
                     values_fn = first)
 
       DATA_SAE = DATA_SA %>%
-        filter((SACAT != "MEDICAL HISTORY" | is.na(SACAT)) & (TIMING == 1 | TIMING == "BASELINE")) %>%
-        mutate(SAOCCUR = as.factor(SAOCCUR)) %>%
-        pivot_wider(id_cols = c(STUDYID, USUBJID),
-                    names_from = SASTRES, names_glue = "{SASTRES}_{.value}",
-                    values_from = c(SAOCCUR, SAPRESP), names_vary = "slowest",
+        filter((.data$SACAT != "MEDICAL HISTORY" | is.na(.data$SACAT)) &
+                 (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+        mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
+        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
+                    names_from = .data$SASTRES, names_glue = "{SASTRES}_{.value}",
+                    values_from = c(.data$SAOCCUR, .data$SAPRESP), names_vary = "slowest",
                     values_fn = first)
 
       DATA = full_join(DATA_HIST, DATA_SAE)
@@ -95,11 +96,11 @@ PREP_SA_BL = function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_T
 
     else{
       DATA = DATA_SA %>%
-        filter(TIMING == 1 | TIMING == "BASELINE") %>%
-        mutate(SAOCCUR = as.factor(SAOCCUR)) %>%
-        pivot_wider(id_cols = c(STUDYID, USUBJID),
-                    names_from = SASTRES, names_glue = "{SASTRES}_{.value}",
-                    values_from = c(SAOCCUR, SAPRESP), names_vary = "slowest",
+        filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+        mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
+        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
+                    names_from = .data$SASTRES, names_glue = "{SASTRES}_{.value}",
+                    values_from = c(.data$SAOCCUR, .data$SAPRESP), names_vary = "slowest",
                     values_fn = first)
     }
   }
@@ -110,20 +111,21 @@ PREP_SA_BL = function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_T
 
     if("SACAT" %in% names(DATA_SA)){
       DATA_HIST = DATA_SA %>%
-        filter(SACAT == "MEDICAL HISTORY") %>%
-        mutate(SAOCCUR = as.factor(SAOCCUR)) %>%
-        pivot_wider(id_cols = c(STUDYID, USUBJID),
-                    names_from = SASTRES, names_glue = "HISTORY_{SASTRES}_{.value}",
-                    values_from = c(SAOCCUR, SAPRESP, SADUR),
+        filter(.data$SACAT == "MEDICAL HISTORY") %>%
+        mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
+        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
+                    names_from = .data$SASTRES, names_glue = "HISTORY_{SASTRES}_{.value}",
+                    values_from = c(.data$SAOCCUR, .data$SAPRESP, .data$SADUR),
                     names_sort = T, names_vary = "slowest",
                     values_fn = first)
 
       DATA_SAE = DATA_SA %>%
-        filter((SACAT != "MEDICAL HISTORY" | is.na(SACAT)) & (TIMING == 1 | TIMING == "BASELINE")) %>%
-        mutate(SAOCCUR = as.factor(SAOCCUR)) %>%
-        pivot_wider(id_cols = c(STUDYID, USUBJID),
-                    names_from = SASTRES, names_glue = "{SASTRES}_{.value}",
-                    values_from = c(SAOCCUR, SAPRESP, SADUR),
+        filter((.data$SACAT != "MEDICAL HISTORY" | is.na(.data$SACAT)) &
+                 (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+        mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
+        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
+                    names_from = .data$SASTRES, names_glue = "{SASTRES}_{.value}",
+                    values_from = c(.data$SAOCCUR, .data$SAPRESP, .data$SADUR),
                     names_sort = T, names_vary = "slowest",
                     values_fn = first)
 
@@ -132,11 +134,11 @@ PREP_SA_BL = function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_T
 
     else{
       DATA = DATA_SA %>%
-        filter(TIMING == 1 | TIMING == "BASELINE") %>%
-        mutate(SAOCCUR = as.factor(SAOCCUR)) %>%
-        pivot_wider(id_cols = c(STUDYID, USUBJID),
-                    names_from = SASTRES, names_glue = "{SASTRES}_{.value}",
-                    values_from = c(SAOCCUR, SAPRESP, SADUR),
+        filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+        mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
+        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
+                    names_from = .data$SASTRES, names_glue = "{SASTRES}_{.value}",
+                    values_from = c(.data$SAOCCUR, .data$SAPRESP, .data$SADUR),
                     names_sort = T, names_vary = "slowest",
                     values_fn = first)
     }
