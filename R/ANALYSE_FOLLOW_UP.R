@@ -77,7 +77,7 @@
 #'
 #' @author Rhys Peploe
 #'
-ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
+ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB = NULL,
                              DATA_IN = NULL, DATA_MB = NULL, DATA_MP = NULL, DATA_RP = NULL,
                              DATA_SA = NULL, DATA_TS = NULL, DATA_VS = NULL, DATA_SC = NULL,
                              DATA_PO = NULL,
@@ -162,21 +162,25 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB,
   }
 
   FU = right_join(DM, FU) %>%
-    relocate(ends_with("DY"), .after = "VISITNUM") %>%
-    relocate(ends_with("DAY"), .after = "VISITDY") %>%
+    # relocate(ends_with("DY"), .after = "VISITNUM") %>%
+    # relocate(ends_with("DAY"), .after = "VISITDY") %>%
     DERIVE_BMI() %>%
     JOIN_PREGNANT() %>%
     JOIN_HIV() %>%
-    DERIVE_ANTHRO() %>%
     filter(is.na("STUDYID") == FALSE & is.na("USUBJID") == FALSE)
 
-  if("START_DAY" %in% names(FU)){
-    FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY, FU$START_DAY, FU$END_DAY), ]
+  if(("HEIGHT" %in% names(FU)) | ("WEIGHT" %in% names(FU))){
+    FU = FU %>%
+      left_join(DERIVE_ANTHRO(FU))
   }
 
-  else{
-    FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY), ]
-  }
+  # if("START_DAY" %in% names(FU)){
+  #   FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY, FU$START_DAY, FU$END_DAY), ]
+  # }
+  #
+  # else{
+  #   FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY), ]
+  # }
 
   return(FU)
 }
