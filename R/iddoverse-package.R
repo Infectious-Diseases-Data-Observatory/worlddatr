@@ -21,6 +21,7 @@
 #' @importFrom janitor clean_names
 #' @importFrom lubridate month
 #' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #' @importFrom stringr str_replace_all
 #' @importFrom stringr str_to_upper
 #' @importFrom tidyr pivot_wider

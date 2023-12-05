@@ -13,9 +13,9 @@
 #'
 CLEAN_SA = function(DATA_SA){
   DATA = DATA_SA %>%
-    mutate(SATERM = str_to_upper(SATERM),
-           SAPRESP = str_to_upper(SAPRESP),
-           SAOCCUR = str_to_upper(SAOCCUR))
+    mutate(SATERM = str_to_upper(.data$SATERM),
+           SAPRESP = str_to_upper(.data$SAPRESP),
+           SAOCCUR = str_to_upper(.data$SAOCCUR))
 
   DATA$SATERM = str_replace_all(DATA$SATERM, "PLASMODIUM FALCIPARUM MALARIA", "MALARIA")
   DATA$SATERM = str_replace_all(DATA$SATERM, "FALCIPARUM MALARIA DAY 17", "MALARIA")

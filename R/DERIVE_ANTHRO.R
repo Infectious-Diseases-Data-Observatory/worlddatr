@@ -18,7 +18,7 @@
 #'
 DERIVE_ANTHRO = function(DATA){
   DATA_ANTHRO = DATA %>%
-    filter(AGE < 5 | AGE_DAYS < 1826)
+    filter(DATA$AGE < 5 | DATA$AGE_DAYS < 1826)
 
   BIND_ANTHRO = cbind(DATA_ANTHRO,
                       anthro_zscores(
@@ -27,8 +27,8 @@ DERIVE_ANTHRO = function(DATA){
                         weight = as.numeric(DATA_ANTHRO$WEIGHT),
                         lenhei = as.numeric(DATA_ANTHRO$HEIGHT)) %>%
 
-                        dplyr::select(zlen, flen, zwei, fwei, zwfl, fwfl)) %>%
-
+                        dplyr::select("zlen", "flen", "zwei",
+                                      "fwei", "zwfl", "fwfl")) %>%
     rename("HAZ" = "zlen",
            "HAZ_FLAG" = "flen",
            "WAZ" = "zwei",
@@ -36,4 +36,5 @@ DERIVE_ANTHRO = function(DATA){
            "WHZ" = "zwfl",
            "WHZ_FLAG" = "fwfl")
 
+  return(BIND_ANTHRO)
 }

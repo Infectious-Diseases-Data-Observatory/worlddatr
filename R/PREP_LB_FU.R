@@ -45,14 +45,14 @@ PREP_LB_FU = function(DATA_LB, DISEASE = "", VARS = NULL){
 
   DATA_LB = DATA_LB %>%
     convert_blanks_to_na() %>%
-    filter(LBTESTCD %in% LB_VARS) %>%
-    mutate(LBSTRES = as.character(LBSTRESN),
-           LBSTRESC = as.character(LBSTRESC),
-           LBORRES = as.character(LBORRES),
-           DAY = LBDY)
+    filter(.data$LBTESTCD %in% LB_VARS) %>%
+    mutate(LBSTRES = as.character(.data$LBSTRESN),
+           LBSTRESC = as.character(.data$LBSTRESC),
+           LBORRES = as.character(.data$LBORRES),
+           DAY = .data$LBDY)
 
   DATA_EMPTY = DATA_LB %>%
-    filter(is.na(VISITDY) & is.na(VISITNUM) & is.na(DAY)) %>%
+    filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
     DERIVE_EMPTY_TIME()
 
   DATA = DATA_LB %>%
@@ -64,9 +64,10 @@ PREP_LB_FU = function(DATA_LB, DISEASE = "", VARS = NULL){
     DATA[which(is.na(DATA$LBSTRES)), "LBORRES"]
 
   DATA = DATA %>%
-    mutate(LBSTRES = str_to_upper(LBSTRES)) %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, EMPTY_TIME), names_from = LBTESTCD,
-                values_from = LBSTRES,
+    mutate(LBSTRES = str_to_upper(.data$LBSTRES)) %>%
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
+                            .data$DAY, .data$EMPTY_TIME), names_from = .data$LBTESTCD,
+                values_from = .data$LBSTRES,
                 names_sort = T, names_vary = "slowest",
                 values_fn = first)
 

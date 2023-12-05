@@ -39,19 +39,20 @@ PREP_MBSPEC_FU = function(DATA_MB, DISEASE = "", VARS = NULL){
 
   DATA_MB = DATA_MB %>%
     convert_blanks_to_na() %>%
-    filter(MBTESTCD %in% MB_VARS) %>%
-    mutate(DAY = MBDY)
+    filter(.data$MBTESTCD %in% MB_VARS) %>%
+    mutate(DAY = .data$MBDY)
 
   DATA_EMPTY = DATA_MB %>%
-    filter(is.na(VISITDY) & is.na(VISITNUM) & is.na(DAY)) %>%
+    filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
     DERIVE_EMPTY_TIME()
 
   DATA = DATA_MB %>%
     left_join(DATA_EMPTY)
 
   DATA = DATA %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, EMPTY_TIME), names_from = MBTESTCD,
-                values_from = c(MBLOC, MBSPEC),
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY,
+                            .data$VISITNUM, .data$DAY, .data$EMPTY_TIME),
+                names_from = .data$MBTESTCD, values_from = c(.data$MBLOC, .data$MBSPEC),
                 names_sort = T, names_vary = "slowest",
                 values_fn = first, names_glue = "{.name}_{.value}")
 
@@ -66,10 +67,10 @@ PREP_MBSPEC_FU = function(DATA_MB, DISEASE = "", VARS = NULL){
   if("AFB_LOC" %in% names(DATA) | "MTB_LOC" %in% names(DATA)){
     if("AFB_LOC" %in% names(DATA) & "MTB_LOC" %in% names(DATA)){
       DATA = DATA %>%
-        mutate(TB_LOC = as.character(MTB_LOC),
-               TB_SPEC = as.character(MTB_SPEC),
-               AFB_LOC = as.character(AFB_LOC),
-               AFB_SPEC = as.character(AFB_SPEC))
+        mutate(TB_LOC = as.character(.data$MTB_LOC),
+               TB_SPEC = as.character(.data$MTB_SPEC),
+               AFB_LOC = as.character(.data$AFB_LOC),
+               AFB_SPEC = as.character(.data$AFB_SPEC))
 
       DATA[which(is.na(DATA$TB_LOC)), "TB_LOC"] =
         DATA[which(is.na(DATA$TB_LOC)), "AFB_LOC"]
@@ -78,7 +79,7 @@ PREP_MBSPEC_FU = function(DATA_MB, DISEASE = "", VARS = NULL){
         DATA[which(is.na(DATA$TB_SPEC)), "AFB_SPEC"]
 
       DATA = DATA %>%
-        dplyr::select(-AFB_LOC, -MTB_LOC, -AFB_SPEC, -MTB_SPEC)
+        dplyr::select(-"AFB_LOC", -"MTB_LOC", -"AFB_SPEC", -"MTB_SPEC")
     }
 
     else if("AFB_LOC" %in% names(DATA) & "MTB_LOC" %!in% names(DATA)){

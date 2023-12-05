@@ -46,11 +46,11 @@ PREP_LB_BL = function(DATA_LB, DISEASE = "", VARS = NULL){
 
   DATA = DATA_LB %>%
     convert_blanks_to_na() %>%
-    filter(LBTESTCD %in% LB_VARS) %>%
+    filter(.data$LBTESTCD %in% LB_VARS) %>%
     DERIVE_TIMING() %>%
-    mutate(LBSTRES = as.character(LBSTRESN),
-           LBSTRESC = as.character(LBSTRESC),
-           LBORRES = as.character(LBORRES))
+    mutate(LBSTRES = str_to_upper(as.character(.data$LBSTRESN)),
+           LBSTRESC = str_to_upper(as.character(.data$LBSTRESC)),
+           LBORRES = str_to_upper(as.character(.data$LBORRES)))
 
   DATA[which(is.na(DATA$LBSTRES)), "LBSTRES"] =
     DATA[which(is.na(DATA$LBSTRES)), "LBSTRESC"]
@@ -58,9 +58,9 @@ PREP_LB_BL = function(DATA_LB, DISEASE = "", VARS = NULL){
     DATA[which(is.na(DATA$LBSTRES)), "LBORRES"]
 
   DATA = DATA %>%
-    filter(TIMING == 1 | TIMING == "BASELINE") %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID), names_from = LBTESTCD,
-                values_from = LBSTRES,
+    filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$LBTESTCD,
+                values_from = .data$LBSTRES,
                 names_sort = T, names_vary = "slowest",
                 values_fn = first)
 

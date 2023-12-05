@@ -17,21 +17,21 @@
 #'
 PREP_TS = function(DATA_TS, DATA_DM){
   DATA_TDIGRP = DATA_TS %>%
-    filter(TSPARMCD == "TDIGRP") %>%
-    dplyr::select(STUDYID, TSVAL) %>%
-    mutate(TSVAL = str_to_upper(TSVAL))
+    filter(.data$TSPARMCD == "TDIGRP") %>%
+    dplyr::select("STUDYID", "TSVAL") %>%
+    mutate(TSVAL = str_to_upper(.data$TSVAL))
 
   DATA_STUDYFU = DATA_TS %>%
-    filter(TSPARMCD == "TRGFUDUR") %>%
-    dplyr::select(STUDYID, TSVAL) %>%
-    mutate(TSVAL = str_to_upper(TSVAL))
+    filter(.data$TSPARMCD == "TRGFUDUR") %>%
+    dplyr::select("STUDYID", "TSVAL") %>%
+    mutate(TSVAL = str_to_upper(.data$TSVAL))
 
   DATA = DATA_DM %>%
-    dplyr::select(STUDYID, ARMCD) %>%
+    dplyr::select("STUDYID", "ARMCD") %>%
     distinct() %>%
-    left_join(DATA_TDIGRP, na_matches = "never") %>%
+    left_join(DATA_TDIGRP) %>%
     rename("DISEASE" = "TSVAL") %>%
-    left_join(DATA_STUDYFU, na_matches = "never") %>%
+    left_join(DATA_STUDYFU) %>%
     rename("STUDYFU" = "TSVAL")
 
   return(DATA)

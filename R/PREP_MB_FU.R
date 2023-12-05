@@ -45,15 +45,15 @@ PREP_MB_FU = function(DATA_MB, DISEASE = "", VARS = NULL){
 
   DATA_MB = DATA_MB %>%
     convert_blanks_to_na() %>%
-    filter(MBTESTCD %in% MB_VARS) %>%
-    mutate(MBSTRES = as.character(MBSTRESN),
-           MBSTRESC = as.character(MBSTRESC),
-           MBMODIFY = as.character(MBMODIFY),
-           MBORRES = as.character(MBORRES),
-           DAY = MBDY)
+    filter(.data$MBTESTCD %in% MB_VARS) %>%
+    mutate(MBSTRES = as.character(.data$MBSTRESN),
+           MBSTRESC = as.character(.data$MBSTRESC),
+           MBMODIFY = as.character(.data$MBMODIFY),
+           MBORRES = as.character(.data$MBORRES),
+           DAY = .data$MBDY)
 
   DATA_EMPTY = DATA_MB %>%
-    filter(is.na(VISITDY) & is.na(VISITNUM) & is.na(DAY)) %>%
+    filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
     DERIVE_EMPTY_TIME()
 
   DATA = DATA_MB %>%
@@ -67,9 +67,10 @@ PREP_MB_FU = function(DATA_MB, DISEASE = "", VARS = NULL){
     DATA[which(is.na(DATA$MBSTRES)), "MBORRES"]
 
   DATA = DATA %>%
-    mutate(MBSTRES = str_to_upper(MBSTRES)) %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, EMPTY_TIME),
-                names_from = MBTESTCD, values_from = MBSTRES,
+    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY,
+                            .data$VISITNUM, .data$DAY, .data$EMPTY_TIME),
+                names_from = .data$MBTESTCD, values_from = .data$MBSTRES,
                 names_sort = T, names_vary = "slowest",
                 values_fn = first)
 
@@ -79,13 +80,13 @@ PREP_MB_FU = function(DATA_MB, DISEASE = "", VARS = NULL){
   if("AFB" %in% names(DATA) | "MTB" %in% names(DATA)){
     if("AFB" %in% names(DATA) & "MTB" %in% names(DATA)){
       DATA = DATA %>%
-        mutate(TB = MTB)
+        mutate(TB = .data$MTB)
 
       DATA[which(is.na(DATA$TB)), "TB"] =
         DATA[which(is.na(DATA$TB)), "AFB"]
 
       DATA = DATA %>%
-        dplyr::select(-AFB, -MTB)
+        dplyr::select(-"AFB", -"MTB")
     }
     else if("AFB" %in% names(DATA) & "MTB" %!in% names(DATA)){
       DATA = DATA %>%

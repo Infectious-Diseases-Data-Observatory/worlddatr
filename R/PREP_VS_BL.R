@@ -46,11 +46,11 @@ PREP_VS_BL = function(DATA_VS, DISEASE = "", VARS = NULL){
 
   DATA = DATA_VS %>%
     convert_blanks_to_na() %>%
-    filter(VSTESTCD %in% VS_VARS) %>%
+    filter(.data$VSTESTCD %in% VS_VARS) %>%
     DERIVE_TIMING() %>%
-    mutate(VSSTRES = as.character(VSSTRESN),
-           VSSTRESC = as.character(VSSTRESC),
-           VSORRES = as.character(VSORRES))
+    mutate(VSSTRES = as.character(.data$VSSTRESN),
+           VSSTRESC = as.character(.data$VSSTRESC),
+           VSORRES = as.character(.data$VSORRES))
 
   DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$VSDY), ]
 
@@ -60,9 +60,9 @@ PREP_VS_BL = function(DATA_VS, DISEASE = "", VARS = NULL){
     DATA[which(is.na(DATA$VSSTRES)), "VSORRES"]
 
   DATA = DATA %>%
-    filter(TIMING == 1 | TIMING == "BASELINE") %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID), names_from = VSTESTCD,
-                values_from = VSSTRES,
+    filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$VSTESTCD,
+                values_from = .data$VSSTRES,
                 names_sort = T, names_vary = "slowest",
                 values_fn = first)
 

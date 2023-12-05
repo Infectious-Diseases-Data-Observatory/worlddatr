@@ -23,19 +23,19 @@ PREP_PO_FU = function(DATA_PO, VARS = NULL){
 
   DATA_PO = DATA_PO %>%
     convert_blanks_to_na() %>%
-    mutate(POSTRES = str_to_upper(as.character(POMODIFY)),
-           POTERM = str_to_upper(as.character(POTERM)),
-           DAY = PODY,
-           START_DAY = POSTDY,
-           END_DAY = POENDY)
+    mutate(POSTRES = str_to_upper(as.character(.data$POMODIFY)),
+           POTERM = str_to_upper(as.character(.data$POTERM)),
+           DAY = .data$PODY,
+           START_DAY = .data$POSTDY,
+           END_DAY = .data$POENDY)
 
   DATA_PO[which(is.na(DATA_PO$POSTRES)), "POSTRES"] =
     DATA_PO[which(is.na(DATA_PO$POSTRES)), "POTERM"]
 
   DATA_PO = DATA_PO %>%
-    filter(POSTRES %in% PO_VARS) %>%
-    mutate(POPRESP = str_to_upper(POPRESP),
-           POOCCUR = str_to_upper(POOCCUR))
+    filter(.data$POSTRES %in% PO_VARS) %>%
+    mutate(POPRESP = str_to_upper(.data$POPRESP),
+           POOCCUR = str_to_upper(.data$POOCCUR))
 
   DATA_PO$POPRESP = str_replace_all(DATA_PO$POPRESP, "TRUE", "Y")
   DATA_PO$POOCCUR = str_replace_all(DATA_PO$POOCCUR, "TRUE", "Y")
@@ -48,14 +48,16 @@ PREP_PO_FU = function(DATA_PO, VARS = NULL){
   }
 
   DATA_EMPTY = DATA_PO %>%
-    filter(is.na(VISITDY) & is.na(VISITNUM) & is.na(DAY) & is.na(START_DAY) & is.na(END_DAY)) %>%
+    filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY) &
+             is.na(.data$START_DAY) & is.na(.data$END_DAY)) %>%
     DERIVE_EMPTY_TIME()
 
   DATA = DATA_PO %>%
     left_join(DATA_EMPTY) %>%
-    mutate(POOCCUR = as.factor(POOCCUR)) %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, START_DAY, END_DAY, EMPTY_TIME),
-                names_from = POSTRES, values_from = POOCCUR,
+    mutate(POOCCUR = as.factor(.data$POOCCUR)) %>%
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
+                            .data$DAY, .data$START_DAY, .data$END_DAY, .data$EMPTY_TIME),
+                names_from = .data$POSTRES, values_from = .data$POOCCUR,
                 values_fn = first)
 
   DATA = DATA %>%

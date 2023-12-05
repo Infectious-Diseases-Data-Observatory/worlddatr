@@ -16,8 +16,8 @@
 #'
 DERIVE_TIMING = function(DOMAIN){
   DATA = DOMAIN %>%
-    mutate(TIMING = as.character(EPOCH),
-           VISITDY = as.character(VISITDY))
+    mutate(TIMING = as.character(.data$EPOCH),
+           VISITDY = as.character(.data$VISITDY))
 
   DATA[which(is.na(DATA$TIMING)), "TIMING"] =
     DATA[which(is.na(DATA$TIMING)), "VISITDY"]

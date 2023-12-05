@@ -14,6 +14,8 @@
 #' @return Data frame with a combined HIV column and the HIV_SAOCCUR column
 #'   removed
 #'
+#' @export
+#'
 #' @author Rhys Peploe
 #'
 JOIN_HIV = function(DATA, SA_TIME = FALSE, SA_DUR = FALSE){
@@ -22,22 +24,22 @@ JOIN_HIV = function(DATA, SA_TIME = FALSE, SA_DUR = FALSE){
       DATA[which(is.na(DATA$HIV)), "HIV_SAOCCUR"]
 
     DATA = DATA %>%
-      dplyr::select(-HIV_SAOCCUR)
+      dplyr::select(-.data$HIV_SAOCCUR)
 
     if(SA_TIME == TRUE){
       DATA = DATA %>%
-        relocate(HIV_SAEVINTX, .after = HIV)
+        relocate(.data$HIV_SAEVINTX, .after = .data$HIV)
     }
 
     if(SA_DUR == TRUE){
       DATA = DATA %>%
-        relocate(HIV_SADUR, .after = HIV)
+        relocate(.data$HIV_SADUR, .after = .data$HIV)
     }
   }
 
   if("HIV_PRESP" %in% names(DATA)){
     DATA = DATA %>%
-      relocate(HIV_PRESP, .after = HIV)
+      relocate(.data$HIV_PRESP, .after = .data$HIV)
   }
 
   return(DATA)

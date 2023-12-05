@@ -19,9 +19,9 @@
 #'
 DERIVE_EMPTY_TIME = function(DATA){
   DATA = DATA %>%
-    group_by(USUBJID) %>%
+    group_by(.data$USUBJID) %>%
     mutate(EMPTY_SEQ = row_number(),
-           EMPTY_TIME = paste(DOMAIN, "_", EMPTY_SEQ))
+           EMPTY_TIME = paste(.data$DOMAIN, "_", .data$EMPTY_SEQ))
 
   DATA$EMPTY_TIME = gsub(" ", "", DATA$EMPTY_TIME)
 
