@@ -27,8 +27,8 @@ DERIVE_ANTHRO = function(DATA){
                         weight = as.numeric(DATA_ANTHRO$WEIGHT),
                         lenhei = as.numeric(DATA_ANTHRO$HEIGHT)) %>%
 
-                        dplyr::select(.data$zlen, .data$flen, .data$zwei,
-                                      .data$fwei, .data$zwfl, .data$fwfl)) %>%
+                        dplyr::select("zlen", "flen", "zwei",
+                                      "fwei", "zwfl", "fwfl")) %>%
     rename("HAZ" = "zlen",
            "HAZ_FLAG" = "flen",
            "WAZ" = "zwei",

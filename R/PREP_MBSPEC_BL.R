@@ -40,16 +40,15 @@ PREP_MBSPEC_BL = function(DATA_MB, DISEASE = "", VARS = NULL){
 
   DATA = DATA_MB %>%
     convert_blanks_to_na() %>%
-    filter(MBTESTCD %in% MB_VARS) %>%
+    filter(.data$MBTESTCD %in% MB_VARS) %>%
     DERIVE_TIMING()
 
   DATA = DATA %>%
-    filter(TIMING == 1 | TIMING == "BASELINE") %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID), names_from = MBTESTCD,
-                values_from = c(MBLOC, MBSPEC),
+    filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
+                values_from = c(.data$MBLOC, .data$MBSPEC),
                 names_sort = T, names_vary = "slowest",
                 values_fn = first, names_glue = "{.name}_{.value}")
-
 
   DATA = DATA %>%
     clean_names(case = "all_caps")
@@ -62,10 +61,10 @@ PREP_MBSPEC_BL = function(DATA_MB, DISEASE = "", VARS = NULL){
   if("AFB_LOC" %in% names(DATA) | "MTB_LOC" %in% names(DATA)){
     if("AFB_LOC" %in% names(DATA) & "MTB_LOC" %in% names(DATA)){
       DATA = DATA %>%
-        mutate(TB_LOC = as.character(MTB_LOC),
-               TB_SPEC = as.character(MTB_SPEC),
-               AFB_LOC = as.character(AFB_LOC),
-               AFB_SPEC = as.character(AFB_SPEC))
+        mutate(TB_LOC = as.character(.data$MTB_LOC),
+               TB_SPEC = as.character(.data$MTB_SPEC),
+               AFB_LOC = as.character(.data$AFB_LOC),
+               AFB_SPEC = as.character(.data$AFB_SPEC))
 
       DATA[which(is.na(DATA$TB_LOC)), "TB_LOC"] =
         DATA[which(is.na(DATA$TB_LOC)), "AFB_LOC"]
@@ -74,7 +73,7 @@ PREP_MBSPEC_BL = function(DATA_MB, DISEASE = "", VARS = NULL){
         DATA[which(is.na(DATA$TB_SPEC)), "AFB_SPEC"]
 
       DATA = DATA %>%
-        dplyr::select(-AFB_LOC, -MTB_LOC, -AFB_SPEC, -MTB_SPEC)
+        dplyr::select(-"AFB_LOC", -"MTB_LOC", -"AFB_SPEC", -"MTB_SPEC")
     }
 
     else if("AFB_LOC" %in% names(DATA) & "MTB_LOC" %!in% names(DATA)){

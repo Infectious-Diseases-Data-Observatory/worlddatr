@@ -37,7 +37,7 @@ PREP_RP_BL = function(DATA_RP, VARS = NULL){
     DATA[which(is.na(DATA$RPSTRES)), "RPORRES"]
 
   DATA = DATA %>%
-    filter(TIMING == 1 | TIMING == "BASELINE") %>%
+    filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$RPTESTCD,
                 values_from = .data$RPSTRES, names_vary = "slowest",
                 names_sort = T,
