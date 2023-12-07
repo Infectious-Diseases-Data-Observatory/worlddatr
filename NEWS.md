@@ -1,3 +1,8 @@
+# iddoverse 0.2.1
+* All variable names are defined relative to the corresponding dataset using the .data$ function or calling the dataframe name before the $
+* Removed dependence on LB domain in ANALYSE_FOLLOW_UP()
+* Increased use for as.character and str_to_upper for consistency 
+
 # iddoverse 0.2.0
 * Significant changes to VL outcome including function name changes, rewriting of code to match other PREP functions, removal of domain dependency and generally a clear look
 * Documentation updates to reflect change
