@@ -31,6 +31,7 @@
 #' @param DM_VARS Specify additional variables to be included in the output
 #'   dataset. Character string. Use column names as specified in the DM section
 #'   of the 'IDDO SDTM Implementation Manual'. i.e. c("DTHFL", "DTHDTC").
+#'   If DM is the only domain, PREP_DM() will be an equivalent method.
 #' @param LB_VARS Specify additional variables to be included in the output
 #'   dataset. Character string. Use controlled terminology for LBTESTCD as
 #'   specified in the LB section of the 'IDDO SDTM Implementation Manual'. i.e.
@@ -162,8 +163,8 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB = NULL,
   }
 
   FU = right_join(DM, FU) %>%
-    # relocate(ends_with("DY"), .after = "VISITNUM") %>%
-    # relocate(ends_with("DAY"), .after = "VISITDY") %>%
+    relocate(ends_with("DY"), .after = "VISITNUM") %>%
+    relocate(ends_with("DAY"), .after = "VISITDY") %>%
     DERIVE_BMI() %>%
     JOIN_PREGNANT() %>%
     JOIN_HIV() %>%
@@ -174,13 +175,13 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB = NULL,
       left_join(DERIVE_ANTHRO(FU))
   }
 
-  # if("START_DAY" %in% names(FU)){
-  #   FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY, FU$START_DAY, FU$END_DAY), ]
-  # }
-  #
-  # else{
-  #   FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY), ]
-  # }
+  if("START_DAY" %in% names(FU)){
+    FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY, FU$START_DAY, FU$END_DAY), ]
+  }
+
+  else{
+    FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY), ]
+  }
 
   return(FU)
 }
