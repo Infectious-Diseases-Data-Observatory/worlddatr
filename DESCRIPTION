@@ -22,6 +22,7 @@ Imports:
     janitor,
     lubridate,
     magrittr,
+    rlang,
     stringr,
     tidyr,
     tidyselect

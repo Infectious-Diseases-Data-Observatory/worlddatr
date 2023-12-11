@@ -21,17 +21,17 @@ PREP_MB_FU_VL = function(DATA_MB){
 
   DATA_MB = DATA_MB %>%
     convert_blanks_to_na() %>%
-    filter(MBTESTCD %in% MB_VARS) %>%
-    mutate(MBSTRES = as.character(MBSTRESN),
-           MBUNITS = as.character(MBSTRESU),
-           MBSTRESC = as.character(MBSTRESC),
-           MBMODIFY = str_to_upper(as.character(MBMODIFY)),
-           MBORRES = str_to_upper(as.character(MBORRES)),
-           DAY = MBDY) %>%
+    filter(.data$MBTESTCD %in% MB_VARS) %>%
+    mutate(MBSTRES = str_to_upper(as.character(.data$MBSTRESN)),
+           MBUNITS = str_to_upper(as.character(.data$MBSTRESU)),
+           MBSTRESC = str_to_upper(as.character(.data$MBSTRESC)),
+           MBMODIFY = str_to_upper(as.character(.data$MBMODIFY)),
+           MBORRES = str_to_upper(as.character(.data$MBORRES)),
+           DAY = .data$MBDY) %>%
     CLEAN_MB_VL()
 
   DATA_EMPTY = DATA_MB %>%
-    filter(is.na(VISITDY) & is.na(VISITNUM) & is.na(DAY)) %>%
+    filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
     DERIVE_EMPTY_TIME()
 
   DATA = DATA_MB %>%
@@ -51,9 +51,10 @@ PREP_MB_FU_VL = function(DATA_MB){
   DATA$MBSTRES = str_replace_all(DATA$MBSTRES, "01-OCT", "1-10")
 
   DATA = DATA %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, EMPTY_TIME), names_from = MBTESTCD,
-                values_from = c(MBSTRES, MBUNITS, MBLOC, MBSPEC), names_glue = "{MBTESTCD}_{.value}",
-                names_sort = T, names_vary = "slowest",
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
+                            .data$DAY, .data$EMPTY_TIME), names_from = .data$MBTESTCD,
+                values_from = c(.data$MBSTRES, .data$MBUNITS, .data$MBLOC, .data$MBSPEC),
+                names_glue = "{MBTESTCD}_{.value}", names_sort = T, names_vary = "slowest",
                 values_fn = first) %>%
     mutate(DATA_LSHMANIA = NA,
            DATA_MAJOR = NA,
@@ -86,9 +87,10 @@ PREP_MB_FU_VL = function(DATA_MB){
   }
 
   DATA = DATA %>%
-    unite(DATA_LSHMANIA, DATA_LDONOV, DATA_MAJOR, col = "SPECIES", na.rm = TRUE, remove = TRUE, sep = " + ") %>%
-    relocate(SPECIES, .after = USUBJID) %>%
-    mutate(SPECIES = convert_blanks_to_na(SPECIES)) %>%
+    unite(.data$DATA_LSHMANIA, .data$DATA_LDONOV, .data$DATA_MAJOR, col = "SPECIES",
+          na.rm = TRUE, remove = TRUE, sep = " + ") %>%
+    relocate(.data$SPECIES, .after = .data$USUBJID) %>%
+    mutate(SPECIES = convert_blanks_to_na(.data$SPECIES)) %>%
     clean_names(case = "all_caps")
 
   DATA = DATA %>%

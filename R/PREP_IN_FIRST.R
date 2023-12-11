@@ -44,25 +44,26 @@ PREP_IN_FIRST = function(DATA_IN, DISEASE = "", VARS = NULL){
 
   DATA = DATA_IN %>%
     convert_blanks_to_na() %>%
-    mutate(INTRT = str_to_upper(INTRT),
-           INSTRES = as.character(INDECOD),
-           INPRESP = str_to_upper(INPRESP),
-           INOCCUR = str_to_upper(INOCCUR),
-           DAY = INDY) %>%
-    filter((INCAT != "MEDICAL HISTORY" | is.na(INCAT)),
-           INPRESP == "Y")
+    mutate(INTRT = str_to_upper(.data$INTRT),
+           INSTRES = as.character(.data$INDECOD),
+           INPRESP = str_to_upper(.data$INPRESP),
+           INOCCUR = str_to_upper(.data$INOCCUR),
+           DAY = .data$INDY) %>%
+    filter((.data$INCAT != "MEDICAL HISTORY" | is.na(.data$INCAT)),
+           .data$INPRESP == "Y")
 
   DATA[which(is.na(DATA$INSTRES)), "INSTRES"] =
     DATA[which(is.na(DATA$INSTRES)), "INTRT"]
 
   DATA = DATA %>%
-    filter(INSTRES %in% IN_VARS)
+    filter(.data$INSTRES %in% IN_VARS)
 
   DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$DAY), ]
 
   DATA = DATA %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID), names_from = INSTRES, names_glue = "{INSTRES}_{.value}",
-                values_from = c(INOCCUR, DAY),
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$INSTRES,
+                names_glue = "{INSTRES}_{.value}",
+                values_from = c(.data$INOCCUR, .data$DAY),
                 names_sort = T, names_vary = "slowest",
                 values_fn = first)
 

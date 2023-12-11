@@ -26,12 +26,12 @@ PREP_MB_BL_MAL = function(DATA_MB){
 
   DATA = DATA_MB %>%
     convert_blanks_to_na() %>%
-    filter(MBTESTCD %in% MB_VARS) %>%
+    filter(.data$MBTESTCD %in% MB_VARS) %>%
     DERIVE_TIMING() %>%
-    mutate(MBSTRES = as.character(MBSTRESN),
-           MBSTRESC = as.character(MBSTRESC),
-           MBMODIFY = as.character(MBMODIFY),
-           MBORRES = as.character(MBORRES))
+    mutate(MBSTRES = as.character(.data$MBSTRESN),
+           MBSTRESC = as.character(.data$MBSTRESC),
+           MBMODIFY = as.character(.data$MBMODIFY),
+           MBORRES = as.character(.data$MBORRES))
 
   DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] =
     DATA[which(is.na(DATA$MBSTRES)), "MBSTRESC"]
@@ -41,10 +41,10 @@ PREP_MB_BL_MAL = function(DATA_MB){
     DATA[which(is.na(DATA$MBSTRES)), "MBORRES"]
 
   DATA = DATA %>%
-    mutate(MBSTRES = str_to_upper(MBSTRES)) %>%
-    filter(TIMING == 1 | TIMING == "BASELINE") %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID), names_from = MBTESTCD, names_glue = "{MBTESTCD}_{.value}",
-                values_from = c(MBSTRES),
+    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
+    filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
+                names_glue = "{MBTESTCD}_{.value}", values_from = .data$MBSTRES,
                 names_sort = T, names_vary = "slowest",
                 values_fn = first) %>%
     mutate(DATA_PF = NA,
@@ -109,11 +109,12 @@ PREP_MB_BL_MAL = function(DATA_MB){
   }
 
   DATA = DATA %>%
-    unite(DATA_PF, DATA_PV, DATA_PK, DATA_PM, DATA_PO, DATA_PL, col = "SPECIES", na.rm = TRUE, remove = TRUE, sep = " + ")
+    unite(.data$DATA_PF, .data$DATA_PV, .data$DATA_PK, .data$DATA_PM, .data$DATA_PO,
+          .data$DATA_PL, col = "SPECIES", na.rm = TRUE, remove = TRUE, sep = " + ")
 
   DATA = DATA %>%
-    relocate(SPECIES, .after = USUBJID) %>%
-    mutate(SPECIES = convert_blanks_to_na(SPECIES)) %>%
+    relocate(.data$SPECIES, .after = .data$USUBJID) %>%
+    mutate(SPECIES = convert_blanks_to_na(.data$SPECIES)) %>%
     clean_names(case = "all_caps")
 
   return(DATA)

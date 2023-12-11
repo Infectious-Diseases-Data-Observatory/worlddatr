@@ -25,11 +25,11 @@ PREP_MP_BL = function(DATA_MP, MPTEST = "LENGTH", VARS = NULL){
 
   DATA = DATA_MP %>%
     convert_blanks_to_na() %>%
-    filter(MPLOC %in% MP_VARS) %>%
+    filter(.data$MPLOC %in% MP_VARS) %>%
     DERIVE_TIMING() %>%
-    mutate(MPSTRES = as.character(MPSTRESN),
-           MPSTRESC = as.character(MPSTRESC),
-           MPORRES = as.character(MPORRES))
+    mutate(MPSTRES = str_to_upper(as.character(.data$MPSTRESN)),
+           MPSTRESC = str_to_upper(as.character(.data$MPSTRESC)),
+           MPORRES = str_to_upper(as.character(.data$MPORRES)))
 
   DATA[which(is.na(DATA$MPSTRES)), "MPSTRES"] =
     DATA[which(is.na(DATA$MPSTRES)), "MPSTRESC"]
@@ -38,29 +38,29 @@ PREP_MP_BL = function(DATA_MP, MPTEST = "LENGTH", VARS = NULL){
 
   if(MPTEST == "WIDTH"){
     DATA = DATA %>%
-      filter(MPTESTCD == "WIDTH",
-             TIMING == 1 | TIMING == "BASELINE") %>%
-      pivot_wider(id_cols = c(STUDYID, USUBJID),
-                  names_from = MPLOC, values_from = MPSTRES,
+      filter(.data$MPTESTCD == "WIDTH",
+             .data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+      pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
+                  names_from = .data$MPLOC, values_from = .data$MPSTRES,
                   names_sort = T, names_vary = "slowest",
                   values_fn = first)
   }
 
   else if(MPTEST == "BOTH"){
     DATA = DATA %>%
-      filter(TIMING == 1 | TIMING == "BASELINE") %>%
-      pivot_wider(id_cols = c(STUDYID, USUBJID),
-                  names_from = c(MPLOC, MPTESTCD), values_from = MPSTRES,
+      filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+      pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
+                  names_from = c(.data$MPLOC, .data$MPTESTCD), values_from = .data$MPSTRES,
                   names_sort = T, names_vary = "slowest",
                   values_fn = first)
   }
 
   else{
     DATA = DATA %>%
-      filter(MPTESTCD == "LENGTH",
-             TIMING == 1 | TIMING == "BASELINE") %>%
-      pivot_wider(id_cols = c(STUDYID, USUBJID),
-                  names_from = MPLOC, values_from = MPSTRES,
+      filter(.data$MPTESTCD == "LENGTH",
+             .data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+      pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
+                  names_from = .data$MPLOC, values_from = .data$MPSTRES,
                   names_sort = T, names_vary = "slowest",
                   values_fn = first)
   }

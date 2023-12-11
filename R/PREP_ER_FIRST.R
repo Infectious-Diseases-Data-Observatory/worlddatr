@@ -17,11 +17,11 @@
 PREP_ER_FIRST = function(DATA_ER){
   DATA = DATA_ER %>%
     convert_blanks_to_na() %>%
-    mutate(ERSTRES = as.character(ERDECOD),
-           ERPRESP = str_to_upper(ERPRESP),
-           EROCCUR = str_to_upper(EROCCUR),
-           DAY = ERDY) %>%
-    filter(ERPRESP == "Y")
+    mutate(ERSTRES = as.character(.data$ERDECOD),
+           ERPRESP = str_to_upper(.data$ERPRESP),
+           EROCCUR = str_to_upper(.data$EROCCUR),
+           DAY = .data$ERDY) %>%
+    filter(.data$ERPRESP == "Y")
 
   DATA[which(is.na(DATA$ERSTRES)), "ERSTRES"] =
     DATA[which(is.na(DATA$ERSTRES)), "ERMODIFY"]
@@ -31,8 +31,9 @@ PREP_ER_FIRST = function(DATA_ER){
   DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$DAY), ]
 
   DATA = DATA %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID), names_from = ERSTRES, names_glue = "{ERSTRES}_{.value}",
-                values_from = c(EROCCUR, DAY),
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$ERSTRES,
+                names_glue = "{ERSTRES}_{.value}",
+                values_from = c(.data$EROCCUR, .data$DAY),
                 names_sort = T, names_vary = "slowest",
                 values_fn = first)
 

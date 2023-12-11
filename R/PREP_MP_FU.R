@@ -25,14 +25,14 @@ PREP_MP_FU = function(DATA_MP, MPTEST = "LENGTH", VARS = NULL){
 
   DATA_MP = DATA_MP %>%
     convert_blanks_to_na() %>%
-    filter(MPLOC %in% MP_VARS) %>%
-    mutate(MPSTRES = as.character(MPSTRESN),
-           MPSTRESC = as.character(MPSTRESC),
-           MPORRES = as.character(MPORRES),
-           DAY = MPDY)
+    filter(.data$MPLOC %in% MP_VARS) %>%
+    mutate(MPSTRES = str_to_upper(as.character(.data$MPSTRESN)),
+           MPSTRESC = str_to_upper(as.character(.data$MPSTRESC)),
+           MPORRES = str_to_upper(as.character(.data$MPORRES)),
+           DAY = .data$MPDY)
 
   DATA_EMPTY = DATA_MP %>%
-    filter(is.na(VISITDY) & is.na(VISITNUM) & is.na(DAY)) %>%
+    filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
     DERIVE_EMPTY_TIME()
 
   DATA = DATA_MP %>%
@@ -45,26 +45,29 @@ PREP_MP_FU = function(DATA_MP, MPTEST = "LENGTH", VARS = NULL){
 
   if(MPTEST == "WIDTH"){
     DATA = DATA %>%
-      filter(MPTESTCD == "WIDTH") %>%
-      pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, EMPTY_TIME),
-                  names_from = MPLOC, values_from = MPSTRES,
+      filter(.data$MPTESTCD == "WIDTH") %>%
+      pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
+                              .data$DAY, .data$EMPTY_TIME),
+                  names_from = .data$MPLOC, values_from = .data$MPSTRES,
                   names_sort = T, names_vary = "slowest",
                   values_fn = first)
   }
 
   else if(MPTEST == "BOTH"){
     DATA = DATA %>%
-      pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, EMPTY_TIME),
-                  names_from = c(MPLOC, MPTESTCD), values_from = MPSTRES,
+      pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
+                              .data$DAY, .data$EMPTY_TIME),
+                  names_from = c(.data$MPLOC, .data$MPTESTCD), values_from = .data$MPSTRES,
                   names_sort = T, names_vary = "slowest",
                   values_fn = first)
   }
 
   else{
     DATA = DATA %>%
-      filter(MPTESTCD == "LENGTH") %>%
-      pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, EMPTY_TIME),
-                  names_from = MPLOC, values_from = MPSTRES,
+      filter(.data$MPTESTCD == "LENGTH") %>%
+      pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
+                              .data$DAY, .data$EMPTY_TIME),
+                  names_from = .data$MPLOC, values_from = .data$MPSTRES,
                   names_sort = T, names_vary = "slowest",
                   values_fn = first)
   }

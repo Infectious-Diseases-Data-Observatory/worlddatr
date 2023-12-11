@@ -48,12 +48,12 @@ PREP_SA_FU = function(DATA_SA, DISEASE = "", VARS = NULL){
 
   DATA_SA = DATA_SA %>%
     convert_blanks_to_na() %>%
-    mutate(SASTRES = str_to_upper(as.character(SADECOD)),
-           SAMODIFY = str_to_upper(as.character(SAMODIFY)),
-           SATERM = str_to_upper(as.character(SATERM)),
-           DAY = SADY,
-           START_DAY = SASTDY,
-           END_DAY = SAENDY)
+    mutate(SASTRES = str_to_upper(as.character(.data$SADECOD)),
+           SAMODIFY = str_to_upper(as.character(.data$SAMODIFY)),
+           SATERM = str_to_upper(as.character(.data$SATERM)),
+           DAY = .data$SADY,
+           START_DAY = .data$SASTDY,
+           END_DAY = .data$SAENDY)
 
   DATA_SA[which(is.na(DATA_SA$SASTRES)), "SASTRES"] =
     DATA_SA[which(is.na(DATA_SA$SASTRES)), "SAMODIFY"]
@@ -61,9 +61,9 @@ PREP_SA_FU = function(DATA_SA, DISEASE = "", VARS = NULL){
     DATA_SA[which(is.na(DATA_SA$SASTRES)), "SATERM"]
 
   DATA_SA = DATA_SA %>%
-    filter(SASTRES %in% SA_VARS) %>%
-    mutate(SAPRESP = str_to_upper(SAPRESP),
-           SAOCCUR = str_to_upper(SAOCCUR))
+    filter(.data$SASTRES %in% SA_VARS) %>%
+    mutate(SAPRESP = str_to_upper(.data$SAPRESP),
+           SAOCCUR = str_to_upper(.data$SAOCCUR))
 
   DATA_SA$SAPRESP = str_replace_all(DATA_SA$SAPRESP, "TRUE", "Y")
   DATA_SA$SAOCCUR = str_replace_all(DATA_SA$SAOCCUR, "TRUE", "Y")
@@ -76,14 +76,16 @@ PREP_SA_FU = function(DATA_SA, DISEASE = "", VARS = NULL){
   }
 
   DATA_EMPTY = DATA_SA %>%
-    filter(is.na(VISITDY) & is.na(VISITNUM) & is.na(DAY) & is.na(START_DAY) & is.na(END_DAY)) %>%
+    filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY) &
+             is.na(.data$START_DAY) & is.na(.data$END_DAY)) %>%
     DERIVE_EMPTY_TIME()
 
   DATA = DATA_SA %>%
     left_join(DATA_EMPTY) %>%
-    mutate(SAOCCUR = as.factor(SAOCCUR)) %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, START_DAY, END_DAY, EMPTY_TIME),
-                names_from = SASTRES, values_from = c(SAOCCUR, SAPRESP),
+    mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
+                            .data$DAY, .data$START_DAY, .data$END_DAY, .data$EMPTY_TIME),
+                names_from = .data$SASTRES, values_from = c(.data$SAOCCUR, .data$SAPRESP),
                 names_glue = "{SASTRES}_{.value}",
                 values_fn = first, names_vary = "slowest")
 

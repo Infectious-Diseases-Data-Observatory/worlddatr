@@ -23,15 +23,15 @@ PREP_SC_FU = function(DATA_SC, VARS = NULL){
 
   DATA_SC = DATA_SC %>%
     convert_blanks_to_na() %>%
-    filter(SCTESTCD %in% SC_VARS) %>%
-    mutate(SCSTRES = as.character(str_to_upper(SCSTRESC)),
-           SCORRES = as.character(str_to_upper(SCORRES)),
-           DAY = SCDY,
-           SCUNITS = as.character(str_to_upper(SCSTRESN)),
-           SCORRESU = as.character(str_to_upper(SCORRESU)))
+    filter(.data$SCTESTCD %in% SC_VARS) %>%
+    mutate(SCSTRES = as.character(str_to_upper(.data$SCSTRESC)),
+           SCORRES = as.character(str_to_upper(.data$SCORRES)),
+           DAY = .data$SCDY,
+           SCUNITS = as.character(str_to_upper(.data$SCSTRESN)),
+           SCORRESU = as.character(str_to_upper(.data$SCORRESU)))
 
   DATA_EMPTY = DATA_SC %>%
-    filter(is.na(VISITDY) & is.na(VISITNUM) & is.na(DAY)) %>%
+    filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
     DERIVE_EMPTY_TIME()
 
   DATA = DATA_SC %>%
@@ -45,18 +45,20 @@ PREP_SC_FU = function(DATA_SC, VARS = NULL){
 
   if("DSTHOSP" %in% SC_VARS){
     DATA = DATA %>%
-      filter(SCTESTCD == "DSTHOSP") %>%
-      pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, EMPTY_TIME),
-                  names_from = SCTESTCD, values_from = c(SCSTRES, SCUNITS),
+      filter(.data$SCTESTCD == "DSTHOSP") %>%
+      pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY,
+                              .data$VISITNUM, .data$DAY, .data$EMPTY_TIME),
+                  names_from = .data$SCTESTCD, values_from = c(.data$SCSTRES, .data$SCUNITS),
                   names_sort = T, names_vary = "slowest",
                   values_fn = first)
   }
 
   else{
     DATA = DATA %>%
-      filter(SCTESTCD != "DSTHOSP") %>%
-      pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, EMPTY_TIME),
-                  names_from = SCTESTCD, values_from = SCSTRES,
+      filter(.data$SCTESTCD != "DSTHOSP") %>%
+      pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY,
+                              .data$VISITNUM, .data$DAY, .data$EMPTY_TIME),
+                  names_from = .data$SCTESTCD, values_from = .data$SCSTRES,
                   names_sort = T, names_vary = "slowest",
                   values_fn = first)
   }

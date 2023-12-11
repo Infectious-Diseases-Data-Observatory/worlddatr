@@ -100,7 +100,7 @@ ANALYSE_BASELINE = function(DISEASE_THEME = "", DATA_DM,
   if(is.null(DATA_TS) == FALSE){
     BASELINE = BASELINE %>%
       left_join(PREP_TS(DATA_TS, DATA_DM)) %>%
-      dplyr::select(STUDYID, DISEASE, everything())
+      dplyr::select("STUDYID", "DISEASE", everything())
   }
 
   if(is.null(DATA_LB) == FALSE){
@@ -111,7 +111,7 @@ ANALYSE_BASELINE = function(DISEASE_THEME = "", DATA_DM,
   if(is.null(DATA_MB) == FALSE){
     MB_JOIN = left_join(PREP_MB_BL(DATA_MB, DISEASE = DISEASE_THEME, VARS = MB_VARS),
                         PREP_MBSPEC_BL(DATA_MB, DISEASE = DISEASE_THEME, VARS = MB_VARS_SPEC)) %>%
-      dplyr::select(sort(names(.)))
+      dplyr::select(order(everything()))
 
     BASELINE = BASELINE %>%
       left_join(MB_JOIN)

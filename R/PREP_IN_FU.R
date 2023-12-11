@@ -22,12 +22,12 @@ PREP_IN_FU = function(DATA_IN, VARS = NULL){
 
   DATA_IN = DATA_IN %>%
     convert_blanks_to_na() %>%
-    mutate(INSTRES = str_to_upper(as.character(INDECOD)),
-           INMODIFY = str_to_upper(as.character(INMODIFY)),
-           INTRT = str_to_upper(as.character(INTRT)),
-           DAY = INDY,
-           START_DAY = INSTDY,
-           END_DAY = INENDY)
+    mutate(INSTRES = str_to_upper(as.character(.data$INDECOD)),
+           INMODIFY = str_to_upper(as.character(.data$INMODIFY)),
+           INTRT = str_to_upper(as.character(.data$INTRT)),
+           DAY = .data$INDY,
+           START_DAY = .data$INSTDY,
+           END_DAY = .data$INENDY)
 
   DATA_IN[which(is.na(DATA_IN$INSTRES)), "INSTRES"] =
     DATA_IN[which(is.na(DATA_IN$INSTRES)), "INMODIFY"]
@@ -35,9 +35,9 @@ PREP_IN_FU = function(DATA_IN, VARS = NULL){
     DATA_IN[which(is.na(DATA_IN$INSTRES)), "INTRT"]
 
   DATA_IN = DATA_IN %>%
-    filter(INSTRES %in% IN_VARS) %>%
-    mutate(INPRESP = str_to_upper(INPRESP),
-           INOCCUR = str_to_upper(INOCCUR))
+    filter(.data$INSTRES %in% IN_VARS) %>%
+    mutate(INPRESP = str_to_upper(.data$INPRESP),
+           INOCCUR = str_to_upper(.data$INOCCUR))
 
   DATA_IN$INPRESP = str_replace_all(DATA_IN$INPRESP, "TRUE", "Y")
   DATA_IN$INOCCUR = str_replace_all(DATA_IN$INOCCUR, "TRUE", "Y")
@@ -50,15 +50,17 @@ PREP_IN_FU = function(DATA_IN, VARS = NULL){
   }
 
   DATA_EMPTY = DATA_IN %>%
-    filter(is.na(VISITDY) & is.na(VISITNUM) & is.na(DAY) & is.na(START_DAY) & is.na(END_DAY)) %>%
+    filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY) &
+             is.na(.data$START_DAY) & is.na(.data$END_DAY)) %>%
     DERIVE_EMPTY_TIME()
 
   DATA = DATA_IN %>%
     left_join(DATA_EMPTY) %>%
-    mutate(INOCCUR = as.factor(INOCCUR)) %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, START_DAY, END_DAY, EMPTY_TIME),
-                names_from = INSTRES, names_glue = "{INSTRES}",
-                values_from = INOCCUR,
+    mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
+                            .data$DAY, .data$START_DAY, .data$END_DAY, .data$EMPTY_TIME),
+                names_from = .data$INSTRES, names_glue = "{INSTRES}",
+                values_from = .data$INOCCUR,
                 values_fn = first)
 
   DATA = DATA %>%

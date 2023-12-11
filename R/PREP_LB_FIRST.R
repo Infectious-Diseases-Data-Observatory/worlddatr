@@ -46,11 +46,11 @@ PREP_LB_FIRST = function(DATA_LB, DISEASE = "", VARS = NULL){
 
   DATA = DATA_LB %>%
     convert_blanks_to_na() %>%
-    filter(LBTESTCD %in% LB_VARS) %>%
-    mutate(LBSTRES = as.character(LBSTRESN),
-           LBSTRESC = as.character(LBSTRESC),
-           LBORRES = as.character(LBORRES),
-           DAY = LBDY)
+    filter(.data$LBTESTCD %in% LB_VARS) %>%
+    mutate(LBSTRES = as.character(.data$LBSTRESN),
+           LBSTRESC = as.character(.data$LBSTRESC),
+           LBORRES = as.character(.data$LBORRES),
+           DAY = .data$LBDY)
 
   DATA[which(is.na(DATA$LBSTRES)), "LBSTRES"] =
     DATA[which(is.na(DATA$LBSTRES)), "LBSTRESC"]
@@ -60,8 +60,9 @@ PREP_LB_FIRST = function(DATA_LB, DISEASE = "", VARS = NULL){
   DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$DAY), ]
 
   DATA = DATA %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID), names_from = LBTESTCD, names_glue = "{LBTESTCD}_{.value}",
-                values_from = c(LBSTRES, DAY),
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$LBTESTCD,
+                names_glue = "{LBTESTCD}_{.value}",
+                values_from = c(.data$LBSTRES, .data$DAY),
                 names_sort = T, names_vary = "slowest",
                 values_fn = first)
 

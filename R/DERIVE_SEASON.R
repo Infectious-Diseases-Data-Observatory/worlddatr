@@ -40,7 +40,7 @@ DERIVE_SEASON = function(DATA){
   }
 
   DATA = DATA %>%
-    relocate(SEASON, .after = RFSTDTC)
+    relocate("SEASON", .after = "RFSTDTC")
 
   return(DATA)
 }

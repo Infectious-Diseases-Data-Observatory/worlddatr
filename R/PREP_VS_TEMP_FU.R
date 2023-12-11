@@ -22,15 +22,15 @@
 PREP_VS_TEMP_FU = function(DATA_VS){
   DATA_VS = DATA_VS %>%
     convert_blanks_to_na() %>%
-    filter(VSTESTCD == "TEMP") %>%
-    mutate(VSSTRES = as.character(VSSTRESN),
-           VSSTRESC = as.character(VSSTRESC),
-           VSORRES = as.character(VSORRES),
-           VISIT = as.character(VISIT),
-           DAY = VSDY)
+    filter(.data$VSTESTCD == "TEMP") %>%
+    mutate(VSSTRES = as.character(.data$VSSTRESN),
+           VSSTRESC = as.character(.data$VSSTRESC),
+           VSORRES = as.character(.data$VSORRES),
+           VISIT = as.character(.data$VISIT),
+           DAY = .data$VSDY)
 
   DATA_EMPTY = DATA_VS %>%
-    filter(is.na(VISITDY) & is.na(VISITNUM) & is.na(DAY)) %>%
+    filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
     DERIVE_EMPTY_TIME()
 
 
@@ -43,8 +43,9 @@ PREP_VS_TEMP_FU = function(DATA_VS){
     DATA[which(is.na(DATA$VSSTRES)), "VSORRES"]
 
   DATA = DATA %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID, VISITDY, VISITNUM, DAY, EMPTY_TIME), names_from = VSTESTCD,
-                values_from = c(VSSTRES, VSLOC),
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
+                            .data$DAY, .data$EMPTY_TIME), names_from = .data$VSTESTCD,
+                values_from = c(.data$VSSTRES, .data$VSLOC),
                 names_sort = T, names_vary = "slowest",
                 values_fn = first)
 

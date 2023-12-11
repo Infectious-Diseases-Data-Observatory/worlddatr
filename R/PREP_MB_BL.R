@@ -45,12 +45,12 @@ PREP_MB_BL = function(DATA_MB, DISEASE = "", VARS = NULL){
 
   DATA = DATA_MB %>%
     convert_blanks_to_na() %>%
-    filter(MBTESTCD %in% MB_VARS) %>%
+    filter(.data$MBTESTCD %in% MB_VARS) %>%
     DERIVE_TIMING() %>%
-    mutate(MBSTRES = as.character(MBSTRESN),
-           MBSTRESC = as.character(MBSTRESC),
-           MBMODIFY = as.character(MBMODIFY),
-           MBORRES = as.character(MBORRES))
+    mutate(MBSTRES = str_to_upper(as.character(.data$MBSTRESN)),
+           MBSTRESC = str_to_upper(as.character(.data$MBSTRESC)),
+           MBMODIFY = str_to_upper(as.character(.data$MBMODIFY)),
+           MBORRES = str_to_upper(as.character(.data$MBORRES)))
 
   DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] =
     DATA[which(is.na(DATA$MBSTRES)), "MBSTRESC"]
@@ -60,10 +60,10 @@ PREP_MB_BL = function(DATA_MB, DISEASE = "", VARS = NULL){
     DATA[which(is.na(DATA$MBSTRES)), "MBORRES"]
 
   DATA = DATA %>%
-    mutate(MBSTRES = str_to_upper(MBSTRES)) %>%
-    filter(TIMING == 1 | TIMING == "BASELINE") %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID), names_from = MBTESTCD,
-                values_from = MBSTRES,
+    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
+    filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
+                values_from = .data$MBSTRES,
                 names_sort = T, names_vary = "slowest",
                 values_fn = first)
 
@@ -73,13 +73,13 @@ PREP_MB_BL = function(DATA_MB, DISEASE = "", VARS = NULL){
   if("AFB" %in% names(DATA) | "MTB" %in% names(DATA)){
     if("AFB" %in% names(DATA) & "MTB" %in% names(DATA)){
       DATA = DATA %>%
-        mutate(TB = MTB)
+        mutate(TB = .data$MTB)
 
       DATA[which(is.na(DATA$TB)), "TB"] =
         DATA[which(is.na(DATA$TB)), "AFB"]
 
       DATA = DATA %>%
-        dplyr::select(-AFB, -MTB)
+        dplyr::select(-"AFB", -"MTB")
     }
     else if("AFB" %in% names(DATA) & "MTB" %!in% names(DATA)){
       DATA = DATA %>%

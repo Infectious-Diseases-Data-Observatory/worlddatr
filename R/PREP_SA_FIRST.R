@@ -48,14 +48,14 @@ PREP_SA_FIRST = function(DATA_SA, DISEASE = "", VARS = NULL){
 
   DATA = DATA_SA %>%
     convert_blanks_to_na() %>%
-    mutate(SATERM = str_to_upper(SATERM),
-           SAMODIFY = str_to_upper(SAMODIFY),
-           SASTRES = as.character(SADECOD),
-           SAPRESP = str_to_upper(SAPRESP),
-           SAOCCUR = str_to_upper(SAOCCUR),
-           DAY = SADY) %>%
-    filter((SACAT != "MEDICAL HISTORY" | is.na(SACAT)),
-           SAPRESP == "Y")
+    mutate(SATERM = str_to_upper(.data$SATERM),
+           SAMODIFY = str_to_upper(.data$SAMODIFY),
+           SASTRES = as.character(.data$SADECOD),
+           SAPRESP = str_to_upper(.data$SAPRESP),
+           SAOCCUR = str_to_upper(.data$SAOCCUR),
+           DAY = .data$SADY) %>%
+    filter((.data$SACAT != "MEDICAL HISTORY" | is.na(.data$SACAT)),
+           .data$SAPRESP == "Y")
 
   DATA[which(is.na(DATA$SASTRES)), "SASTRES"] =
     DATA[which(is.na(DATA$SASTRES)), "SAMODIFY"]
@@ -63,13 +63,13 @@ PREP_SA_FIRST = function(DATA_SA, DISEASE = "", VARS = NULL){
     DATA[which(is.na(DATA$SASTRES)), "SATERM"]
 
   DATA = DATA %>%
-    filter(SASTRES %in% SA_VARS)
+    filter(.data$SASTRES %in% SA_VARS)
 
   DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$DAY), ]
 
   DATA = DATA %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID), names_from = SASTRES, names_glue = "{SASTRES}_{.value}",
-                values_from = c(SAOCCUR, DAY),
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$SASTRES,
+                names_glue = "{SASTRES}_{.value}", values_from = c(.data$SAOCCUR, .data$DAY),
                 names_sort = T, names_vary = "slowest",
                 values_fn = first)
 

@@ -27,13 +27,13 @@ PREP_RS_OUT_VL = function(DATA_RS, TOC_OVRLRESP = "TOC", expand_cols = FALSE){
 
   DATA_RS = DATA_RS %>%
     convert_blanks_to_na() %>%
-    filter(is.na(RSSCAT) | (RSSCAT != "ADDITIONAL OUTCOME PROVIDED" &
-                              RSSCAT != "ADDITIONAL OUTCOMES PROVIDED" &
-                              RSSCAT != "MEDICAL HISTORY")) %>%
-    mutate(RSSTRES = str_to_upper(as.character(RSSTRESN)),
-           RSSTRESC = str_to_upper(as.character(RSSTRESC)),
-           RSORRES = str_to_upper(as.character(RSORRES)),
-           DAY = RSDY)
+    filter(is.na(.data$RSSCAT) | (.data$RSSCAT != "ADDITIONAL OUTCOME PROVIDED" &
+                                    .data$RSSCAT != "ADDITIONAL OUTCOMES PROVIDED" &
+                                    .data$RSSCAT != "MEDICAL HISTORY")) %>%
+    mutate(RSSTRES = str_to_upper(as.character(.data$RSSTRESN)),
+           RSSTRESC = str_to_upper(as.character(.data$RSSTRESC)),
+           RSORRES = str_to_upper(as.character(.data$RSORRES)),
+           DAY = .data$RSDY)
 
   DATA_RS$RSSTRESC = str_replace_all(DATA_RS$RSSTRESC, "RELPASE", "RELAPSE")
   DATA_RS$RSSTRESC = str_replace_all(DATA_RS$RSSTRESC, "FAILURE - ADVERSE EVENT", "FAILURE-ADVERSE EVENT")
@@ -48,10 +48,10 @@ PREP_RS_OUT_VL = function(DATA_RS, TOC_OVRLRESP = "TOC", expand_cols = FALSE){
   if(expand_cols == FALSE){
     if(TOC_OVRLRESP == "TOC"){
       DATA = DATA_RS %>%
-        filter(RSTESTCD == "TOC") %>%
-        pivot_wider(id_cols = c(STUDYID, USUBJID),
-                    names_from = RSTESTCD,
-                    values_from = c(RSSTRES, VISITNUM, VISITDY, DAY),
+        filter(.data$RSTESTCD == "TOC") %>%
+        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
+                    names_from = .data$RSTESTCD,
+                    values_from = c(.data$RSSTRES, .data$VISITNUM, .data$VISITDY, .data$DAY),
                     values_fn = first) %>%
         rename("INITIAL_TOC" =  "RSSTRES_TOC",
                "INITIAL_TOC_VISITNUM" =  "VISITNUM_TOC",
@@ -61,10 +61,10 @@ PREP_RS_OUT_VL = function(DATA_RS, TOC_OVRLRESP = "TOC", expand_cols = FALSE){
 
     else if(TOC_OVRLRESP == "OVRLRESP"){
       DATA = DATA_RS %>%
-        filter(RSTESTCD == "OVRLRESP") %>%
-        pivot_wider(id_cols = c(STUDYID, USUBJID),
-                    names_from = RSTESTCD,
-                    values_from = c(RSSTRES, VISITNUM, VISITDY, DAY),
+        filter(.data$RSTESTCD == "OVRLRESP") %>%
+        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
+                    names_from = .data$RSTESTCD,
+                    values_from = c(.data$RSSTRES, .data$VISITNUM, .data$VISITDY, .data$DAY),
                     values_fn = first) %>%
         rename("INITIAL_OVRLRESP" =  "RSSTRES_OVRLRESP",
                "INITIAL_OVRLRESP_VISITNUM" = "VISITNUM_OVRLRESP",
@@ -75,18 +75,19 @@ PREP_RS_OUT_VL = function(DATA_RS, TOC_OVRLRESP = "TOC", expand_cols = FALSE){
 
   else if(expand_cols == TRUE){
     DATA = DATA_RS %>%
-      group_by(STUDYID, USUBJID, RSTESTCD) %>%
+      group_by(.data$STUDYID, .data$USUBJID, .data$RSTESTCD) %>%
       mutate(ROWN = row_number()) %>%
-      pivot_wider(id_cols = c(STUDYID, USUBJID),
-                  names_from = c(RSTESTCD, ROWN), names_glue = "{RSTESTCD}_{ROWN}_{.value}",
-                  values_from = c(RSSTRES, VISITNUM, VISITDY, DAY), names_vary = "slowest")
+      pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
+                  names_from = c(.data$RSTESTCD, .data$ROWN), names_glue = "{RSTESTCD}_{ROWN}_{.value}",
+                  values_from = c(.data$RSSTRES, .data$VISITNUM, .data$VISITDY, .data$DAY),
+                  names_vary = "slowest")
 
     colnames(DATA) = str_replace_all(colnames(DATA), "RSDY", "DAY")
     colnames(DATA) = str_replace_all(colnames(DATA), "_RSSTRES", "")
     colnames(DATA) = str_replace_all(colnames(DATA), "OVRLRESP", "OVERALL_RESP")
 
     DATA = DATA %>%
-      dplyr::select(STUDYID, USUBJID, starts_with("TOC"), starts_with("OVERALL_RESP"), everything())
+      dplyr::select("STUDYID", "USUBJID", starts_with("TOC"), starts_with("OVERALL_RESP"), everything())
 
   }
 
