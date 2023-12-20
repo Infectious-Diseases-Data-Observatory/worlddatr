@@ -193,6 +193,11 @@ baseline_df <- ANALYSE_BASELINE(" ",
                                 DATA_SA = sa_df)
 
 kable(baseline_df)
+follow_up_df <- ANALYSE_FOLLOW_UP("VL",
+                                  DATA_DM = dm_df,
+                                  DATA_LB = lb_df,
+                                  DATA_MB = NULL,
+                                  DATA_SA = sa_df)
 ```
 
 
@@ -209,7 +214,7 @@ join_df_raw <- data.frame(
 join_df_raw
 
 join_df <- cbind(join_df_raw, 
-                     join_df_raw %>% JOIN_PREGNANT())
+                 join_df_raw %>% JOIN_PREGNANT())
 
 join_df
 
@@ -224,7 +229,9 @@ join_df
 To easily assess the variables in a domain, the DOMAIN_TABLE() function uses table() to display the frequency of terms, tests and treatments so that the user can specify additional variables in the PREP\_ and ANALYSE\_ steps. Demographic (DM) variables are the various column names, most domains this will be the TESTCD, such as in the Laboratory Test Results (LB). 
 
 ```{r}
-#use domains from prep
+DOMAIN_TABLE("dm", dm_df) 
+
+DOMAIN_TABLE("lb", lb_df)
 ```
 
 
