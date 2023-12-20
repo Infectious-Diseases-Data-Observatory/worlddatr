@@ -75,3 +75,8 @@ PREP_IN_FIRST = function(DATA_IN, DISEASE = "", VARS = NULL){
 
   return(DATA)
 }
+
+# if(any(is.na(DATA_IN$INPRESP) == T)) {
+#   DATA_IN[which(is.na(DATA_IN$INPRESP)), "INPRESP"] = "N"
+#   DATA_IN[which(DATA_IN$INPRESP == "N"), "INOCCUR"] = "Y"
+# }
