@@ -1,3 +1,5 @@
+# iddoverse 0.2.2
+
 # iddoverse 0.2.1
 * All variable names are defined relative to the corresponding dataset using the .data$ function or calling the dataframe name before the $
 * Removed dependence on LB domain in ANALYSE_FOLLOW_UP()
