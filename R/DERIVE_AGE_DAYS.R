@@ -16,6 +16,9 @@
 #'
 #'
 DERIVE_AGE_DAYS = function(DATA) {
+  DATA = DATA %>%
+    mutate(AGEU = str_to_upper(AGEU))
+
   AGE_DAYS = NA
 
   for (i in seq(1, nrow(DATA), 1)) {
