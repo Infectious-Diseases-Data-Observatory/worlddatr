@@ -1,4 +1,7 @@
 # iddoverse 0.2.2
+* Vignette created
+* str_to_upper(AGEU) in DERIVE_AGE_YEARS & DERIVE_AGE_DAYS
+* for loop added into PREP_SA_BL to convert SAOCCUR & SAPRESP
 
 # iddoverse 0.2.1
 * All variable names are defined relative to the corresponding dataset using the .data$ function or calling the dataframe name before the $
