@@ -72,6 +72,11 @@ PREP_SA_BL = function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_T
   DATA_SA$SAOCCUR = str_replace_all(DATA_SA$SAOCCUR, "FALSE", "N")
   DATA_SA$SAOCCUR = str_replace_all(DATA_SA$SAOCCUR, "UNKNOWN", "U")
 
+  if(any(is.na(DATA_SA$SAPRESP))) {
+    DATA_SA[which(is.na(DATA_SA$SAPRESP)), "SAPRESP"] = "N"
+    DATA_SA[which(DATA_SA$SAPRESP == "N"), "SAOCCUR"] = "Y"
+  }
+
   if(inc_DUR == FALSE & inc_TIME == FALSE){
     if("SACAT" %in% names(DATA_SA)){
       DATA_HIST = DATA_SA %>%
