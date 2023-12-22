@@ -31,13 +31,6 @@ devtools::install_github("RhysPeploe/iddoverse")
 library(iddoverse)
 ```
 
-Alternatively, to load the most recent update:
-
-``` r
-pkg = c('RhysPeploe/iddoverse')
-pacman::p_load_current_gh(char = pkg)
-```
-
 We recommend updating the install regularly as the package is developing
 constantly. Version 1.0 will be released in 2024. Until then, versions
 starting with ‘0.’ should be expected to change without notification.
