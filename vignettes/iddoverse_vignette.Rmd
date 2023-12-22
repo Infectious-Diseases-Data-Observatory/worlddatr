@@ -235,7 +235,7 @@ DOMAIN_TABLE("lb", lb_df)
 ```
 
 
-# Data Dictionary
+# Function Directory
 
 Here is a list of the functions in the \{iddoverse\} package with a description and the required domains; the table can be filtered and sorted. 
 
