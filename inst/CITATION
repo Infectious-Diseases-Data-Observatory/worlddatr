@@ -7,7 +7,7 @@ citEntry(
   institution = "Infectious Disease Data Observatory (IDDO), University of Oxford, Oxford, UK",
   year     = "2023",
   url      = "https://github.com/RhysPeploe/iddoverse",
-  note     = "R package version 0.2.1",
+  note     = "",
   textVersion = paste(
     "R. Peploe (2023), 'Welcome to the iddoverse: An R package for converting IDDO-SDTM data to analyse datasets', Infectious Disease Data Observatory, University of Oxford. Available: https://github.com/RhysPeploe/iddoverse"
   )
