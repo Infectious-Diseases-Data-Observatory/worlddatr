@@ -20,6 +20,11 @@ DERIVE_ANTHRO = function(DATA){
   DATA_ANTHRO = DATA %>%
     filter(DATA$AGE < 5 | DATA$AGE_DAYS < 1826)
 
+  if(nrow(DATA_ANTHRO) == 0){
+    return(DATA_ANTHRO)
+  }
+
+  else{
   BIND_ANTHRO = cbind(DATA_ANTHRO,
                       anthro_zscores(
                         sex = DATA_ANTHRO$SEX,
@@ -37,4 +42,5 @@ DERIVE_ANTHRO = function(DATA){
            "WHZ_FLAG" = "fwfl")
 
   return(BIND_ANTHRO)
+  }
 }
