@@ -17,9 +17,8 @@
 #'
 DERIVE_AGE_DAYS = function(DATA) {
   DATA = DATA %>%
-    mutate(AGEU = str_to_upper(AGEU))
-
-  AGE_DAYS = NA
+    mutate(AGEU = str_to_upper(.data$AGEU),
+           AGE_DAYS = NA)
 
   for (i in seq(1, nrow(DATA), 1)) {
     if(is.na(DATA$AGEU[i])) {
@@ -39,5 +38,5 @@ DERIVE_AGE_DAYS = function(DATA) {
     }
   }
 
-  return(cbind(DATA, AGE_DAYS))
+  return(DATA)
 }

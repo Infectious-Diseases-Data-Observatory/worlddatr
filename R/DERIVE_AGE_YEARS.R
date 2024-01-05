@@ -15,7 +15,7 @@
 #'
 DERIVE_AGE_YEARS = function(DATA){
   DATA = DATA %>%
-    mutate(AGEU = str_to_upper(AGEU))
+    mutate(AGEU = str_to_upper(.data$AGEU))
 
   for (i in seq(1, nrow(DATA), 1)){
     if(is.na(DATA$AGEU[i])){
