@@ -31,7 +31,8 @@ PREP_MB_FU_MAL = function(DATA_MB){
            MBSTRESC = as.character(.data$MBSTRESC),
            MBMODIFY = as.character(.data$MBMODIFY),
            MBORRES = as.character(.data$MBORRES),
-           DAY = .data$MBDY)
+           DAY = .data$MBDY,
+           MBUNITS = as.character(NA))
 
   DATA_EMPTY = DATA_MB %>%
     filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
@@ -47,12 +48,18 @@ PREP_MB_FU_MAL = function(DATA_MB){
   DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] =
     DATA[which(is.na(DATA$MBSTRES)), "MBORRES"]
 
+  DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBUNITS"] =
+    DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBSTRESU"]
+  DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBUNITS"] =
+    DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBORRESU"]
+
   DATA = DATA %>%
-    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
+    mutate(MBSTRES = str_to_upper(.data$MBSTRES),
+           MBUNITS = str_to_upper(.data$MBUNITS)) %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
                             .data$DAY, .data$EMPTY_TIME),
-                names_from = .data$MBTESTCD, values_from = .data$MBSTRES,
-                names_sort = T, names_vary = "slowest",
+                names_from = .data$MBTESTCD, values_from = c(.data$MBSTRES, .data$MBUNITS),
+                names_sort = T, names_vary = "slowest", names_glue = "{MBTESTCD}_{.value}",
                 values_fn = first) #%>%
     # mutate(DATA_PF = NA,
     #        DATA_PV = NA,
@@ -61,7 +68,7 @@ PREP_MB_FU_MAL = function(DATA_MB){
     #        DATA_PM = NA,
     #        DATA_PO = NA)
 
-  # colnames(DATA) = gsub("_MBSTRES", "", colnames(DATA))
+  colnames(DATA) = gsub("_MBSTRES", "", colnames(DATA))
 
   colnames(DATA) = gsub("PFALCIPA", "PARA_PF", colnames(DATA))
   colnames(DATA) = gsub("PFALCIPS", "GAM_PF", colnames(DATA))

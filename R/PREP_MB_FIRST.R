@@ -53,18 +53,24 @@ PREP_MB_FIRST = function(DATA_MB, DISEASE = "", VARS = NULL){
     mutate(MBSTRES = as.character(.data$MBSTRESN),
            MBSTRESC = as.character(.data$MBSTRESC),
            MBORRES = as.character(.data$MBORRES),
-           DAY = .data$MBDY)
+           DAY = .data$MBDY,
+           MBUNITS = as.character(NA))
 
   DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] =
     DATA[which(is.na(DATA$MBSTRES)), "MBSTRESC"]
   DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] =
     DATA[which(is.na(DATA$MBSTRES)), "MBORRES"]
 
+  DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBUNITS"] =
+    DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBSTRESU"]
+  DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBUNITS"] =
+    DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBORRESU"]
+
   DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$DAY), ]
 
   DATA = DATA %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
-                names_glue = "{MBTESTCD}_{.value}", values_from = c(.data$MBSTRES, .data$DAY),
+                names_glue = "{MBTESTCD}_{.value}", values_from = c(.data$MBSTRES, .data$MBUNITS, .data$DAY),
                 names_sort = T, names_vary = "slowest",
                 values_fn = first)
 

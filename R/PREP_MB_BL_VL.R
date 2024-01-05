@@ -28,7 +28,8 @@ PREP_MB_BL_VL = function(DATA_MB){
            MBUNITS = as.character(.data$MBSTRESU),
            MBSTRESC = as.character(.data$MBSTRESC),
            MBMODIFY = as.character(.data$MBMODIFY),
-           MBORRES = as.character(.data$MBORRES))
+           MBORRES = as.character(.data$MBORRES),
+           MBUNITS = as.character(NA))
 
   DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] =
     DATA[which(is.na(DATA$MBSTRES)), "MBSTRESC"]
@@ -37,13 +38,17 @@ PREP_MB_BL_VL = function(DATA_MB){
   DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] =
     DATA[which(is.na(DATA$MBSTRES)), "MBORRES"]
 
-  DATA[which(is.na(DATA$MBUNITS)), "MBUNITS"] =
-    DATA[which(is.na(DATA$MBUNITS)), "MBORRESU"]
+  DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBUNITS"] =
+    DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBSTRESU"]
+  DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBUNITS"] =
+    DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBORRESU"]
 
   DATA$MBSTRES = str_replace_all(DATA$MBSTRES, "01-Oct", "1-10")
   DATA$MBSTRES = str_replace_all(DATA$MBSTRES, "01-OCT", "1-10")
 
   DATA = DATA %>%
+    mutate(MBSTRES = str_to_upper(.data$MBSTRES),
+           MBUNITS = str_to_upper(.data$MBUNITS)) %>%
     filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
                 names_glue = "{MBTESTCD}_{.value}",
