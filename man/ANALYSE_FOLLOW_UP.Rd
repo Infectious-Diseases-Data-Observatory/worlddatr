@@ -61,7 +61,8 @@ Required.}
 
 \item{DM_VARS}{Specify additional variables to be included in the output
 dataset. Character string. Use column names as specified in the DM section
-of the 'IDDO SDTM Implementation Manual'. i.e. c("DTHFL", "DTHDTC").}
+of the 'IDDO SDTM Implementation Manual'. i.e. c("DTHFL", "DTHDTC").
+If DM is the only domain, PREP_DM() will be an equivalent method.}
 
 \item{LB_VARS}{Specify additional variables to be included in the output
 dataset. Character string. Use controlled terminology for LBTESTCD as
