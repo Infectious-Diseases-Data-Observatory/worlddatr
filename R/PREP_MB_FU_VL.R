@@ -60,43 +60,12 @@ PREP_MB_FU_VL = function(DATA_MB){
                             .data$DAY, .data$EMPTY_TIME), names_from = .data$MBTESTCD,
                 values_from = c(.data$MBSTRES, .data$MBUNITS, .data$MBLOC, .data$MBSPEC),
                 names_glue = "{MBTESTCD}_{.value}", names_sort = T, names_vary = "slowest",
-                values_fn = first) %>%
-    mutate(DATA_LSHMANIA = NA,
-           DATA_MAJOR = NA,
-           DATA_LDONOV = NA)
+                values_fn = first)
 
   colnames(DATA) = gsub("_MBSTRES", "", colnames(DATA))
   colnames(DATA) = gsub("MBUNITS", "UNITS", colnames(DATA))
   colnames(DATA) = gsub("MBLOC", "LOC", colnames(DATA))
   colnames(DATA) = gsub("MBSPEC", "SPEC", colnames(DATA))
-
-  for(i in 1:nrow(DATA)){
-    if("LSHMANIA" %in% names(DATA)){
-      if(!is.na(DATA$LSHMANIA[i]) | !is.na(DATA$LSHMANIA_UNITS[i]) |
-         !is.na(DATA$LSHMANIA_SPEC[i]) | !is.na(DATA$LSHMANIA_LOC[i])){
-        DATA$DATA_LSHMANIA[i] = "LSHM"
-      }
-    }
-    if("LDONOV" %in% names(DATA)){
-      if(!is.na(DATA$LDONOV[i]) | !is.na(DATA$LDONOV_UNITS[i]) |
-         !is.na(DATA$LDONOV_SPEC[i]) | !is.na(DATA$LDONOV_LOC[i])){
-        DATA$DATA_LDONOV[i] = "LDON"
-      }
-    }
-    if("LMAJOR" %in% names(DATA)){
-      if(!is.na(DATA$LMAJOR[i]) | !is.na(DATA$LMAJOR_UNITS[i]) |
-         !is.na(DATA$LMAJOR_SPEC[i]) | !is.na(DATA$LMAJOR_LOC[i])){
-        DATA$DATA_MAJOR[i] = "LMAJ"
-      }
-    }
-  }
-
-  DATA = DATA %>%
-    unite(.data$DATA_LSHMANIA, .data$DATA_LDONOV, .data$DATA_MAJOR, col = "SPECIES",
-          na.rm = TRUE, remove = TRUE, sep = " + ") %>%
-    relocate(.data$SPECIES, .after = .data$USUBJID) %>%
-    mutate(SPECIES = convert_blanks_to_na(.data$SPECIES)) %>%
-    clean_names(case = "all_caps")
 
   DATA = DATA %>%
     clean_names(case = "all_caps")
