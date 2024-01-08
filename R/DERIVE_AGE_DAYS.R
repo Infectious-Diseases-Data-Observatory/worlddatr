@@ -25,16 +25,16 @@ DERIVE_AGE_DAYS = function(DATA) {
       next
     }
     else if (DATA$AGEU[i] == "DAYS") {
-      AGE_DAYS[i] = floor(DATA$AGE[i])
+      DATA$AGE_DAYS[i] = floor(DATA$AGE[i])
     }
     else if (DATA$AGEU[i] == "WEEKS") {
-      AGE_DAYS[i] = floor(DATA$AGE[i]*7)
+      DATA$AGE_DAYS[i] = floor(DATA$AGE[i]*7)
     }
     else if (DATA$AGEU[i] == "MONTHS") {
-      AGE_DAYS[i] = floor(DATA$AGE[i]*30.417)
+      DATA$AGE_DAYS[i] = floor(DATA$AGE[i]*30.417)
     }
     else if (DATA$AGEU[i] == "YEARS") {
-      AGE_DAYS[i] = floor(DATA$AGE[i]*365.25)
+      DATA$AGE_DAYS[i] = floor(DATA$AGE[i]*365.25)
     }
   }
 
