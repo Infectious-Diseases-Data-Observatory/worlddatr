@@ -27,7 +27,8 @@ PREP_RP_BL = function(DATA_RP, VARS = NULL){
     DERIVE_TIMING() %>%
     mutate(RPSTRES = as.character(.data$RPSTRESN),
            RPSTRESC = as.character(.data$RPSTRESC),
-           RPORRES = as.character(.data$RPORRES))
+           RPORRES = as.character(.data$RPORRES),
+           RPUNITS = as.character(NA))
 
   DATA$RPSTRESC = str_replace_all(DATA$RPSTRESC, "NEGATIVE", "N")
 
@@ -36,17 +37,25 @@ PREP_RP_BL = function(DATA_RP, VARS = NULL){
   DATA[which(is.na(DATA$RPSTRES)), "RPSTRES"] =
     DATA[which(is.na(DATA$RPSTRES)), "RPORRES"]
 
+  DATA[which(!is.na(DATA$RPSTRESC) | !is.na(DATA$RPSTRESN)), "RPUNITS"] =
+    DATA[which(!is.na(DATA$RPSTRESC) | !is.na(DATA$RPSTRESN)), "RPSTRESU"]
+  DATA[which(is.na(DATA$RPSTRESC) & is.na(DATA$RPSTRESN)), "RPUNITS"] =
+    DATA[which(is.na(DATA$RPSTRESC) & is.na(DATA$RPSTRESN)), "RPORRESU"]
+
   DATA = DATA %>%
     filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$RPTESTCD,
-                values_from = .data$RPSTRES, names_vary = "slowest",
+                values_from = c(.data$RPSTRES, .data$RPUNITS), names_vary = "slowest",
                 names_sort = T,
-                values_fn = first)
+                values_fn = first, names_glue = "{RPTESTCD}_{.value}")
 
   if("EGESTAGE" %in% names(DATA)){
     DATA = DATA %>%
       rename("EGA" = "EGESTAGE")
   }
+
+  colnames(DATA) = gsub("_RPSTRES", "", colnames(DATA))
+  colnames(DATA) = gsub("RPUNITS", "UNITS", colnames(DATA))
 
   return(DATA)
 }

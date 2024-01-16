@@ -29,7 +29,8 @@ PREP_MP_FU = function(DATA_MP, MPTEST = "LENGTH", VARS = NULL){
     mutate(MPSTRES = str_to_upper(as.character(.data$MPSTRESN)),
            MPSTRESC = str_to_upper(as.character(.data$MPSTRESC)),
            MPORRES = str_to_upper(as.character(.data$MPORRES)),
-           DAY = .data$MPDY)
+           DAY = .data$MPDY,
+           MPUNITS = as.character(NA))
 
   DATA_EMPTY = DATA_MP %>%
     filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
@@ -43,13 +44,18 @@ PREP_MP_FU = function(DATA_MP, MPTEST = "LENGTH", VARS = NULL){
   DATA[which(is.na(DATA$MPSTRES)), "MPSTRES"] =
     DATA[which(is.na(DATA$MPSTRES)), "MPORRES"]
 
+  DATA[which(!is.na(DATA$MPSTRESC) | !is.na(DATA$MPSTRESN)), "MPUNITS"] =
+    DATA[which(!is.na(DATA$MPSTRESC) | !is.na(DATA$MPSTRESN)), "MPSTRESU"]
+  DATA[which(is.na(DATA$MPSTRESC) & is.na(DATA$MPSTRESN)), "MPUNITS"] =
+    DATA[which(is.na(DATA$MPSTRESC) & is.na(DATA$MPSTRESN)), "MPORRESU"]
+
   if(MPTEST == "WIDTH"){
     DATA = DATA %>%
       filter(.data$MPTESTCD == "WIDTH") %>%
       pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
                               .data$DAY, .data$EMPTY_TIME),
-                  names_from = .data$MPLOC, values_from = .data$MPSTRES,
-                  names_sort = T, names_vary = "slowest",
+                  names_from = .data$MPLOC, values_from = c(.data$MPSTRES, .data$MPUNITS),
+                  names_sort = T, names_vary = "slowest", names_glue = "{MPLOC}_{.value}",
                   values_fn = first)
   }
 
@@ -57,8 +63,8 @@ PREP_MP_FU = function(DATA_MP, MPTEST = "LENGTH", VARS = NULL){
     DATA = DATA %>%
       pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
                               .data$DAY, .data$EMPTY_TIME),
-                  names_from = c(.data$MPLOC, .data$MPTESTCD), values_from = .data$MPSTRES,
-                  names_sort = T, names_vary = "slowest",
+                  names_from = c(.data$MPLOC, .data$MPTESTCD), values_from = c(.data$MPSTRES, .data$MPUNITS),
+                  names_sort = T, names_vary = "slowest", names_glue = "{MPLOC}_{MPTESTCD}_{.value}",
                   values_fn = first)
   }
 
@@ -67,13 +73,18 @@ PREP_MP_FU = function(DATA_MP, MPTEST = "LENGTH", VARS = NULL){
       filter(.data$MPTESTCD == "LENGTH") %>%
       pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
                               .data$DAY, .data$EMPTY_TIME),
-                  names_from = .data$MPLOC, values_from = .data$MPSTRES,
-                  names_sort = T, names_vary = "slowest",
+                  names_from = .data$MPLOC, values_from = c(.data$MPSTRES, .data$MPUNITS),
+                  names_sort = T, names_vary = "slowest", names_glue = "{MPLOC}_{.value}",
                   values_fn = first)
   }
 
+  colnames(DATA) = gsub("_MBSTRES", "", colnames(DATA))
+  colnames(DATA) = gsub("MPUNITS", "UNITS", colnames(DATA))
+
   DATA = DATA %>%
     clean_names(case = "all_caps")
+
+
 
   return(DATA)
 }

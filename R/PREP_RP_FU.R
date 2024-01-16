@@ -27,7 +27,8 @@ PREP_RP_FU = function(DATA_RP, VARS = NULL){
     mutate(RPSTRES = as.character(.data$RPSTRESN),
            RPSTRESC = as.character(.data$RPSTRESC),
            RPORRES = as.character(.data$RPORRES),
-           DAY = .data$RPDY)
+           DAY = .data$RPDY,
+           RPUNITS = as.character(NA))
 
   DATA_RP$RPSTRESC = str_replace_all(DATA_RP$RPSTRESC, "NEGATIVE", "N")
 
@@ -43,15 +44,24 @@ PREP_RP_FU = function(DATA_RP, VARS = NULL){
   DATA[which(is.na(DATA$RPSTRES)), "RPSTRES"] =
     DATA[which(is.na(DATA$RPSTRES)), "RPORRES"]
 
+  DATA[which(!is.na(DATA$RPSTRESC) | !is.na(DATA$RPSTRESN)), "RPUNITS"] =
+    DATA[which(!is.na(DATA$RPSTRESC) | !is.na(DATA$RPSTRESN)), "RPSTRESU"]
+  DATA[which(is.na(DATA$RPSTRESC) & is.na(DATA$RPSTRESN)), "RPUNITS"] =
+    DATA[which(is.na(DATA$RPSTRESC) & is.na(DATA$RPSTRESN)), "RPORRESU"]
+
   DATA = DATA %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
                             .data$DAY, .data$EMPTY_TIME), names_from = .data$RPTESTCD,
-                values_from = .data$RPSTRES, names_vary = "slowest",
-                names_sort = T, values_fn = first)
+                values_from = c(.data$RPSTRES, .data$RPUNITS), names_vary = "slowest",
+                names_sort = T, values_fn = first, names_glue = "{RPTESTCD}_{.value}")
+
+  colnames(DATA) = gsub("_RPSTRES", "", colnames(DATA))
+  colnames(DATA) = gsub("RPUNITS", "UNITS", colnames(DATA))
 
   if("EGESTAGE" %in% names(DATA)){
     DATA = DATA %>%
-      rename("EGA" = "EGESTAGE")
+      rename("EGA" = "EGESTAGE",
+             "EGA_UNITS" = "EGESTAGE_UNITS")
   }
 
   return(DATA)

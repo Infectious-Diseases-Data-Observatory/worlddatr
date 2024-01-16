@@ -50,20 +50,29 @@ PREP_VS_FIRST = function(DATA_VS, DISEASE = "", VARS = NULL){
     mutate(VSSTRES = as.character(.data$VSSTRESN),
            VSSTRESC = as.character(.data$VSSTRESC),
            VSORRES = as.character(.data$VSORRES),
-           DAY = .data$VSDY)
+           DAY = .data$VSDY,
+           VSUNITS = as.character(NA))
 
   DATA[which(is.na(DATA$VSSTRES)), "VSSTRES"] =
     DATA[which(is.na(DATA$VSSTRES)), "VSSTRESC"]
   DATA[which(is.na(DATA$VSSTRES)), "VSSTRES"] =
     DATA[which(is.na(DATA$VSSTRES)), "VSORRES"]
 
+  DATA[which(!is.na(DATA$VSSTRESC) | !is.na(DATA$VSSTRESN)), "VSUNITS"] =
+    DATA[which(!is.na(DATA$VSSTRESC) | !is.na(DATA$VSSTRESN)), "VSSTRESU"]
+  DATA[which(is.na(DATA$VSSTRESC) & is.na(DATA$VSSTRESN)), "VSUNITS"] =
+    DATA[which(is.na(DATA$VSSTRESC) & is.na(DATA$VSSTRESN)), "VSORRESU"]
+
   DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$DAY), ]
 
   DATA = DATA %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$VSTESTCD,
-                names_glue = "{VSTESTCD}_{.value}", values_from = c(.data$VSSTRES, .data$DAY),
+                names_glue = "{VSTESTCD}_{.value}", values_from = c(.data$VSSTRES, .data$VSUNITS, .data$DAY),
                 names_sort = T, names_vary = "slowest",
                 values_fn = first)
+
+  colnames(DATA) = gsub("_VSSTRES", "", colnames(DATA))
+  colnames(DATA) = gsub("VSUNITS", "UNITS", colnames(DATA))
 
   DATA = DATA %>%
     clean_names(case = "all_caps")
