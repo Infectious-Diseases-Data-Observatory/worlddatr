@@ -73,8 +73,7 @@ PREP_MB_FU = function(DATA_MB, DISEASE = "", VARS = NULL){
     DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBORRESU"]
 
   DATA = DATA %>%
-    mutate(MBSTRES = str_to_upper(.data$MBSTRES),
-           MBUNITS = str_to_upper(.data$MBUNITS)) %>%
+    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY,
                             .data$VISITNUM, .data$DAY, .data$EMPTY_TIME),
                 names_from = .data$MBTESTCD, values_from = c(.data$MBSTRES, .data$MBUNITS),
@@ -82,6 +81,7 @@ PREP_MB_FU = function(DATA_MB, DISEASE = "", VARS = NULL){
                 values_fn = first, names_glue = "{MBTESTCD}_{.value}")
 
   colnames(DATA) = gsub("_MBSTRES", "", colnames(DATA))
+  colnames(DATA) = gsub("MBUNITS", "UNITS", colnames(DATA))
 
   DATA = DATA %>%
     clean_names(case = "all_caps")
@@ -89,21 +89,32 @@ PREP_MB_FU = function(DATA_MB, DISEASE = "", VARS = NULL){
   if("AFB" %in% names(DATA) | "MTB" %in% names(DATA)){
     if("AFB" %in% names(DATA) & "MTB" %in% names(DATA)){
       DATA = DATA %>%
-        mutate(TB = .data$MTB)
+        mutate(TB = .data$MTB,
+               TB_UNITS = .data$MTB_UNITS,
+               MB_IND = NA)
 
-      DATA[which(is.na(DATA$TB)), "TB"] =
-        DATA[which(is.na(DATA$TB)), "AFB"]
+      DATA[which(!is.na(DATA$MTB)), "MB_IND"] = "MTB"
+
+      DATA[which(is.na(DATA$MB_IND)), "TB"] =
+        DATA[which(is.na(DATA$MB_IND)), "AFB"]
+
+      DATA[which(is.na(DATA$MB_IND)), "TB_UNITS"] =
+        DATA[which(is.na(DATA$MB_IND)), "AFB_UNITS"]
 
       DATA = DATA %>%
-        dplyr::select(-"AFB", -"MTB")
+        dplyr::select(-"AFB", -"MTB",
+                      -"AFB_UNITS", -"MTB_UNITS",
+                      -"MB_IND")
     }
     else if("AFB" %in% names(DATA) & "MTB" %!in% names(DATA)){
       DATA = DATA %>%
-        rename("TB" = "AFB")
+        rename("TB" = "AFB",
+               "TB_UNITS" = "AFB_UNITS")
     }
     else if("AFB" %!in% names(DATA) & "MTB" %in% names(DATA)){
       DATA = DATA %>%
-        rename("TB" = "MTB")
+        rename("TB" = "MTB",
+               "TB_UNITS" = "MTB_UNITS")
     }
   }
 
