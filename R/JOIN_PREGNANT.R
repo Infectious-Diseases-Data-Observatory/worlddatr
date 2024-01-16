@@ -17,17 +17,27 @@
 #'
 JOIN_PREGNANT = function(DATA){
   if(("HCG" %in% names(DATA)) & ("PREGIND" %in% names(DATA))){
-    DATA$PREGNANT = DATA$HCG
+    DATA$DOMAIN_IND = NA
 
-    DATA[which(is.na(DATA$PREGNANT)), "PREGNANT"] =
-      DATA[which(is.na(DATA$PREGNANT)), "PREGIND"]
+    DATA$PREGNANT = DATA$HCG
+    DATA$PREGNANT_UNITS = DATA$HCG_UNITS
+
+    DATA[which(!is.na(DATA$PREGNANT) | !is.na(DATA$PREGNANT_UNITS)), "DOMAIN_IND"] = "LB"
+
+    DATA[which(is.na(DATA$DOMAIN_IND)), "PREGNANT"] =
+      DATA[which(is.na(DATA$DOMAIN_IND)), "PREGIND"]
+
+    DATA[which(is.na(DATA$DOMAIN_IND)), "PREGNANT_UNITS"] =
+      DATA[which(is.na(DATA$DOMAIN_IND)), "PREGIND_UNITS"]
 
     DATA = DATA %>%
-      dplyr::select(-"PREGIND", -"HCG")
+      dplyr::select(-"PREGIND", -"HCG", -"DOMAIN_IND",
+                    -"PREGIND_UNITS", -"HCG_UNITS")
 
     if("EGA" %in% names(DATA)){
       DATA = DATA %>%
-        relocate("EGA", .after = "PREGNANT")
+        relocate("EGA_UNITS", .after = "PREGNANT_UNITS") %>%
+        relocate("EGA", .after = "PREGNANT_UNITS")
     }
   }
 
