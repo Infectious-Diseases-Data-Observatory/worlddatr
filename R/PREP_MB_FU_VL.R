@@ -54,8 +54,7 @@ PREP_MB_FU_VL = function(DATA_MB){
   DATA$MBSTRES = str_replace_all(DATA$MBSTRES, "01-OCT", "1-10")
 
   DATA = DATA %>%
-    mutate(MBSTRES = str_to_upper(.data$MBSTRES),
-           MBUNITS = str_to_upper(.data$MBUNITS)) %>%
+    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
                             .data$DAY, .data$EMPTY_TIME), names_from = .data$MBTESTCD,
                 values_from = c(.data$MBSTRES, .data$MBUNITS, .data$MBLOC, .data$MBSPEC),
