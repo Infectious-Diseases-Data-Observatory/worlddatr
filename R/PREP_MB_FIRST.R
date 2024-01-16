@@ -81,42 +81,5 @@ PREP_MB_FIRST = function(DATA_MB, DISEASE = "", VARS = NULL){
   DATA = DATA %>%
     clean_names(case = "all_caps")
 
-  if("AFB" %in% names(DATA) | "MTB" %in% names(DATA)){
-    if("AFB" %in% names(DATA) & "MTB" %in% names(DATA)){
-      DATA = DATA %>%
-        mutate(TB = .data$MTB,
-               TB_UNITS = .data$MTB_UNITS,
-               TB_DAY = .data$MTB_DAY,
-               MB_IND = NA)
-
-      DATA[which(!is.na(DATA$MTB)), "MB_IND"] = "MTB"
-
-      DATA[which(is.na(DATA$MB_IND)), "TB"] =
-        DATA[which(is.na(DATA$MB_IND)), "AFB"]
-
-      DATA[which(is.na(DATA$MB_IND)), "TB_UNITS"] =
-        DATA[which(is.na(DATA$MB_IND)), "AFB_UNITS"]
-
-      DATA[which(is.na(DATA$MB_IND)), "TB_DAY"] =
-        DATA[which(is.na(DATA$MB_IND)), "AFB_DAY"]
-
-      DATA = DATA %>%
-        dplyr::select(-"AFB", -"MTB",
-                      -"AFB_UNITS", -"MTB_UNITS",
-                      -"AFB_DAY", -"MTB_UNITS",
-                      -"MB_IND")
-    }
-    else if("AFB" %in% names(DATA) & "MTB" %!in% names(DATA)){
-      DATA = DATA %>%
-        rename("TB" = "AFB",
-               "TB_UNITS" = "AFB_UNITS")
-    }
-    else if("AFB" %!in% names(DATA) & "MTB" %in% names(DATA)){
-      DATA = DATA %>%
-        rename("TB" = "MTB",
-               "TB_UNITS" = "MTB_UNITS")
-    }
-  }
-
   return(DATA)
 }
