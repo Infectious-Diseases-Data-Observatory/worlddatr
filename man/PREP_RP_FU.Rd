@@ -15,14 +15,15 @@ specified in the RP section of the 'IDDO SDTM Implementation Manual'. i.e.
 c("LMPSTDTC").}
 }
 \value{
-Wide data frame containing a row per subject per day, with RPTESTCDs as
-columns.
+Wide data frame containing a row per subject per day, with RPTESTCDs
+and the units as columns.
 }
 \description{
 Prepare the Reproductive System Findings (RP) domain for use in follow up
 analysis data sets. Takes a IDDO-SDTM curated RP domain, transforms and
 pivots it in order to merge it into a follow up analysis data set with other
-domains using the ANALYSE_FOLLOW_UP() functions.
+domains using the ANALYSE_FOLLOW_UP() functions. Default variables are:
+"PREGIND" & "EGESTAGE" (renamed as "EGA")
 }
 \author{
 Rhys Peploe

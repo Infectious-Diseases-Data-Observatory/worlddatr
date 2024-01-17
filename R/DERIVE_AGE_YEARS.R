@@ -8,6 +8,7 @@
 #'
 #' @return Data frame with AGE and AGEU in years as opposed to the original
 #'   values.
+#'
 #' @export
 #'
 #' @author Rhys Peploe

@@ -3,7 +3,8 @@
 #' Prepare the Morphology and Physiology (MP) domain for use in follow up
 #' analysis data sets. Takes a IDDO-SDTM curated MP domain, transforms and
 #' pivots it in order to merge it into a follow up analysis data set with other
-#' domains using the ANALYSE_FOLLOW_UP() function.
+#' domains using the ANALYSE_FOLLOW_UP() function. Default variables are: "LIVER" &
+#' "SPLEEN"
 #'
 #' @param DATA_MP The MP domain data frame, as named in the global environment.
 #' @param MPTEST Specify which MPTESTCD is desired in the output. Options are:
@@ -13,7 +14,7 @@
 #'   specified in the MP section of the 'IDDO SDTM Implementation Manual'.
 #'
 #' @return Dataframe containing a row per USUBJID/subject per day, with
-#'   MPTESTCDs as columns
+#'   MPTESTCDs and the units as columns
 #'
 #' @export
 #'

@@ -3,7 +3,22 @@
 #' Prepare the Clinical and Adverse Effects (SA) domain for use in baseline
 #' analysis data sets. Takes a IDDO-SDTM curated SA domain, transforms and
 #' pivots it in order to merge it into a baseline analysis data set with other
-#' domains using the ANALYSE_BASELINE() function.
+#' domains using the ANALYSE_BASELINE() function. Default variables are:
+#' "FEVER", "ANEMIA", "HIV", with disease specific defaults in 'Details'
+#'
+#' Default variables:
+#'
+#' Malaria: "FEVER", "ANEMIA", "HIV", "ANOREXIA",
+#' "DIARRHOEA", "NAUSEA", "VOMITING", "ABDOMINAL PAIN", "DIZZINESS", "SHORTNESS
+#' OF BREATH", "JAUNDICE", "DARK URINE", "ENLARGED SPLEEN", "ENLARGED LIVER"
+#'
+#' VL: "FEVER", "ANEMIA", "HIV"
+#'
+#' Ebola: "FEVER", "LOSS OF APPETITE", "VOMITING", "NAUSEA AND
+#' VOMITING","HEADACHE", "DIARRHOEA", "ABDOMINAL PAIN", "BLEEDING", "DIFFICULTY
+#' SWALLOWING", "HICCOUGHS", "DIFFICULTY BREATHING", "PAIN IN THROAT",
+#' "FATIGUE", "MUSCLE PAIN", "JOINT PAIN", "GENERALIZED ACHES AND PAIN",
+#' "ERUPTION OF SKIN"
 #'
 #' @param DATA_SA The SA domain data frame, as named in the global environment.
 #' @param DISEASE The name of the disease theme being analysed. Character

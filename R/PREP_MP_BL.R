@@ -3,7 +3,8 @@
 #' Prepare the Morphology and Physiology (MP) domain for use in baseline
 #' analysis data sets. Takes a IDDO-SDTM curated MP domain, transforms and
 #' pivots it in order to merge it into a baseline analysis data set with other
-#' domains using the ANALYSE_BASELINE() function.
+#' domains using the ANALYSE_BASELINE() function. Default variables are: "LIVER" &
+#' "SPLEEN"
 #'
 #' @param DATA_MP The MP domain data frame, as named in the global environment.
 #' @param MPTEST Specify which MPTESTCD is desired in the output. Options are:
@@ -12,8 +13,8 @@
 #'   dataset. Character string. Use controlled terminology for MPLOC as
 #'   specified in the MP section of the 'IDDO SDTM Implementation Manual'.
 #'
-#' @return Dataframe containing a row per USUBJID/subject, with MPTESTCDs as
-#'   columns
+#' @return Dataframe containing a row per USUBJID/subject, with MPTESTCDs and
+#'   the units as columns
 #'
 #' @export
 #'

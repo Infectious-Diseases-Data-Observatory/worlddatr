@@ -6,14 +6,13 @@
 #' into a baseline analysis data set with other domains using the
 #' ANALYSE_BASELINE() function.
 #'
-#' This allows the Temperature location to be
-#' recorded in the analysis dataset without including the location for all of
-#' the other VS variables
+#' This allows the Temperature location to be recorded in the analysis dataset
+#' without including the location for all of the other VS variables
 #'
 #' @param DATA_VS The VS domain data frame, as named in the global environment.
 #'
-#' @return Data frame with one row per USUBJID/subject, with VSTESTCDs as
-#'   columns
+#' @return Data frame with one row per USUBJID/subject, with TEMP, TEMP_UNITS
+#'   and TEMP_LOC as columns
 #'
 #' @export
 #'

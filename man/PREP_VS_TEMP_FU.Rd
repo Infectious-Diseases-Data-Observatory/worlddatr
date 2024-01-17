@@ -10,8 +10,8 @@ PREP_VS_TEMP_FU(DATA_VS)
 \item{DATA_VS}{The VS domain data frame, as named in the global environment.}
 }
 \value{
-Data frame with one row per USUBJID/subject, with VSTESTCDs as
-columns
+Data frame with one row per USUBJID/subject, with TEMP, TEMP_UNITS
+and TEMP_LOC as columns
 }
 \description{
 Prepare the Temperature variable in the Vital Signs (VS) domain for use in
@@ -21,9 +21,8 @@ into a follow up analysis data set with other domains using the
 ANALYSE_FOLLOW_UP() function.
 }
 \details{
-This allows the Temperature location to be
-recorded in the analysis dataset without including the location for all of
-the other VS variables
+This allows the Temperature location to be recorded in the analysis dataset
+without including the location for all of the other VS variables
 }
 \author{
 Rhys Peploe

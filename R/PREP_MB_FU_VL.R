@@ -5,12 +5,12 @@
 #' MB domain, transforms and pivots it in order to merge it into a follow up
 #' analysis data set with other domains using the ANALYSE_FOLLOW_UP() function.
 #' PREP_MB_FU() and PREP_MB_VL_FU() would be merged in the ANALYSE_FOLLOW_UP()
-#' function.
+#' function. Default variables are: "LSHMANIA", "LDONOV", "LMAJOR"
 #'
 #' @param DATA_MB The MB domain data frame, as named in the global environment.
 #'
 #' @return Data frame with one row per USUBJID/subject per day, with VL specific
-#'   MBTESTCDs as columns
+#'   MBTESTCDs and the units as columns
 #'
 #' @export
 #'

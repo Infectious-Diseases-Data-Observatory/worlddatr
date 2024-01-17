@@ -3,7 +3,20 @@
 #' Prepare the Laboratory Test Results (LB) domain for use in follow up analysis
 #' data sets. Takes a IDDO-SDTM curated LB domain, transforms and pivots it in
 #' order to merge it into a follow up analysis data set with other domains using
-#' the ANALYSE_FOLLOW_UP() function.
+#' the ANALYSE_FOLLOW_UP() function. Default variables are: "HGB", "HCT",
+#' "PLAT", "WBC", "K", "ALT", "AST", "BILI", "CREAT", "ALB", "SODIUM", "HCG".
+#' Disease specific features that are included by default are listed in
+#' 'Details'
+#'
+#' Default Variables:
+#'
+#' Malaria: "INTLK6", "CD4", "HGB", "HGBMET", "HCT", "PLAT", "WBC", "K", "ALT",
+#' "AST", "BILI", "CREAT", "ALB", "SODIUM", "HCG", "G6PD"
+#'
+#' VL: "INTLK6", "CD4", "HGB", "HCT", "PLAT", "WBC", "K", "ALT", "AST", "BILI",
+#' "CREAT", "ALB", "SODIUM", "HCG"
+#'
+#' Ebola: "K", "ALT", "AST", "CREAT", "SODIUM", "UREA"
 #'
 #' @param DATA_LB The LB domain data frame, as named in the global environment.
 #' @param DISEASE The name of the disease theme being analysed. Character

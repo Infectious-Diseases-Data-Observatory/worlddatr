@@ -9,7 +9,8 @@
 #' @param DATA Data frame containing both the MB test for HIV and the SA event
 #'   for HIV.
 #'
-#' @return Data frame with a PREGNANT column, and PREGIND & HCG removed.
+#' @return Data frame with PREGNANT and PREGNANT_UNITS columns, and PREGIND &
+#'   HCG, with their respective units, removed.
 #'
 #' @export
 #'

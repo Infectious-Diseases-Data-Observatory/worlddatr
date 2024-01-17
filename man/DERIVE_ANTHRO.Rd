@@ -11,8 +11,8 @@ DERIVE_ANTHRO(DATA)
 typically held in the Demographics (DM) and Vital Signs (VS) domains.}
 }
 \value{
-Data frame with additional columns for WAZ, HAZ and WHZ scores,
-along with flags for each.
+Data frame with only only 5 year olds included and additional columns
+for WAZ, HAZ and WHZ scores, along with flags for each.
 }
 \description{
 Calculates the Height for Age, Weight for Age and Weight for Height z-scores
@@ -21,5 +21,6 @@ is only for children less than 5 years old.
 }
 \details{
 Note the function can be applied to a dataset with subjects greater than 5
-years old too, but those subjects will have NA in these columns.
+years old too, but those subjects will be filtered out. If using ANALYSE_X(),
+then over 5 year olds will still remain in the resultant dataset.
 }

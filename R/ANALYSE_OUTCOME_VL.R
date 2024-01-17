@@ -37,6 +37,7 @@ ANALYSE_OUTCOME_VL = function(DATA_DM, DATA_DS = NULL, DATA_RS = NULL, DATA_MB =
     OUT = PREP_DM(DATA_DM, DISEASE = "VL", VARS = c("DTHFL", "DTHDTC", str_to_upper(DM_VARS))) %>%
       left_join(PREP_DS_OUT_VL(DATA_DS, expand_cols = FALSE))
   }
+
   else if(is.null(DATA_DS)){
     OUT = PREP_DM(DATA_DM, DISEASE = "VL", VARS = c("DTHFL", "DTHDTC", str_to_upper(DM_VARS)))
   }

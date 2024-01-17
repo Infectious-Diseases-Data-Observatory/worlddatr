@@ -27,7 +27,21 @@ day of first occurrence of each as columns.
 Prepare the Laboratory (LB) domain for use in first occurrence
 analysis data sets. Takes a IDDO-SDTM curated LB domain, transforms and
 pivots it in order to merge it into a first occurrence analysis data set with other
-domains using the ANALYSE_FIRST() function.
+domains using the ANALYSE_FIRST() function. Default variables are: "HGB", "HCT",
+"PLAT", "WBC", "K", "ALT", "AST", "BILI", "CREAT", "ALB", "SODIUM", "HCG".
+Disease specific features that are included by default are listed in
+'Details'
+}
+\details{
+Default Variables:
+
+Malaria: "INTLK6", "CD4", "HGB", "HGBMET", "HCT", "PLAT", "WBC", "K", "ALT",
+"AST", "BILI", "CREAT", "ALB", "SODIUM", "HCG", "G6PD"
+
+VL: "INTLK6", "CD4", "HGB", "HCT", "PLAT", "WBC", "K", "ALT", "AST", "BILI",
+"CREAT", "ALB", "SODIUM", "HCG"
+
+Ebola: "K", "ALT", "AST", "CREAT", "SODIUM", "UREA"
 }
 \author{
 Rhys Peploe

@@ -3,16 +3,17 @@
 #' Prepare the Reproductive System Findings (RP) domain for use in baseline
 #' analysis data sets. Takes a IDDO-SDTM curated RP domain, transforms and
 #' pivots it in order to merge it into a baseline analysis data set with other
-#' domains using the ANALYSE_BASELINE() functions.
+#' domains using the ANALYSE_BASELINE() functions. Default variables are:
+#' "PREGIND" & "EGESTAGE" (renamed as "EGA")
 #'
 #' @param DATA_RP The RP domain data frame, as named in the global environment.
 #' @param VARS Specify additional variables to be included in the output
 #'   dataset. Character string. Use controlled terminology for RPTESTCD as
 #'   specified in the RP section of the 'IDDO SDTM Implementation Manual'. i.e.
-#'   c("EGESTAGE", "LMPSTDTC").
+#'   c("LMPSTDTC").
 #'
 #' @return Wide data frame containing a row per USUBJID/subject, with RPTESTCDs
-#'   as columns.
+#'   and the units as columns.
 #'
 #' @export
 #'

@@ -5,12 +5,13 @@
 #' curated MB domain, transforms and pivots it in order to merge it into a
 #' baseline analysis data set with other domains using the ANALYSE_BASELINE()
 #' function. PREP_MB_BL() and PREP_MB_VL_BL() would be merged in the
-#' ANALYSE_BASELINE() function.
+#' ANALYSE_BASELINE() function. Default variables are: "LSHMANIA", "LDONOV",
+#' "LMAJOR"
 #'
 #' @param DATA_MB The MB domain data frame, as named in the global environment.
 #'
 #' @return Data frame with one row per USUBJID/subject, with VL specific
-#'   MBTESTCDs as columns
+#'   MBTESTCDs and the units as columns
 #'
 #' @export
 #'

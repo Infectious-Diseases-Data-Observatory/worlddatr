@@ -17,14 +17,15 @@ dataset. Character string. Use controlled terminology for MPLOC as
 specified in the MP section of the 'IDDO SDTM Implementation Manual'.}
 }
 \value{
-Dataframe containing a row per USUBJID/subject, with MPTESTCDs as
-columns
+Dataframe containing a row per USUBJID/subject, with MPTESTCDs and
+the units as columns
 }
 \description{
 Prepare the Morphology and Physiology (MP) domain for use in baseline
 analysis data sets. Takes a IDDO-SDTM curated MP domain, transforms and
 pivots it in order to merge it into a baseline analysis data set with other
-domains using the ANALYSE_BASELINE() function.
+domains using the ANALYSE_BASELINE() function. Default variables are: "LIVER" &
+"SPLEEN"
 }
 \author{
 Rhys Peploe

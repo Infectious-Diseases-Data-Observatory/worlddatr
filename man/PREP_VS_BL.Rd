@@ -24,10 +24,15 @@ Data frame with one row per USUBJID/subject, with VSTESTCDs as
 columns
 }
 \description{
-Prepare the Vital Signs (VS) domain for use in baseline
-analysis data sets. Takes a IDDO-SDTM curated VS domain, transforms and
-pivots it in order to merge it into a baseline analysis data set with other
-domains using the ANALYSE_BASELINE() function.
+Prepare the Vital Signs (VS) domain for use in baseline analysis data sets.
+Takes a IDDO-SDTM curated VS domain, transforms and pivots it in order to
+merge it into a baseline analysis data set with other domains using the
+ANALYSE_BASELINE() function. Default variables are: "WEIGHT", "HEIGHT",
+"MUARMCIR", "BMI", "DIABP", "HR", "PULSE", "RESP", "SYSBP". Ebola specific
+variables are listed in 'Details'
+}
+\details{
+Ebola default variables: "RESP", "HR", "SYSBP", "DIABP"
 }
 \author{
 Rhys Peploe

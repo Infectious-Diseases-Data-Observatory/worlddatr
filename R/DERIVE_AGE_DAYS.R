@@ -12,8 +12,10 @@
 #'
 #' @return Data frame with the additional AGE_DAYS variable, providing the ages
 #'   in days.
+#'
 #' @export
 #'
+#' @author Rhys Peploe
 #'
 DERIVE_AGE_DAYS = function(DATA) {
   DATA = DATA %>%

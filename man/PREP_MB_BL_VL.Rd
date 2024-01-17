@@ -11,7 +11,7 @@ PREP_MB_BL_VL(DATA_MB)
 }
 \value{
 Data frame with one row per USUBJID/subject, with VL specific
-MBTESTCDs as columns
+MBTESTCDs and the units as columns
 }
 \description{
 Prepare the Microbiology (MB) domain for use in baseline analysis data sets
@@ -19,7 +19,8 @@ with specific actions for Visceral Leishmaniasis (VL). Takes a IDDO-SDTM
 curated MB domain, transforms and pivots it in order to merge it into a
 baseline analysis data set with other domains using the ANALYSE_BASELINE()
 function. PREP_MB_BL() and PREP_MB_VL_BL() would be merged in the
-ANALYSE_BASELINE() function.
+ANALYSE_BASELINE() function. Default variables are: "LSHMANIA", "LDONOV",
+"LMAJOR"
 }
 \author{
 Rhys Peploe
