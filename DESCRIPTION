@@ -1,5 +1,5 @@
 Package: iddoverse
-Title: Transforms IDDO customised SDTM domains into analysis datasets
+Title: Converting IDDO-SDTM data to analysis datasets
 Version: 0.2.2
 Authors@R: 
     person("Rhys", "Peploe", , "rhys.peploe@iddo.org", role = c("aut", "cre"),
