@@ -1,3 +1,8 @@
+# iddoverse 0.3.0
+* Units have been including alongside all variable which having a --ORRESU or --STRESU is possible (issue #18). Units are now matched with the equivalent result so STRESU will be used if STRESC or STRESN are and likewise if MODIFY or ORRES are reported in the output, ORRESU will be the units
+* Error in DERIVE_ANTHRO when there is no under 5s, issue #19
+* Removed SPECIES from MB domains 
+
 # iddoverse 0.2.2
 * Vignette created
 * str_to_upper(AGEU) in DERIVE_AGE_YEARS & DERIVE_AGE_DAYS
