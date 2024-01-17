@@ -3,7 +3,14 @@
 #' Prepare the Microbiology (MB) domain for use in baseline analysis data sets.
 #' Takes a IDDO-SDTM curated MB domain, transforms and pivots it in order to
 #' merge it into a baseline analysis data set with other domains using the
-#' ANALYSE_BASELINE() function.
+#' ANALYSE_BASELINE() function. Default variables are: "HIV", "AFB", "MTB",
+#' "ANCDUOD", "ANCLMTA", "ASCLUM". Disease specific options are listed in
+#' 'Details'.
+#'
+#' VL: "HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM", "PLSMDM", "PLSMDMA",
+#' "PLSMDMS", "PFALCIP", "PFALCIPA", "PFALCIPS", "PVIVAX", "PVIVAXA", "PVIVAXS"
+#'
+#' Ebola: "ZEBOV"
 #'
 #' @param DATA_MB The MB domain data frame, as named in the global environment.
 #' @param DISEASE The name of the disease theme being analysed. Character
@@ -15,8 +22,8 @@
 #'   specified in the MB section of the 'IDDO SDTM Implementation Manual'. i.e.
 #'   c("CRONAVIR").
 #'
-#' @return Data frame with one row per USUBJID/subject, with MBTESTCDs as
-#'   columns
+#' @return Data frame with one row per USUBJID/subject, with MBTESTCDs and the
+#'   units as columns
 #'
 #' @export
 #'
@@ -25,17 +32,16 @@
 PREP_MB_BL = function(DATA_MB, DISEASE = "", VARS = NULL){
   DISEASE = str_to_upper(DISEASE)
 
-  if(DISEASE == "MALARIA"){
-    MB_VARS = c("HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM",
-                str_to_upper(VARS))
-  }
-
-  else if(DISEASE == "VL"){
+  if(DISEASE == "VL"){
     MB_VARS = c("HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM",
                 "PLSMDM", "PLSMDMA", "PLSMDMS",
                 "PFALCIP", "PFALCIPA", "PFALCIPS",
                 "PVIVAX", "PVIVAXA", "PVIVAXS",
                 str_to_upper(VARS))
+  }
+
+  else if(DISEASE == "EBOLA"){
+    MB_VARS = c("ZEBOV", str_to_upper(VARS))
   }
 
   else{

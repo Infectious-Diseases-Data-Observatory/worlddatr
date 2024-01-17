@@ -1,9 +1,18 @@
 #' Prepare the MB domain for analysis on the first occurrence of events.
 #'
-#' Prepare the Microbiology (MB) domain for use in first occurrence
-#' analysis data sets. Takes a IDDO-SDTM curated MB domain, transforms and
-#' pivots it in order to merge it into a first occurrence analysis data set with other
-#' domains using the ANALYSE_FIRST() function.
+#' Prepare the Microbiology (MB) domain for use in first occurrence analysis
+#' data sets. Takes a IDDO-SDTM curated MB domain, transforms and pivots it in
+#' order to merge it into a first occurrence analysis data set with other
+#' domains using the ANALYSE_FIRST() function. Default variables are: "HIV",
+#' "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM". Disease specific options are
+#' listed in 'Details'.
+#'
+#' Default variables:
+#'
+#' VL: "HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM", "PLSMDM", "PLSMDMA",
+#' "PLSMDMS", "PFALCIP", "PFALCIPA", "PFALCIPS", "PVIVAX", "PVIVAXA", "PVIVAXS"
+#'
+#' Ebola: "ZEBOV"
 #'
 #' @param DATA_MB The MB domain data frame, as named in the global environment.
 #' @param DISEASE The name of the disease theme being analysed. Character
@@ -15,8 +24,8 @@
 #'   specified in the MB section of the 'IDDO SDTM Implementation Manual'. i.e.
 #'   c("CRONAVIR").
 #'
-#' @return Data frame containing a row per USUBJID/subject, with MBTESTCDs and the
-#'   day of first occurrence of each as columns.
+#' @return Data frame containing a row per USUBJID/subject, with MBTESTCDs, the
+#'   units and the day of first occurrence of each as columns.
 #'
 #' @export
 #'
@@ -25,12 +34,7 @@
 PREP_MB_FIRST = function(DATA_MB, DISEASE = "", VARS = NULL){
   DISEASE = str_to_upper(DISEASE)
 
-  if(DISEASE == "MALARIA"){
-    MB_VARS = c("HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM",
-                str_to_upper(VARS))
-  }
-
-  else if(DISEASE == "VL"){
+  if(DISEASE == "VL"){
     MB_VARS = c("HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM",
                 "PLSMDM", "PLSMDMA", "PLSMDMS",
                 "PFALCIP", "PFALCIPA", "PFALCIPS",

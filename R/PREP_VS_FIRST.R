@@ -3,7 +3,11 @@
 #' Prepare the Vital Signs (VS) domain for use in first occurrence analysis data
 #' sets. Takes a IDDO-SDTM curated VS domain, transforms and pivots it in order
 #' to merge it into a first occurrence analysis data set with other domains
-#' using the ANALYSE_FIRST() function.
+#' using the ANALYSE_FIRST() function. Default variables are: "WEIGHT", "HEIGHT",
+#' "MUARMCIR", "BMI", "DIABP", "HR", "PULSE", "RESP", "SYSBP". Ebola specific
+#' variables are listed in 'Details'
+#'
+#' Ebola default variables: "RESP", "HR", "SYSBP", "DIABP"
 #'
 #' @param DATA_VS The VS domain data frame, as named in the global environment.
 #' @param DISEASE The name of the disease theme being analysed. Character
@@ -25,18 +29,8 @@
 PREP_VS_FIRST = function(DATA_VS, DISEASE = "", VARS = NULL){
   DISEASE = str_to_upper(DISEASE)
 
-  if(DISEASE == "MALARIA"){
-    VS_VARS = c("WEIGHT", "HEIGHT", "MUARMCIR", "BMI", "DIABP", "HR",
-                "PULSE", "RESP", "SYSBP", str_to_upper(VARS))
-  }
-
-  else if(DISEASE == "VL"){
-    VS_VARS = c("WEIGHT", "HEIGHT", "MUARMCIR", "BMI", "DIABP", "HR",
-                "PULSE", "RESP", "SYSBP", str_to_upper(VARS))
-  }
-
-  else if(DISEASE == "EBOLA"){
-    VS_VARS = c("TEMP", "RESP", "HR", "SYSBP", "DIABP", str_to_upper(VARS))
+  if(DISEASE == "EBOLA"){
+    VS_VARS = c("RESP", "HR", "SYSBP", "DIABP", str_to_upper(VARS))
   }
 
   else{
