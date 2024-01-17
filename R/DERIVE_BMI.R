@@ -21,11 +21,6 @@
 #'
 #' @importFrom admiral compute_bmi
 #'
-#' @examples
-#' df <- data.frame(WEIGHT = c(30), HEIGHT = c(150), AGE = c(34))
-#' DERIVE_BMI(df)
-#'
-#'
 DERIVE_BMI = function(DATA){
   if(("HEIGHT" %in% names(DATA)) & ("WEIGHT" %in% names(DATA))){
     DATA = DATA %>%
