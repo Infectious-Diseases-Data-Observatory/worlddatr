@@ -24,12 +24,6 @@ those with valid WEIGHT and HEIGHT variables, then where NAs exist, the
 variable is populated with existing BMI results, along with the relevant
 units. This new variable then replaces the existing BMI column.
 }
-\examples{
-df <- data.frame(WEIGHT = c(30), HEIGHT = c(150), AGE = c(34))
-DERIVE_BMI(df)
-
-
-}
 \author{
 Rhys Peploe
 }
