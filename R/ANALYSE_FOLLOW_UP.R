@@ -110,8 +110,10 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB = NULL,
 
   if(is.null(DATA_MB) == FALSE){
     MB_JOIN = PREP_MB_FU(DATA_MB, DISEASE = DISEASE_THEME, VARS = MB_VARS) %>%
-      left_join(PREP_MBSPEC_FU(DATA_MB, DISEASE = DISEASE_THEME, VARS = MB_VARS)) %>%
-      dplyr::select(order(everything()))
+      left_join(PREP_MBSPEC_FU(DATA_MB, DISEASE = DISEASE_THEME, VARS = MB_VARS))
+
+    MB_JOIN = MB_JOIN %>%
+      dplyr::select(sort(colnames(MB_JOIN)))
 
     if("VISCERAL LEISHMANIASIS" %in% DM$DISEASE | DISEASE_THEME == "VL"){
       FU = FU %>%
@@ -142,8 +144,7 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB = NULL,
   if(is.null(DATA_VS) == FALSE){
     FU = FU %>%
       full_join(PREP_VS_FU(DATA_VS, DISEASE = DISEASE_THEME, VARS = VS_VARS)) %>%
-      full_join(PREP_VS_TEMP_FU(DATA_VS)) %>%
-      relocate("TEMP_LOC", .after = "TEMP")
+      full_join(PREP_VS_TEMP_FU(DATA_VS))
   }
 
   if(is.null(DATA_SA) == FALSE){
@@ -168,7 +169,7 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB = NULL,
     DERIVE_BMI() %>%
     JOIN_PREGNANT() %>%
     JOIN_HIV() %>%
-    filter(is.na("STUDYID") == FALSE & is.na("USUBJID") == FALSE)
+    filter(!is.na("STUDYID") & !is.na("USUBJID"))
 
   if(("HEIGHT" %in% names(FU)) | ("WEIGHT" %in% names(FU))){
     FU = FU %>%
