@@ -67,7 +67,7 @@ PREP_SA_BL = function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_T
 
   DATA_SA = DATA_SA %>%
     convert_blanks_to_na() %>%
-    mutate(SASTRES = str_to_upper(.data$SADECOD),
+    mutate(SASTRES = as.character(.data$SADECOD),
            SAMODIFY = as.character(.data$SAMODIFY),
            SATERM = as.character(.data$SATERM))
 
@@ -77,6 +77,7 @@ PREP_SA_BL = function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_T
     DATA_SA[which(is.na(DATA_SA$SASTRES)), "SATERM"]
 
   DATA_SA = DATA_SA %>%
+    mutate(SASTRES = str_to_upper(.data$SASTRES)) %>%
     filter(.data$SASTRES %in% SA_VARS) %>%
     DERIVE_TIMING() %>%
     mutate(SAPRESP = str_to_upper(.data$SAPRESP),
