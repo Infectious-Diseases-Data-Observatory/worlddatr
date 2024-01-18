@@ -12,7 +12,7 @@ DERIVE_BMI(DATA)
 Vital Signs (VS) domain.}
 }
 \value{
-Data frame with additional column for BMI, if BMI did not previously
+Data frame with additional columns for BMI & BMI_UNITS, if BMI did not previously
 exist. If BMI existed previously, the BMI is recalculated using the WEIGHT
 and HEIGHT provided. The existing value will only be used if there is an NA
 value in the recalculated column, the existing column is then discarded.
@@ -21,14 +21,8 @@ value in the recalculated column, the existing column is then discarded.
 Calculates the Body Mass Index of subjects if WEIGHT and HEIGHT are in the
 data frame. Initially creates a new variable which calculates the BMI of
 those with valid WEIGHT and HEIGHT variables, then where NAs exist, the
-variable is populated with existing BMI results. This new variable then
-replaces the existing BMI column.
-}
-\examples{
-df <- data.frame(WEIGHT = c(30), HEIGHT = c(150), AGE = c(34))
-DERIVE_BMI(df)
-
-
+variable is populated with existing BMI results, along with the relevant
+units. This new variable then replaces the existing BMI column.
 }
 \author{
 Rhys Peploe

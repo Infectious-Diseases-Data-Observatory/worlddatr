@@ -11,7 +11,7 @@ PREP_MB_FU_VL(DATA_MB)
 }
 \value{
 Data frame with one row per USUBJID/subject per day, with VL specific
-MBTESTCDs as columns
+MBTESTCDs and the units as columns
 }
 \description{
 Prepare the Microbiology (MB) domain for use in follow up analysis data sets
@@ -19,7 +19,7 @@ with specific actions for Visceral Leishmaniasis. Takes a IDDO-SDTM curated
 MB domain, transforms and pivots it in order to merge it into a follow up
 analysis data set with other domains using the ANALYSE_FOLLOW_UP() function.
 PREP_MB_FU() and PREP_MB_VL_FU() would be merged in the ANALYSE_FOLLOW_UP()
-function.
+function. Default variables are: "LSHMANIA", "LDONOV", "LMAJOR"
 }
 \author{
 Rhys Peploe

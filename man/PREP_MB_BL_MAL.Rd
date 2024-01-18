@@ -10,16 +10,18 @@ PREP_MB_BL_MAL(DATA_MB)
 \item{DATA_MB}{The MB domain data frame, as named in the global environment.}
 }
 \value{
-Data frame with one row per USUBJID/subject, with Malaria
-specific MBTESTCDs as columns
+Data frame with one row per USUBJID/subject, with Malaria specific
+MBTESTCDs and the units  as columns
 }
 \description{
 Prepare the Microbiology (MB) domain for use in baseline analysis data sets
-with specific actions for Malaria. Takes a IDDO-SDTM curated
-MB domain, transforms and pivots it in order to merge it into a baseline
-analysis data set with other domains using the ANALYSE_BASELINE() function.
-PREP_MB_BL() and PREP_MB_MAL_BL() would be merged in the ANALYSE_BASELINE()
-function.
+with specific actions for Malaria. Takes a IDDO-SDTM curated MB domain,
+transforms and pivots it in order to merge it into a baseline analysis data
+set with other domains using the ANALYSE_BASELINE() function. PREP_MB_BL()
+and PREP_MB_MAL_BL() would be merged in the ANALYSE_BASELINE() function.
+Default variables are: "PFALCIPA", "PFALCIPS", "PFALCIP", "PVIVAXA",
+"PVIVAXS", "PVIVAX", "PLSMDMA", "PLSMDMS", "PLSMDM", "PKNOWLA", "PKNOWLS",
+"PKNOWL", "PMALARA", "PMALARS", "PMALAR", "POVALEA", "POVALES", "POVALE"
 }
 \author{
 Rhys Peploe

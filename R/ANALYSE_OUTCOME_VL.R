@@ -37,6 +37,7 @@ ANALYSE_OUTCOME_VL = function(DATA_DM, DATA_DS = NULL, DATA_RS = NULL, DATA_MB =
     OUT = PREP_DM(DATA_DM, DISEASE = "VL", VARS = c("DTHFL", "DTHDTC", str_to_upper(DM_VARS))) %>%
       left_join(PREP_DS_OUT_VL(DATA_DS, expand_cols = FALSE))
   }
+
   else if(is.null(DATA_DS)){
     OUT = PREP_DM(DATA_DM, DISEASE = "VL", VARS = c("DTHFL", "DTHDTC", str_to_upper(DM_VARS)))
   }
@@ -54,8 +55,7 @@ ANALYSE_OUTCOME_VL = function(DATA_DM, DATA_DS = NULL, DATA_RS = NULL, DATA_MB =
                            "INITIAL_TOC_DAY" = "DAY") %>%
                     dplyr::select(-"EMPTY_TIME") %>%
                     dplyr::rename_with(.fn = function(.x){paste0("INITIAL_TOC_", .x)},
-                                       .cols = c("SPECIES",
-                                                 starts_with("LDONOV"),
+                                       .cols = c(starts_with("LDONOV"),
                                                  starts_with("LSHMANIA"))))
 
       OVRLRESP = OVRLRESP %>%
@@ -65,8 +65,7 @@ ANALYSE_OUTCOME_VL = function(DATA_DM, DATA_DS = NULL, DATA_RS = NULL, DATA_MB =
                            "INITIAL_OVRLRESP_DAY" = "DAY") %>%
                     dplyr::select(-"EMPTY_TIME") %>%
                     dplyr::rename_with(.fn = function(.x){paste0("INITIAL_OVRLRESP_", .x)},
-                                       .cols = c("SPECIES",
-                                                 starts_with("LDONOV"),
+                                       .cols = c(starts_with("LDONOV"),
                                                  starts_with("LSHMANIA"))))
     }
 

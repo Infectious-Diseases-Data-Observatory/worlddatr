@@ -12,32 +12,33 @@
 #'
 #' @return Data frame with the additional AGE_DAYS variable, providing the ages
 #'   in days.
+#'
 #' @export
 #'
+#' @author Rhys Peploe
 #'
 DERIVE_AGE_DAYS = function(DATA) {
   DATA = DATA %>%
-    mutate(AGEU = str_to_upper(AGEU))
-
-  AGE_DAYS = NA
+    mutate(AGEU = str_to_upper(.data$AGEU),
+           AGE_DAYS = NA)
 
   for (i in seq(1, nrow(DATA), 1)) {
     if(is.na(DATA$AGEU[i])) {
       next
     }
     else if (DATA$AGEU[i] == "DAYS") {
-      AGE_DAYS[i] = floor(DATA$AGE[i])
+      DATA$AGE_DAYS[i] = floor(DATA$AGE[i])
     }
     else if (DATA$AGEU[i] == "WEEKS") {
-      AGE_DAYS[i] = floor(DATA$AGE[i]*7)
+      DATA$AGE_DAYS[i] = floor(DATA$AGE[i]*7)
     }
     else if (DATA$AGEU[i] == "MONTHS") {
-      AGE_DAYS[i] = floor(DATA$AGE[i]*30.417)
+      DATA$AGE_DAYS[i] = floor(DATA$AGE[i]*30.417)
     }
     else if (DATA$AGEU[i] == "YEARS") {
-      AGE_DAYS[i] = floor(DATA$AGE[i]*365.25)
+      DATA$AGE_DAYS[i] = floor(DATA$AGE[i]*365.25)
     }
   }
 
-  return(cbind(DATA, AGE_DAYS))
+  return(DATA)
 }

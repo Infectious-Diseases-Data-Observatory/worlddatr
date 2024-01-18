@@ -5,13 +5,15 @@
 #' is only for children less than 5 years old.
 #'
 #' Note the function can be applied to a dataset with subjects greater than 5
-#' years old too, but those subjects will have NA in these columns.
+#' years old too, but those subjects will be filtered out. If using ANALYSE_X(),
+#' then over 5 year olds will still remain in the resultant dataset.
 #'
 #' @param DATA Data frame contain the AGE, AGE_DAYS, WEIGHT & HEIGHT variables,
 #'   typically held in the Demographics (DM) and Vital Signs (VS) domains.
 #'
-#' @return Data frame with additional columns for WAZ, HAZ and WHZ scores,
-#'   along with flags for each.
+#' @return Data frame with only only 5 year olds included and additional columns
+#'   for WAZ, HAZ and WHZ scores, along with flags for each.
+#'
 #' @export
 #'
 #' @importFrom anthro anthro_zscores
@@ -20,6 +22,11 @@ DERIVE_ANTHRO = function(DATA){
   DATA_ANTHRO = DATA %>%
     filter(DATA$AGE < 5 | DATA$AGE_DAYS < 1826)
 
+  if(nrow(DATA_ANTHRO) == 0){
+    return(DATA_ANTHRO)
+  }
+
+  else{
   BIND_ANTHRO = cbind(DATA_ANTHRO,
                       anthro_zscores(
                         sex = DATA_ANTHRO$SEX,
@@ -37,4 +44,5 @@ DERIVE_ANTHRO = function(DATA){
            "WHZ_FLAG" = "fwfl")
 
   return(BIND_ANTHRO)
+  }
 }

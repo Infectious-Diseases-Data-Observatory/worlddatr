@@ -6,11 +6,14 @@
 #' transforms and pivots it in order to merge it into a follow up analysis data
 #' set with other domains using the ANALYSE_FOLLOW_UP() function. PREP_MB_FU()
 #' and PREP_MB_MAL_FU() would be merged in the ANALYSE_FOLLOW_UP() function.
+#' Default variables are: "PFALCIPA", "PFALCIPS", "PFALCIP", "PVIVAXA",
+#' "PVIVAXS", "PVIVAX", "PLSMDMA", "PLSMDMS", "PLSMDM", "PKNOWLA", "PKNOWLS",
+#' "PKNOWL", "PMALARA", "PMALARS", "PMALAR", "POVALEA", "POVALES", "POVALE"
 #'
 #' @param DATA_MB The MB domain data frame, as named in the global environment.
 #'
 #' @return Data frame with one row per USUBJID/subject per day, with Malaria
-#'   specific MBTESTCDs as columns
+#'   specific MBTESTCDs  and the units as columns
 #'
 #' @export
 #'
@@ -31,7 +34,8 @@ PREP_MB_FU_MAL = function(DATA_MB){
            MBSTRESC = as.character(.data$MBSTRESC),
            MBMODIFY = as.character(.data$MBMODIFY),
            MBORRES = as.character(.data$MBORRES),
-           DAY = .data$MBDY)
+           DAY = .data$MBDY,
+           MBUNITS = as.character(NA))
 
   DATA_EMPTY = DATA_MB %>%
     filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
@@ -47,21 +51,21 @@ PREP_MB_FU_MAL = function(DATA_MB){
   DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] =
     DATA[which(is.na(DATA$MBSTRES)), "MBORRES"]
 
+  DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBUNITS"] =
+    DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBSTRESU"]
+  DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBUNITS"] =
+    DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBORRESU"]
+
   DATA = DATA %>%
     mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
                             .data$DAY, .data$EMPTY_TIME),
-                names_from = .data$MBTESTCD, values_from = .data$MBSTRES,
-                names_sort = T, names_vary = "slowest",
-                values_fn = first) #%>%
-    # mutate(DATA_PF = NA,
-    #        DATA_PV = NA,
-    #        DATA_PL = NA,
-    #        DATA_PK = NA,
-    #        DATA_PM = NA,
-    #        DATA_PO = NA)
+                names_from = .data$MBTESTCD, values_from = c(.data$MBSTRES, .data$MBUNITS),
+                names_sort = T, names_vary = "slowest", names_glue = "{MBTESTCD}_{.value}",
+                values_fn = first)
 
-  # colnames(DATA) = gsub("_MBSTRES", "", colnames(DATA))
+  colnames(DATA) = gsub("_MBSTRES", "", colnames(DATA))
+  colnames(DATA) = gsub("MBUNITS", "UNITS", colnames(DATA))
 
   colnames(DATA) = gsub("PFALCIPA", "PARA_PF", colnames(DATA))
   colnames(DATA) = gsub("PFALCIPS", "GAM_PF", colnames(DATA))
@@ -82,47 +86,7 @@ PREP_MB_FU_MAL = function(DATA_MB){
   colnames(DATA) = gsub("POVALEA", "PARA_PO", colnames(DATA))
   colnames(DATA) = gsub("POVALES", "GAM_PO", colnames(DATA))
 
-  # for(i in 1:nrow(DATA)){
-  #   if("PARA_PF" %in% names(DATA)){
-  #     if(!is.na(DATA$PARA_PF[i]) | !is.na(DATA$GAM_PF[i])){
-  #       DATA$DATA_PF[i] = "PF"
-  #     }
-  #   }
-  #   if("PARA_PV" %in% names(DATA)){
-  #     if(!is.na(DATA$PARA_PV[i]) | !is.na(DATA$GAM_PV[i])){
-  #       DATA$DATA_PV[i] = "PV"
-  #     }
-  #   }
-  #   if("PARA_PL" %in% names(DATA)){
-  #     if(!is.na(DATA$PARA_PL[i]) | !is.na(DATA$GAM_PL[i])){
-  #       DATA$DATA_PL[i] = "PL"
-  #     }
-  #   }
-  #   if("PARA_PK" %in% names(DATA)){
-  #     if(!is.na(DATA$PARA_PK[i]) | !is.na(DATA$GAM_PK[i])){
-  #       DATA$DATA_PK[i] = "PK"
-  #     }
-  #   }
-  #   if("PARA_PM" %in% names(DATA)){
-  #     if(!is.na(DATA$PARA_PM[i]) | !is.na(DATA$GAM_PM[i])){
-  #       DATA$DATA_PM[i] = "PM"
-  #     }
-  #   }
-  #   if("PARA_PO" %in% names(DATA)){
-  #     if(!is.na(DATA$PARA_PO[i]) | !is.na(DATA$GAM_PO[i])){
-  #       DATA$DATA_PO[i] = "PO"
-  #     }
-  #   }
-  # }
-
-  # DATA = DATA %>%
-  #   unite(.data$DATA_PF, .data$DATA_PV, .data$DATA_PK, .data$DATA_PM,
-  #         .data$DATA_PO, .data$DATA_PL, col = "SPECIES", na.rm = TRUE,
-  #         remove = TRUE, sep = " + ")
-
   DATA = DATA %>%
-    # relocate(.data$SPECIES, .after = .data$USUBJID) %>%
-    # mutate(SPECIES = convert_blanks_to_na(.data$SPECIES)) %>%
     clean_names(case = "all_caps")
 
   return(DATA)

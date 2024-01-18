@@ -12,7 +12,8 @@ JOIN_PREGNANT(DATA)
 for HIV.}
 }
 \value{
-Data frame with a PREGNANT column, and PREGIND & HCG removed.
+Data frame with PREGNANT and PREGNANT_UNITS columns, and PREGIND &
+HCG, with their respective units, removed.
 }
 \description{
 Pregnancy can be confirmed with a lab test (LB Domain) or by asking the

@@ -6,14 +6,13 @@
 #' into a baseline analysis data set with other domains using the
 #' ANALYSE_BASELINE() function.
 #'
-#' This allows the Temperature location to be
-#' recorded in the analysis dataset without including the location for all of
-#' the other VS variables
+#' This allows the Temperature location to be recorded in the analysis dataset
+#' without including the location for all of the other VS variables
 #'
 #' @param DATA_VS The VS domain data frame, as named in the global environment.
 #'
-#' @return Data frame with one row per USUBJID/subject, with VSTESTCDs as
-#'   columns
+#' @return Data frame with one row per USUBJID/subject, with TEMP, TEMP_UNITS
+#'   and TEMP_LOC as columns
 #'
 #' @export
 #'
@@ -26,7 +25,8 @@ PREP_VS_TEMP_BL = function(DATA_VS){
     DERIVE_TIMING() %>%
     mutate(VSSTRES = as.character(.data$VSSTRESN),
            VSSTRESC = as.character(.data$VSSTRESC),
-           VSORRES = as.character(.data$VSORRES))
+           VSORRES = as.character(.data$VSORRES),
+           VSUNITS = as.character(NA))
 
   DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$VSDY), ]
 
@@ -35,16 +35,23 @@ PREP_VS_TEMP_BL = function(DATA_VS){
   DATA[which(is.na(DATA$VSSTRES)), "VSSTRES"] =
     DATA[which(is.na(DATA$VSSTRES)), "VSORRES"]
 
+  DATA[which(!is.na(DATA$VSSTRESC) | !is.na(DATA$VSSTRESN)), "VSUNITS"] =
+    DATA[which(!is.na(DATA$VSSTRESC) | !is.na(DATA$VSSTRESN)), "VSSTRESU"]
+  DATA[which(is.na(DATA$VSSTRESC) & is.na(DATA$VSSTRESN)), "VSUNITS"] =
+    DATA[which(is.na(DATA$VSSTRESC) & is.na(DATA$VSSTRESN)), "VSORRESU"]
+
   DATA = DATA %>%
     filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$VSTESTCD,
-                values_from = c(.data$VSSTRES, .data$VSLOC),
+                values_from = c(.data$VSSTRES, .data$VSUNITS, .data$VSLOC),
                 names_sort = T, names_vary = "slowest",
-                values_fn = first, names_glue = "{.value}_TEMP")
+                values_fn = first, names_glue = "{VSTESTCD}_{.value}")
+
+  colnames(DATA) = gsub("_VSSTRES", "", colnames(DATA))
+  colnames(DATA) = gsub("VSUNITS", "UNITS", colnames(DATA))
+  colnames(DATA) = gsub("VSLOC", "LOC", colnames(DATA))
 
   DATA = DATA %>%
-    rename("TEMP" = "VSSTRES_TEMP",
-           "TEMP_LOC" = "VSLOC_TEMP") %>%
     clean_names(case = "all_caps")
 
   return(DATA)

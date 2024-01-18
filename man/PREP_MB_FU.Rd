@@ -20,14 +20,22 @@ specified in the MB section of the 'IDDO SDTM Implementation Manual'. i.e.
 c("CRONAVIR").}
 }
 \value{
-Data frame with one row per USUBJID/subject per day, with MBTESTCDs as
-columns
+Data frame with one row per USUBJID/subject per day, with MBTESTCDs
+and the units as columns
 }
 \description{
-Prepare the Microbiology (MB) domain for use in follow up
-analysis data sets. Takes a IDDO-SDTM curated MB domain, transforms and
-pivots it in order to merge it into a follow up analysis data set with other
-domains using the ANALYSE_FOLLOW_UP() function.
+Prepare the Microbiology (MB) domain for use in follow up analysis data sets.
+Takes a IDDO-SDTM curated MB domain, transforms and pivots it in order to
+merge it into a follow up analysis data set with other domains using the
+ANALYSE_FOLLOW_UP() function. Default variables are: "HIV", "AFB", "MTB",
+"ANCDUOD", "ANCLMTA", "ASCLUM". Disease specific options are listed in
+'Details'.
+}
+\details{
+VL: "HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM", "PLSMDM", "PLSMDMA",
+"PLSMDMS", "PFALCIP", "PFALCIPA", "PFALCIPS", "PVIVAX", "PVIVAXA", "PVIVAXS"
+
+Ebola: "ZEBOV"
 }
 \author{
 Rhys Peploe

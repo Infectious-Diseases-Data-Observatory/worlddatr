@@ -4,7 +4,7 @@
 \name{iddoverse-package}
 \alias{iddoverse}
 \alias{iddoverse-package}
-\title{iddoverse: Transforms IDDO customised SDTM domains into analysis datasets}
+\title{iddoverse: Converting IDDO-SDTM data to analysis datasets}
 \description{
 Functions to convert IDDO-curated SDTM domains into analysis datasets, similar to the Analysis Data Model (ADaM).
 }

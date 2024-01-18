@@ -20,14 +20,24 @@ specified in the MB section of the 'IDDO SDTM Implementation Manual'. i.e.
 c("CRONAVIR").}
 }
 \value{
-Data frame containing a row per USUBJID/subject, with MBTESTCDs and the
-day of first occurrence of each as columns.
+Data frame containing a row per USUBJID/subject, with MBTESTCDs, the
+units and the day of first occurrence of each as columns.
 }
 \description{
-Prepare the Microbiology (MB) domain for use in first occurrence
-analysis data sets. Takes a IDDO-SDTM curated MB domain, transforms and
-pivots it in order to merge it into a first occurrence analysis data set with other
-domains using the ANALYSE_FIRST() function.
+Prepare the Microbiology (MB) domain for use in first occurrence analysis
+data sets. Takes a IDDO-SDTM curated MB domain, transforms and pivots it in
+order to merge it into a first occurrence analysis data set with other
+domains using the ANALYSE_FIRST() function. Default variables are: "HIV",
+"AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM". Disease specific options are
+listed in 'Details'.
+}
+\details{
+Default variables:
+
+VL: "HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM", "PLSMDM", "PLSMDMA",
+"PLSMDMS", "PFALCIP", "PFALCIPA", "PFALCIPS", "PVIVAX", "PVIVAXA", "PVIVAXS"
+
+Ebola: "ZEBOV"
 }
 \author{
 Rhys Peploe

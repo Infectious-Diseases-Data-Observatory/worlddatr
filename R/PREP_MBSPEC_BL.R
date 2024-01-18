@@ -53,8 +53,6 @@ PREP_MBSPEC_BL = function(DATA_MB, DISEASE = "", VARS = NULL){
   DATA = DATA %>%
     clean_names(case = "all_caps")
 
-  colnames(DATA) = gsub("MBLOC_", "", colnames(DATA))
-  colnames(DATA) = gsub("MBSPEC_", "", colnames(DATA))
   colnames(DATA) = gsub("MBLOC", "LOC", colnames(DATA))
   colnames(DATA) = gsub("MBSPEC", "SPEC", colnames(DATA))
 
@@ -64,16 +62,20 @@ PREP_MBSPEC_BL = function(DATA_MB, DISEASE = "", VARS = NULL){
         mutate(TB_LOC = as.character(.data$MTB_LOC),
                TB_SPEC = as.character(.data$MTB_SPEC),
                AFB_LOC = as.character(.data$AFB_LOC),
-               AFB_SPEC = as.character(.data$AFB_SPEC))
+               AFB_SPEC = as.character(.data$AFB_SPEC),
+               MB_IND = NA)
 
-      DATA[which(is.na(DATA$TB_LOC)), "TB_LOC"] =
-        DATA[which(is.na(DATA$TB_LOC)), "AFB_LOC"]
+      DATA[which(!is.na(DATA$MTB_LOC) | !is.na(DATA$MTB_SPEC)), "MB_IND"] = "MTB"
 
-      DATA[which(is.na(DATA$TB_SPEC)), "TB_SPEC"] =
-        DATA[which(is.na(DATA$TB_SPEC)), "AFB_SPEC"]
+      DATA[which(is.na(DATA$MB_IND)), "TB_LOC"] =
+        DATA[which(is.na(DATA$MB_IND)), "AFB_LOC"]
+
+      DATA[which(is.na(DATA$MB_IND)), "TB_SPEC"] =
+        DATA[which(is.na(DATA$MB_IND)), "AFB_SPEC"]
 
       DATA = DATA %>%
-        dplyr::select(-"AFB_LOC", -"MTB_LOC", -"AFB_SPEC", -"MTB_SPEC")
+        dplyr::select(-"AFB_LOC", -"MTB_LOC", -"MB_IND",
+                      -"AFB_SPEC", -"MTB_SPEC")
     }
 
     else if("AFB_LOC" %in% names(DATA) & "MTB_LOC" %!in% names(DATA)){

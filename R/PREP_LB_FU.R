@@ -3,7 +3,20 @@
 #' Prepare the Laboratory Test Results (LB) domain for use in follow up analysis
 #' data sets. Takes a IDDO-SDTM curated LB domain, transforms and pivots it in
 #' order to merge it into a follow up analysis data set with other domains using
-#' the ANALYSE_FOLLOW_UP() function.
+#' the ANALYSE_FOLLOW_UP() function. Default variables are: "HGB", "HCT",
+#' "PLAT", "WBC", "K", "ALT", "AST", "BILI", "CREAT", "ALB", "SODIUM", "HCG".
+#' Disease specific features that are included by default are listed in
+#' 'Details'
+#'
+#' Default Variables:
+#'
+#' Malaria: "INTLK6", "CD4", "HGB", "HGBMET", "HCT", "PLAT", "WBC", "K", "ALT",
+#' "AST", "BILI", "CREAT", "ALB", "SODIUM", "HCG", "G6PD"
+#'
+#' VL: "INTLK6", "CD4", "HGB", "HCT", "PLAT", "WBC", "K", "ALT", "AST", "BILI",
+#' "CREAT", "ALB", "SODIUM", "HCG"
+#'
+#' Ebola: "K", "ALT", "AST", "CREAT", "SODIUM", "UREA"
 #'
 #' @param DATA_LB The LB domain data frame, as named in the global environment.
 #' @param DISEASE The name of the disease theme being analysed. Character
@@ -49,7 +62,8 @@ PREP_LB_FU = function(DATA_LB, DISEASE = "", VARS = NULL){
     mutate(LBSTRES = as.character(.data$LBSTRESN),
            LBSTRESC = as.character(.data$LBSTRESC),
            LBORRES = as.character(.data$LBORRES),
-           DAY = .data$LBDY)
+           DAY = .data$LBDY,
+           LBUNITS = as.character(NA))
 
   DATA_EMPTY = DATA_LB %>%
     filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
@@ -63,13 +77,21 @@ PREP_LB_FU = function(DATA_LB, DISEASE = "", VARS = NULL){
   DATA[which(is.na(DATA$LBSTRES)), "LBSTRES"] =
     DATA[which(is.na(DATA$LBSTRES)), "LBORRES"]
 
+  DATA[which(!is.na(DATA$LBSTRESC) | !is.na(DATA$LBSTRESN)), "LBUNITS"] =
+    DATA[which(!is.na(DATA$LBSTRESC) | !is.na(DATA$LBSTRESN)), "LBSTRESU"]
+  DATA[which(is.na(DATA$LBSTRESC) & is.na(DATA$LBSTRESN)), "LBUNITS"] =
+    DATA[which(is.na(DATA$LBSTRESC) & is.na(DATA$LBSTRESN)), "LBORRESU"]
+
   DATA = DATA %>%
     mutate(LBSTRES = str_to_upper(.data$LBSTRES)) %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
                             .data$DAY, .data$EMPTY_TIME), names_from = .data$LBTESTCD,
-                values_from = .data$LBSTRES,
+                values_from = c(.data$LBSTRES, .data$LBUNITS),
                 names_sort = T, names_vary = "slowest",
-                values_fn = first)
+                values_fn = first, names_glue = "{LBTESTCD}_{.value}")
+
+  colnames(DATA) = gsub("_LBSTRES", "", colnames(DATA))
+  colnames(DATA) = gsub("LBUNITS", "UNITS", colnames(DATA))
 
   DATA = DATA %>%
     clean_names(case = "all_caps")

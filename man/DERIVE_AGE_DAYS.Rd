@@ -23,3 +23,6 @@ rounded down.
 \details{
 AGE_DAYS is used to calculate WHO growth standards in the DERIVE_ANTHRO() function.
 }
+\author{
+Rhys Peploe
+}

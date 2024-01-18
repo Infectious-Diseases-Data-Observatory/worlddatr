@@ -27,7 +27,12 @@ day of first occurrence of each as columns.
 Prepare the Vital Signs (VS) domain for use in first occurrence analysis data
 sets. Takes a IDDO-SDTM curated VS domain, transforms and pivots it in order
 to merge it into a first occurrence analysis data set with other domains
-using the ANALYSE_FIRST() function.
+using the ANALYSE_FIRST() function. Default variables are: "WEIGHT", "HEIGHT",
+"MUARMCIR", "BMI", "DIABP", "HR", "PULSE", "RESP", "SYSBP". Ebola specific
+variables are listed in 'Details'
+}
+\details{
+Ebola default variables: "RESP", "HR", "SYSBP", "DIABP"
 }
 \author{
 Rhys Peploe
