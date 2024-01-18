@@ -73,7 +73,7 @@ PREP_MB_FIRST = function(DATA_MB, DISEASE = "", VARS = NULL){
   DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$DAY), ]
 
   DATA = DATA %>%
-    mutate(MBSTRES = str_to_upper(MBSTRES)) %>%
+    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
                 names_glue = "{MBTESTCD}_{.value}", values_from = c(.data$MBSTRES, .data$MBUNITS, .data$DAY),
                 names_sort = T, names_vary = "slowest",
