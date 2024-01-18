@@ -79,13 +79,11 @@ PREP_MP_FU = function(DATA_MP, MPTEST = "LENGTH", VARS = NULL){
                   values_fn = first)
   }
 
-  colnames(DATA) = gsub("_MBSTRES", "", colnames(DATA))
+  colnames(DATA) = gsub("_MPSTRES", "", colnames(DATA))
   colnames(DATA) = gsub("MPUNITS", "UNITS", colnames(DATA))
 
   DATA = DATA %>%
     clean_names(case = "all_caps")
-
-
 
   return(DATA)
 }
