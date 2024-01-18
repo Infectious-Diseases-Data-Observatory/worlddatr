@@ -81,7 +81,6 @@ PREP_LB_FIRST = function(DATA_LB, DISEASE = "", VARS = NULL){
   DATA = DATA %>%
     mutate(LBSTRES = str_to_upper(.data$LBSTRES)) %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$LBTESTCD,
-                names_glue = "{LBTESTCD}_{.value}",
                 values_from = c(.data$LBSTRES, .data$LBUNITS, .data$DAY),
                 names_sort = T, names_vary = "slowest",
                 values_fn = first, names_glue = "{LBTESTCD}_{.value}")
