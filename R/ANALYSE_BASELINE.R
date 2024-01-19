@@ -103,6 +103,11 @@ ANALYSE_BASELINE = function(DISEASE_THEME = "", DATA_DM,
       dplyr::select("STUDYID", "DISEASE", everything())
   }
 
+  else{
+    BASELINE = BASELINE %>%
+      mutate(DISEASE = NA)
+  }
+
   if(is.null(DATA_LB) == FALSE){
     BASELINE = BASELINE %>%
       left_join(PREP_LB_BL(DATA_LB, DISEASE = DISEASE_THEME, VARS = LB_VARS))

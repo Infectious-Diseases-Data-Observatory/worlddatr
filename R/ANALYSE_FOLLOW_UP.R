@@ -96,6 +96,12 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB = NULL,
       dplyr::select("STUDYID", "DISEASE", everything())
   }
 
+  else{
+    DM = DM %>%
+      mutate(DISEASE = NA) %>%
+      dplyr::select("STUDYID", "DISEASE", everything())
+  }
+
   if(is.null(DATA_LB) == FALSE){
     FU = PREP_LB_FU(DATA_LB, DISEASE = DISEASE_THEME, VARS = LB_VARS) %>%
       mutate(START_DAY = NA,
