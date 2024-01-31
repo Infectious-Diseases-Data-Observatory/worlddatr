@@ -1,13 +1,13 @@
 citHeader("To cite iddoverse in publications use:")
 
 citEntry(
-  entry    = "Unpublished",
+  entry    = "Misc",
   title    = "Welcome to the iddoverse: An R package for converting IDDO-SDTM data to analysis datasets",
   author   = "Rhys Peploe",
   institution = "Infectious Disease Data Observatory (IDDO), University of Oxford, Oxford, UK",
   year     = "2023",
   url      = "https://github.com/RhysPeploe/iddoverse",
-  note     = "",
+  note     = "Package Version 0.3.0",
   textVersion = paste(
     "R. Peploe (2023), 'Welcome to the iddoverse: An R package for converting IDDO-SDTM data to analyse datasets', Infectious Disease Data Observatory, University of Oxford. Available: https://github.com/RhysPeploe/iddoverse"
   )
