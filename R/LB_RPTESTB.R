@@ -1,0 +1,28 @@
+#' IDDO-SDTM Tutorial Laboratory Test Results (LB) Domain
+#'
+#' A fictional LB dataset for testing code and training
+#'
+#' @format ##
+#' A data frame with 10 rows and 19 columns:
+#' \describe{
+#'   \item{STUDYID}{Study Identifier}
+#'   \item{DOMAIN}{Domain Abbreviation}
+#'   \item{USUBJID}{Unique Subject Identifier}
+#'   \item{LBSEQ}{Sequence Number}
+#'   \item{LBTESTCD}{Lab Test or Examination Short Name}
+#'   \item{LBTEST}{Lab Test or Examination Name}
+#'   \item{LBORRES}{Result or Finding in Original Units}
+#'   \item{LBMODIFY}{}
+#'   \item{LBORRESU}{Original Units}
+#'   \item{LBSTRESC}{Character Result/Finding in Std Format}
+#'   \item{LBSTRESN}{Numeric Result/Finding in Standard Units}
+#'   \item{LBSTRESU}{Standard Units}
+#'   \item{VISITNUM}{Visit Number}
+#'   \item{VISIT}{Visit Name}
+#'   \item{VISITDY}{Planned Study Day of Visit}
+#'   \item{EPOCH}{Epoch}
+#'   \item{LBDTC}{Date/Time of Specimen Collection}
+#'   \item{LBDY}{Study Day of Specimen Collection}
+#'   \item{LBEVINTX}{Evaluation Interval Text}
+#' }
+"LB_RPTESTB"
