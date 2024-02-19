@@ -1,3 +1,9 @@
+# iddoverse 0.3.1
+* Data exported with package as opposed to read.csv 
+* Data documented
+* Resolved uninitiated DISEASE variable in ANALYSE functions
+* Creation of PREP_DS_OUT_EVD (Ebola Virus Disease)
+
 # iddoverse 0.3.0
 * Units have been including alongside all variable which having a --ORRESU or --STRESU is possible (issue #18). Units are now matched with the equivalent result so STRESU will be used if STRESC or STRESN are and likewise if MODIFY or ORRES are reported in the output, ORRESU will be the units
 * Error in DERIVE_ANTHRO when there is no under 5s, issue #19
