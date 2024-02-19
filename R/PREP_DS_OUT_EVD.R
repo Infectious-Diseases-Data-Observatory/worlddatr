@@ -1,4 +1,18 @@
-PREP_DS_OUT_EVD = function(DATA_DS, expand_cols = FALSE){
+#' Prepare the DS Domain for Ebola outcome analysis.
+#'
+#' Prepare the Disposition (DS) domain for use in outcome analysis data sets
+#' studying Ebola Virus Disease (EVD). Takes a IDDO-SDTM curated DS domain,
+#' transforms and pivots it in order to present the data in a wide data format.
+#'
+#' @param DATA_DS The DS domain data frame, as named in the global environment.
+#'
+#' @return Dataframe containing a row per USUBJID, with DS terms as columns.
+#'
+#' @export
+#'
+#' @author Rhys Peploe
+#'
+PREP_DS_OUT_EVD = function(DATA_DS){
   DATA_DS = DATA_DS %>%
     convert_blanks_to_na() %>%
     mutate(DSSTRES = str_to_upper(as.character(.data$DSDECOD)),
