@@ -33,7 +33,7 @@ PREP_DS_OUT_VL = function(DATA_DS, expand_cols = FALSE){
            DAY = .data$DSDY,
            START_DAY = .data$DSSTDY)
 
-  DATA_DS[which(is.na(DATA_DS$DSSTRES)), "DSSTRES"] = #not needed since no NA but for generalisablity
+  DATA_DS[which(is.na(DATA_DS$DSSTRES)), "DSSTRES"] =
     DATA_DS[which(is.na(DATA_DS$DSSTRES)), "DSMODIFY"]
   DATA_DS[which(is.na(DATA_DS$DSSTRES)), "DSSTRES"] =
     DATA_DS[which(is.na(DATA_DS$DSSTRES)), "DSTERM"]
