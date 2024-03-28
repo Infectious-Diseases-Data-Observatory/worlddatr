@@ -15,18 +15,18 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_TS = function(DATA_TS, DATA_DM){
-  DATA_TDIGRP = DATA_TS %>%
+PREP_TS <- function(DATA_TS, DATA_DM) {
+  DATA_TDIGRP <- DATA_TS %>%
     filter(.data$TSPARMCD == "TDIGRP") %>%
     dplyr::select("STUDYID", "TSVAL") %>%
     mutate(TSVAL = str_to_upper(.data$TSVAL))
 
-  DATA_STUDYFU = DATA_TS %>%
+  DATA_STUDYFU <- DATA_TS %>%
     filter(.data$TSPARMCD == "TRGFUDUR") %>%
     dplyr::select("STUDYID", "TSVAL") %>%
     mutate(TSVAL = str_to_upper(.data$TSVAL))
 
-  DATA = DATA_DM %>%
+  DATA <- DATA_DM %>%
     dplyr::select("STUDYID", "ARMCD") %>%
     distinct() %>%
     left_join(DATA_TDIGRP) %>%

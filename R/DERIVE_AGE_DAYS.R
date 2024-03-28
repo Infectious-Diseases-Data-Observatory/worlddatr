@@ -17,26 +17,24 @@
 #'
 #' @author Rhys Peploe
 #'
-DERIVE_AGE_DAYS = function(DATA) {
-  DATA = DATA %>%
-    mutate(AGEU = str_to_upper(.data$AGEU),
-           AGE_DAYS = NA)
+DERIVE_AGE_DAYS <- function(DATA) {
+  DATA <- DATA %>%
+    mutate(
+      AGEU = str_to_upper(.data$AGEU),
+      AGE_DAYS = NA
+    )
 
   for (i in seq(1, nrow(DATA), 1)) {
-    if(is.na(DATA$AGEU[i])) {
+    if (is.na(DATA$AGEU[i])) {
       next
-    }
-    else if (DATA$AGEU[i] == "DAYS") {
-      DATA$AGE_DAYS[i] = floor(DATA$AGE[i])
-    }
-    else if (DATA$AGEU[i] == "WEEKS") {
-      DATA$AGE_DAYS[i] = floor(DATA$AGE[i]*7)
-    }
-    else if (DATA$AGEU[i] == "MONTHS") {
-      DATA$AGE_DAYS[i] = floor(DATA$AGE[i]*30.417)
-    }
-    else if (DATA$AGEU[i] == "YEARS") {
-      DATA$AGE_DAYS[i] = floor(DATA$AGE[i]*365.25)
+    } else if (DATA$AGEU[i] == "DAYS") {
+      DATA$AGE_DAYS[i] <- floor(DATA$AGE[i])
+    } else if (DATA$AGEU[i] == "WEEKS") {
+      DATA$AGE_DAYS[i] <- floor(DATA$AGE[i] * 7)
+    } else if (DATA$AGEU[i] == "MONTHS") {
+      DATA$AGE_DAYS[i] <- floor(DATA$AGE[i] * 30.417)
+    } else if (DATA$AGEU[i] == "YEARS") {
+      DATA$AGE_DAYS[i] <- floor(DATA$AGE[i] * 365.25)
     }
   }
 

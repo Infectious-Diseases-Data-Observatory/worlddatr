@@ -31,57 +31,71 @@
 #'
 #' @author Rhys Peploe
 #'
-ANALYSE_OUTCOME_VL = function(DATA_DM, DATA_DS = NULL, DATA_RS = NULL, DATA_MB = NULL,
-                              DM_VARS = NULL, expand_cols = FALSE){
-  if(is.null(DATA_DS) == FALSE){
-    OUT = PREP_DM(DATA_DM, DISEASE = "VL", VARS = c("DTHFL", "DTHDTC", str_to_upper(DM_VARS))) %>%
+ANALYSE_OUTCOME_VL <- function(DATA_DM, DATA_DS = NULL, DATA_RS = NULL, DATA_MB = NULL,
+                               DM_VARS = NULL, expand_cols = FALSE) {
+  if (is.null(DATA_DS) == FALSE) {
+    OUT <- PREP_DM(DATA_DM, DISEASE = "VL", VARS = c("DTHFL", "DTHDTC", str_to_upper(DM_VARS))) %>%
       left_join(PREP_DS_OUT_VL(DATA_DS, expand_cols = FALSE))
+  } else if (is.null(DATA_DS)) {
+    OUT <- PREP_DM(DATA_DM, DISEASE = "VL", VARS = c("DTHFL", "DTHDTC", str_to_upper(DM_VARS)))
   }
 
-  else if(is.null(DATA_DS)){
-    OUT = PREP_DM(DATA_DM, DISEASE = "VL", VARS = c("DTHFL", "DTHDTC", str_to_upper(DM_VARS)))
-  }
+  if (is.null(DATA_RS) == FALSE) {
+    TOC <- PREP_RS_OUT_VL(DATA_RS, TOC_OVRLRESP = "TOC", expand_cols = FALSE)
 
-  if(is.null(DATA_RS) == FALSE){
-    TOC = PREP_RS_OUT_VL(DATA_RS, TOC_OVRLRESP = "TOC", expand_cols = FALSE)
+    OVRLRESP <- PREP_RS_OUT_VL(DATA_RS, TOC_OVRLRESP = "OVRLRESP", expand_cols = FALSE)
 
-    OVRLRESP = PREP_RS_OUT_VL(DATA_RS, TOC_OVRLRESP = "OVRLRESP", expand_cols = FALSE)
-
-    if(is.null(DATA_MB) == FALSE){
-      TOC = TOC %>%
+    if (is.null(DATA_MB) == FALSE) {
+      TOC <- TOC %>%
         left_join(PREP_MB_FU_VL(DATA_MB) %>%
-                    rename("INITIAL_TOC_VISITDY" = "VISITDY",
-                           "INITIAL_TOC_VISITNUM" = "VISITNUM",
-                           "INITIAL_TOC_DAY" = "DAY") %>%
-                    dplyr::select(-"EMPTY_TIME") %>%
-                    dplyr::rename_with(.fn = function(.x){paste0("INITIAL_TOC_", .x)},
-                                       .cols = c(starts_with("LDONOV"),
-                                                 starts_with("LSHMANIA"))))
+          rename(
+            "INITIAL_TOC_VISITDY" = "VISITDY",
+            "INITIAL_TOC_VISITNUM" = "VISITNUM",
+            "INITIAL_TOC_DAY" = "DAY"
+          ) %>%
+          dplyr::select(-"EMPTY_TIME") %>%
+          dplyr::rename_with(
+            .fn = function(.x) {
+              paste0("INITIAL_TOC_", .x)
+            },
+            .cols = c(
+              starts_with("LDONOV"),
+              starts_with("LSHMANIA")
+            )
+          ))
 
-      OVRLRESP = OVRLRESP %>%
+      OVRLRESP <- OVRLRESP %>%
         left_join(PREP_MB_FU_VL(DATA_MB) %>%
-                    rename("INITIAL_OVRLRESP_VISITDY" = "VISITDY",
-                           "INITIAL_OVRLRESP_VISITNUM" = "VISITNUM",
-                           "INITIAL_OVRLRESP_DAY" = "DAY") %>%
-                    dplyr::select(-"EMPTY_TIME") %>%
-                    dplyr::rename_with(.fn = function(.x){paste0("INITIAL_OVRLRESP_", .x)},
-                                       .cols = c(starts_with("LDONOV"),
-                                                 starts_with("LSHMANIA"))))
+          rename(
+            "INITIAL_OVRLRESP_VISITDY" = "VISITDY",
+            "INITIAL_OVRLRESP_VISITNUM" = "VISITNUM",
+            "INITIAL_OVRLRESP_DAY" = "DAY"
+          ) %>%
+          dplyr::select(-"EMPTY_TIME") %>%
+          dplyr::rename_with(
+            .fn = function(.x) {
+              paste0("INITIAL_OVRLRESP_", .x)
+            },
+            .cols = c(
+              starts_with("LDONOV"),
+              starts_with("LSHMANIA")
+            )
+          ))
     }
 
-    OUT = OUT %>%
+    OUT <- OUT %>%
       left_join(TOC) %>%
       left_join(OVRLRESP)
   }
 
-  if(expand_cols == TRUE){
-    if(is.null(DATA_DS) == FALSE){
-      OUT = OUT %>%
+  if (expand_cols == TRUE) {
+    if (is.null(DATA_DS) == FALSE) {
+      OUT <- OUT %>%
         left_join(PREP_DS_OUT_VL(DATA_DS, expand_cols = expand_cols))
     }
 
-    if(is.null(DATA_RS) == FALSE){
-      OUT = OUT %>%
+    if (is.null(DATA_RS) == FALSE) {
+      OUT <- OUT %>%
         left_join(PREP_RS_OUT_VL(DATA_RS, expand_cols = expand_cols))
     }
   }

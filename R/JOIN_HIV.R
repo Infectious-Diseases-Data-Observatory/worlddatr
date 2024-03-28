@@ -18,27 +18,27 @@
 #'
 #' @author Rhys Peploe
 #'
-JOIN_HIV = function(DATA, SA_TIME = FALSE, SA_DUR = FALSE){
-  if(("HIV_SAOCCUR" %in% names(DATA)) & ("HIV" %in% names(DATA))){
-    DATA[which(is.na(DATA$HIV)), "HIV"] =
+JOIN_HIV <- function(DATA, SA_TIME = FALSE, SA_DUR = FALSE) {
+  if (("HIV_SAOCCUR" %in% names(DATA)) & ("HIV" %in% names(DATA))) {
+    DATA[which(is.na(DATA$HIV)), "HIV"] <-
       DATA[which(is.na(DATA$HIV)), "HIV_SAOCCUR"]
 
-    DATA = DATA %>%
+    DATA <- DATA %>%
       dplyr::select(-.data$HIV_SAOCCUR)
 
-    if(SA_TIME == TRUE){
-      DATA = DATA %>%
+    if (SA_TIME == TRUE) {
+      DATA <- DATA %>%
         relocate(.data$HIV_SAEVINTX, .after = .data$HIV)
     }
 
-    if(SA_DUR == TRUE){
-      DATA = DATA %>%
+    if (SA_DUR == TRUE) {
+      DATA <- DATA %>%
         relocate(.data$HIV_SADUR, .after = .data$HIV)
     }
   }
 
-  if("HIV_PRESP" %in% names(DATA)){
-    DATA = DATA %>%
+  if ("HIV_PRESP" %in% names(DATA)) {
+    DATA <- DATA %>%
       relocate(.data$HIV_PRESP, .after = .data$HIV)
   }
 
