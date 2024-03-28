@@ -22,7 +22,7 @@ PREP_MBSPEC_HR0_BL <- function(DATA_MB, DISEASE = "", VARS = NULL) {
     pivot_wider(
       id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
       values_from = c(.data$MBLOC, .data$MBSPEC),
-      names_sort = T, names_vary = "slowest",
+      names_sort = TRUE, names_vary = "slowest",
       values_fn = first
     )
 

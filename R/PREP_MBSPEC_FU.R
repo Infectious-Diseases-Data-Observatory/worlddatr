@@ -52,8 +52,8 @@ PREP_MBSPEC_FU <- function(DATA_MB, DISEASE = "", VARS = NULL) {
         .data$VISITNUM, .data$DAY, .data$EMPTY_TIME
       ),
       names_from = .data$MBTESTCD, values_from = c(.data$MBLOC, .data$MBSPEC),
-      names_sort = T, names_vary = "slowest",
-      values_fn = first, names_glue = "{.name}_{.value}"
+      names_sort = TRUE, names_vary = "slowest",
+      values_fn = first
     )
 
   DATA <- DATA %>%

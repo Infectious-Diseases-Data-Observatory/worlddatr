@@ -44,8 +44,8 @@ PREP_MBSPEC_BL <- function(DATA_MB, DISEASE = "", VARS = NULL) {
     pivot_wider(
       id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
       values_from = c(.data$MBLOC, .data$MBSPEC),
-      names_sort = T, names_vary = "slowest",
-      values_fn = first, names_glue = "{.name}_{.value}"
+      names_sort = TRUE, names_vary = "slowest",
+      values_fn = first
     )
 
   DATA <- DATA %>%
