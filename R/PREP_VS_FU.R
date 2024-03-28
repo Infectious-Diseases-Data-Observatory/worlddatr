@@ -26,55 +26,61 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_VS_FU = function(DATA_VS, DISEASE = "", VARS = NULL){
-  DISEASE = str_to_upper(DISEASE)
+PREP_VS_FU <- function(DATA_VS, DISEASE = "", VARS = NULL) {
+  DISEASE <- str_to_upper(DISEASE)
 
-  if(DISEASE == "EBOLA"){
-    VS_VARS = c("RESP", "HR", "SYSBP", "DIABP", str_to_upper(VARS))
+  if (DISEASE == "EBOLA") {
+    VS_VARS <- c("RESP", "HR", "SYSBP", "DIABP", str_to_upper(VARS))
+  } else {
+    VS_VARS <- c(
+      "WEIGHT", "HEIGHT", "MUARMCIR", "BMI", "DIABP", "HR",
+      "PULSE", "RESP", "SYSBP", str_to_upper(VARS)
+    )
   }
 
-  else{
-    VS_VARS = c("WEIGHT", "HEIGHT", "MUARMCIR", "BMI", "DIABP", "HR",
-                "PULSE", "RESP", "SYSBP", str_to_upper(VARS))
-  }
-
-  DATA_VS = DATA_VS %>%
+  DATA_VS <- DATA_VS %>%
     convert_blanks_to_na() %>%
     filter(.data$VSTESTCD %in% VS_VARS) %>%
-    mutate(VSSTRES = as.character(.data$VSSTRESN),
-           VSSTRESC = as.character(.data$VSSTRESC),
-           VSORRES = as.character(.data$VSORRES),
-           DAY = .data$VSDY,
-           VSUNITS = as.character(NA))
+    mutate(
+      VSSTRES = as.character(.data$VSSTRESN),
+      VSSTRESC = as.character(.data$VSSTRESC),
+      VSORRES = as.character(.data$VSORRES),
+      DAY = .data$VSDY,
+      VSUNITS = as.character(NA)
+    )
 
-  DATA_EMPTY = DATA_VS %>%
+  DATA_EMPTY <- DATA_VS %>%
     filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
     DERIVE_EMPTY_TIME()
 
-  DATA = DATA_VS %>%
+  DATA <- DATA_VS %>%
     left_join(DATA_EMPTY)
 
-  DATA[which(is.na(DATA$VSSTRES)), "VSSTRES"] =
+  DATA[which(is.na(DATA$VSSTRES)), "VSSTRES"] <-
     DATA[which(is.na(DATA$VSSTRES)), "VSSTRESC"]
-  DATA[which(is.na(DATA$VSSTRES)), "VSSTRES"] =
+  DATA[which(is.na(DATA$VSSTRES)), "VSSTRES"] <-
     DATA[which(is.na(DATA$VSSTRES)), "VSORRES"]
 
-  DATA[which(!is.na(DATA$VSSTRESC) | !is.na(DATA$VSSTRESN)), "VSUNITS"] =
+  DATA[which(!is.na(DATA$VSSTRESC) | !is.na(DATA$VSSTRESN)), "VSUNITS"] <-
     DATA[which(!is.na(DATA$VSSTRESC) | !is.na(DATA$VSSTRESN)), "VSSTRESU"]
-  DATA[which(is.na(DATA$VSSTRESC) & is.na(DATA$VSSTRESN)), "VSUNITS"] =
+  DATA[which(is.na(DATA$VSSTRESC) & is.na(DATA$VSSTRESN)), "VSUNITS"] <-
     DATA[which(is.na(DATA$VSSTRESC) & is.na(DATA$VSSTRESN)), "VSORRESU"]
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     mutate(VSSTRES = str_to_upper(.data$VSSTRES)) %>%
-    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
-                            .data$DAY, .data$EMPTY_TIME), names_from = .data$VSTESTCD,
-                values_from = c(.data$VSSTRES, .data$VSUNITS), names_sort = T,
-                names_vary = "slowest", values_fn = first, names_glue = "{VSTESTCD}_{.value}")
+    pivot_wider(
+      id_cols = c(
+        .data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
+        .data$DAY, .data$EMPTY_TIME
+      ), names_from = .data$VSTESTCD,
+      values_from = c(.data$VSSTRES, .data$VSUNITS), names_sort = T,
+      names_vary = "slowest", values_fn = first, names_glue = "{VSTESTCD}_{.value}"
+    )
 
-  colnames(DATA) = gsub("_VSSTRES", "", colnames(DATA))
-  colnames(DATA) = gsub("VSUNITS", "UNITS", colnames(DATA))
+  colnames(DATA) <- gsub("_VSSTRES", "", colnames(DATA))
+  colnames(DATA) <- gsub("VSUNITS", "UNITS", colnames(DATA))
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     clean_names(case = "all_caps")
 
   return(DATA)

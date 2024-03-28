@@ -19,50 +19,58 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_RP_FU = function(DATA_RP, VARS = NULL){
-  RP_VARS = c("PREGIND", "EGESTAGE", str_to_upper(VARS))
+PREP_RP_FU <- function(DATA_RP, VARS = NULL) {
+  RP_VARS <- c("PREGIND", "EGESTAGE", str_to_upper(VARS))
 
-  DATA_RP = DATA_RP %>%
+  DATA_RP <- DATA_RP %>%
     convert_blanks_to_na() %>%
     filter(.data$RPTESTCD %in% RP_VARS) %>%
-    mutate(RPSTRES = as.character(.data$RPSTRESN),
-           RPSTRESC = as.character(.data$RPSTRESC),
-           RPORRES = as.character(.data$RPORRES),
-           DAY = .data$RPDY,
-           RPUNITS = as.character(NA))
+    mutate(
+      RPSTRES = as.character(.data$RPSTRESN),
+      RPSTRESC = as.character(.data$RPSTRESC),
+      RPORRES = as.character(.data$RPORRES),
+      DAY = .data$RPDY,
+      RPUNITS = as.character(NA)
+    )
 
-  DATA_RP$RPSTRESC = str_replace_all(DATA_RP$RPSTRESC, "NEGATIVE", "N")
+  DATA_RP$RPSTRESC <- str_replace_all(DATA_RP$RPSTRESC, "NEGATIVE", "N")
 
-  DATA_EMPTY = DATA_RP %>%
+  DATA_EMPTY <- DATA_RP %>%
     filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
     DERIVE_EMPTY_TIME()
 
-  DATA = DATA_RP %>%
+  DATA <- DATA_RP %>%
     left_join(DATA_EMPTY)
 
-  DATA[which(is.na(DATA$RPSTRES)), "RPSTRES"] =
+  DATA[which(is.na(DATA$RPSTRES)), "RPSTRES"] <-
     DATA[which(is.na(DATA$RPSTRES)), "RPSTRESC"]
-  DATA[which(is.na(DATA$RPSTRES)), "RPSTRES"] =
+  DATA[which(is.na(DATA$RPSTRES)), "RPSTRES"] <-
     DATA[which(is.na(DATA$RPSTRES)), "RPORRES"]
 
-  DATA[which(!is.na(DATA$RPSTRESC) | !is.na(DATA$RPSTRESN)), "RPUNITS"] =
+  DATA[which(!is.na(DATA$RPSTRESC) | !is.na(DATA$RPSTRESN)), "RPUNITS"] <-
     DATA[which(!is.na(DATA$RPSTRESC) | !is.na(DATA$RPSTRESN)), "RPSTRESU"]
-  DATA[which(is.na(DATA$RPSTRESC) & is.na(DATA$RPSTRESN)), "RPUNITS"] =
+  DATA[which(is.na(DATA$RPSTRESC) & is.na(DATA$RPSTRESN)), "RPUNITS"] <-
     DATA[which(is.na(DATA$RPSTRESC) & is.na(DATA$RPSTRESN)), "RPORRESU"]
 
-  DATA = DATA %>%
-    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
-                            .data$DAY, .data$EMPTY_TIME), names_from = .data$RPTESTCD,
-                values_from = c(.data$RPSTRES, .data$RPUNITS), names_vary = "slowest",
-                names_sort = T, values_fn = first, names_glue = "{RPTESTCD}_{.value}")
+  DATA <- DATA %>%
+    pivot_wider(
+      id_cols = c(
+        .data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
+        .data$DAY, .data$EMPTY_TIME
+      ), names_from = .data$RPTESTCD,
+      values_from = c(.data$RPSTRES, .data$RPUNITS), names_vary = "slowest",
+      names_sort = T, values_fn = first, names_glue = "{RPTESTCD}_{.value}"
+    )
 
-  colnames(DATA) = gsub("_RPSTRES", "", colnames(DATA))
-  colnames(DATA) = gsub("RPUNITS", "UNITS", colnames(DATA))
+  colnames(DATA) <- gsub("_RPSTRES", "", colnames(DATA))
+  colnames(DATA) <- gsub("RPUNITS", "UNITS", colnames(DATA))
 
-  if("EGESTAGE" %in% names(DATA)){
-    DATA = DATA %>%
-      rename("EGA" = "EGESTAGE",
-             "EGA_UNITS" = "EGESTAGE_UNITS")
+  if ("EGESTAGE" %in% names(DATA)) {
+    DATA <- DATA %>%
+      rename(
+        "EGA" = "EGESTAGE",
+        "EGA_UNITS" = "EGESTAGE_UNITS"
+      )
   }
 
   return(DATA)

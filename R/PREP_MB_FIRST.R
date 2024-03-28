@@ -31,58 +31,62 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_MB_FIRST = function(DATA_MB, DISEASE = "", VARS = NULL){
-  DISEASE = str_to_upper(DISEASE)
+PREP_MB_FIRST <- function(DATA_MB, DISEASE = "", VARS = NULL) {
+  DISEASE <- str_to_upper(DISEASE)
 
-  if(DISEASE == "VL"){
-    MB_VARS = c("HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM",
-                "PLSMDM", "PLSMDMA", "PLSMDMS",
-                "PFALCIP", "PFALCIPA", "PFALCIPS",
-                "PVIVAX", "PVIVAXA", "PVIVAXS",
-                str_to_upper(VARS))
+  if (DISEASE == "VL") {
+    MB_VARS <- c(
+      "HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM",
+      "PLSMDM", "PLSMDMA", "PLSMDMS",
+      "PFALCIP", "PFALCIPA", "PFALCIPS",
+      "PVIVAX", "PVIVAXA", "PVIVAXS",
+      str_to_upper(VARS)
+    )
+  } else if (DISEASE == "EBOLA") {
+    MB_VARS <- c("ZEBOV", str_to_upper(VARS))
+  } else {
+    MB_VARS <- c(
+      "HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM",
+      str_to_upper(VARS)
+    )
   }
 
-  else if(DISEASE == "EBOLA"){
-    MB_VARS = c("ZEBOV", str_to_upper(VARS))
-  }
-
-  else{
-    MB_VARS = c("HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM",
-                str_to_upper(VARS))
-  }
-
-  DATA = DATA_MB %>%
+  DATA <- DATA_MB %>%
     convert_blanks_to_na() %>%
     filter(.data$MBTESTCD %in% MB_VARS) %>%
-    mutate(MBSTRES = as.character(.data$MBSTRESN),
-           MBSTRESC = as.character(.data$MBSTRESC),
-           MBORRES = as.character(.data$MBORRES),
-           DAY = .data$MBDY,
-           MBUNITS = as.character(NA))
+    mutate(
+      MBSTRES = as.character(.data$MBSTRESN),
+      MBSTRESC = as.character(.data$MBSTRESC),
+      MBORRES = as.character(.data$MBORRES),
+      DAY = .data$MBDY,
+      MBUNITS = as.character(NA)
+    )
 
-  DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] =
+  DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] <-
     DATA[which(is.na(DATA$MBSTRES)), "MBSTRESC"]
-  DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] =
+  DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] <-
     DATA[which(is.na(DATA$MBSTRES)), "MBORRES"]
 
-  DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBUNITS"] =
+  DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBUNITS"] <-
     DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBSTRESU"]
-  DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBUNITS"] =
+  DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBUNITS"] <-
     DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBORRESU"]
 
-  DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$DAY), ]
+  DATA <- DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$DAY), ]
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
-    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
-                names_glue = "{MBTESTCD}_{.value}", values_from = c(.data$MBSTRES, .data$MBUNITS, .data$DAY),
-                names_sort = T, names_vary = "slowest",
-                values_fn = first)
+    pivot_wider(
+      id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
+      names_glue = "{MBTESTCD}_{.value}", values_from = c(.data$MBSTRES, .data$MBUNITS, .data$DAY),
+      names_sort = T, names_vary = "slowest",
+      values_fn = first
+    )
 
-  colnames(DATA) = gsub("_MBSTRES", "", colnames(DATA))
-  colnames(DATA) = gsub("MBUNITS", "UNITS", colnames(DATA))
+  colnames(DATA) <- gsub("_MBSTRES", "", colnames(DATA))
+  colnames(DATA) <- gsub("MBUNITS", "UNITS", colnames(DATA))
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     clean_names(case = "all_caps")
 
   return(DATA)

@@ -12,21 +12,23 @@
 #'
 #' @author Rhys Peploe
 #'
-CLEAN_IN = function(DATA_IN){
-  DATA = DATA_IN %>%
-    mutate(INTRT = str_to_upper(.data$INTRT),
-           INPRESP = str_to_upper(.data$INPRESP),
-           INOCCUR = str_to_upper(.data$INOCCUR))
+CLEAN_IN <- function(DATA_IN) {
+  DATA <- DATA_IN %>%
+    mutate(
+      INTRT = str_to_upper(.data$INTRT),
+      INPRESP = str_to_upper(.data$INPRESP),
+      INOCCUR = str_to_upper(.data$INOCCUR)
+    )
 
-  DATA$INTRT = str_replace_all(DATA$INTRT, "PACKED RED BLOOD CELLS", "BLOOD_TRANS")
-  DATA$INTRT = str_replace_all(DATA$INTRT, "1 UNIT OF WHOLE BLOOD \\(450ML\\)", "BLOOD_TRANS")
-  DATA$INTRT = str_replace_all(DATA$INTRT, "BLOOD \\(WHOLE\\)", "BLOOD_TRANS")
-  DATA$INTRT = str_replace_all(DATA$INTRT, "WHOLE BLOOD 450ML", "BLOOD_TRANS")
-  DATA$INTRT = str_replace_all(DATA$INTRT, "WHOLE BLOOD", "BLOOD_TRANS")
-  DATA$INTRT = str_replace_all(DATA$INTRT, "FRESH BLOOD TRANSFUSION", "BLOOD_TRANS")
-  DATA$INTRT = str_replace_all(DATA$INTRT, "BLOOD TRANSFUSION", "BLOOD_TRANS")
-  DATA$INTRT = str_replace_all(DATA$INTRT, "TRANSFUSION", "BLOOD_TRANS")
-  DATA$INTRT = str_replace_all(DATA$INTRT, "BLOOD_TRANS", "BLOOD_TRANSFUSION")
+  DATA$INTRT <- str_replace_all(DATA$INTRT, "PACKED RED BLOOD CELLS", "BLOOD_TRANS")
+  DATA$INTRT <- str_replace_all(DATA$INTRT, "1 UNIT OF WHOLE BLOOD \\(450ML\\)", "BLOOD_TRANS")
+  DATA$INTRT <- str_replace_all(DATA$INTRT, "BLOOD \\(WHOLE\\)", "BLOOD_TRANS")
+  DATA$INTRT <- str_replace_all(DATA$INTRT, "WHOLE BLOOD 450ML", "BLOOD_TRANS")
+  DATA$INTRT <- str_replace_all(DATA$INTRT, "WHOLE BLOOD", "BLOOD_TRANS")
+  DATA$INTRT <- str_replace_all(DATA$INTRT, "FRESH BLOOD TRANSFUSION", "BLOOD_TRANS")
+  DATA$INTRT <- str_replace_all(DATA$INTRT, "BLOOD TRANSFUSION", "BLOOD_TRANS")
+  DATA$INTRT <- str_replace_all(DATA$INTRT, "TRANSFUSION", "BLOOD_TRANS")
+  DATA$INTRT <- str_replace_all(DATA$INTRT, "BLOOD_TRANS", "BLOOD_TRANSFUSION")
 
   # DATA$INTRT = str_replace_all(DATA$INTRT, "PREVIOUS MALARIA TREATMENT", "MALARIA")
   # DATA$INTRT = str_replace_all(DATA$INTRT, 'AMODIAQUINE', 'MALARIA')
@@ -114,11 +116,11 @@ CLEAN_IN = function(DATA_IN){
   # DATA$INTRT = str_replace_all(DATA$INTRT, 'PENTOSTAM', 'VL')
   # DATA$INTRT = str_replace_all(DATA$INTRT, 'SAG', 'VL')
 
-  DATA$INPRESP = str_replace_all(DATA$INPRESP, "TRUE", "Y")
+  DATA$INPRESP <- str_replace_all(DATA$INPRESP, "TRUE", "Y")
 
-  DATA$INOCCUR = str_replace_all(DATA$INOCCUR, "TRUE", "Y")
-  DATA$INOCCUR = str_replace_all(DATA$INOCCUR, "FALSE", "N")
-  DATA$INOCCUR = str_replace_all(DATA$INOCCUR, "UNKNOWN", "U")
+  DATA$INOCCUR <- str_replace_all(DATA$INOCCUR, "TRUE", "Y")
+  DATA$INOCCUR <- str_replace_all(DATA$INOCCUR, "FALSE", "N")
+  DATA$INOCCUR <- str_replace_all(DATA$INOCCUR, "UNKNOWN", "U")
 
   return(DATA)
 }

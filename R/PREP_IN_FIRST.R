@@ -22,56 +22,58 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_IN_FIRST = function(DATA_IN, DISEASE = "", VARS = NULL){
-  DISEASE = str_to_upper(DISEASE)
+PREP_IN_FIRST <- function(DATA_IN, DISEASE = "", VARS = NULL) {
+  DISEASE <- str_to_upper(DISEASE)
 
-  if(DISEASE == "MALARIA"){
-    VS_VARS = c(str_to_upper(VARS))
+  if (DISEASE == "MALARIA") {
+    VS_VARS <- c(str_to_upper(VARS))
+  } else if (DISEASE == "VL") {
+    VS_VARS <- c(str_to_upper(VARS))
+  } else if (DISEASE == "EBOLA") {
+    IN_VARS <- c(
+      "MULTIVITAMINS, PLAIN", "VITAMIN A", "ANTIBIOTICS", "ANTIMALARIALS",
+      "CEPHALOSPORINS", "INTRAVENOUS FLUIDS", str_to_upper(VARS)
+    )
+  } else {
+    VS_VARS <- c(str_to_upper(VARS))
   }
 
-  else if(DISEASE == "VL"){
-    VS_VARS = c(str_to_upper(VARS))
-  }
-
-  else if(DISEASE == "EBOLA"){
-    IN_VARS = c("MULTIVITAMINS, PLAIN", "VITAMIN A", "ANTIBIOTICS", "ANTIMALARIALS",
-                "CEPHALOSPORINS", "INTRAVENOUS FLUIDS", str_to_upper(VARS))
-  }
-
-  else{
-    VS_VARS = c(str_to_upper(VARS))
-  }
-
-  DATA = DATA_IN %>%
+  DATA <- DATA_IN %>%
     convert_blanks_to_na() %>%
-    mutate(INTRT = str_to_upper(.data$INTRT),
-           INSTRES = as.character(.data$INDECOD),
-           INPRESP = str_to_upper(.data$INPRESP),
-           INOCCUR = str_to_upper(.data$INOCCUR),
-           DAY = .data$INDY) %>%
-    filter((.data$INCAT != "MEDICAL HISTORY" | is.na(.data$INCAT)),
-           .data$INPRESP == "Y")
+    mutate(
+      INTRT = str_to_upper(.data$INTRT),
+      INSTRES = as.character(.data$INDECOD),
+      INPRESP = str_to_upper(.data$INPRESP),
+      INOCCUR = str_to_upper(.data$INOCCUR),
+      DAY = .data$INDY
+    ) %>%
+    filter(
+      (.data$INCAT != "MEDICAL HISTORY" | is.na(.data$INCAT)),
+      .data$INPRESP == "Y"
+    )
 
-  DATA[which(is.na(DATA$INSTRES)), "INSTRES"] =
+  DATA[which(is.na(DATA$INSTRES)), "INSTRES"] <-
     DATA[which(is.na(DATA$INSTRES)), "INTRT"]
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     filter(.data$INSTRES %in% IN_VARS)
 
-  DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$DAY), ]
+  DATA <- DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$DAY), ]
 
-  DATA = DATA %>%
-    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$INSTRES,
-                names_glue = "{INSTRES}_{.value}",
-                values_from = c(.data$INOCCUR, .data$DAY),
-                names_sort = T, names_vary = "slowest",
-                values_fn = first)
+  DATA <- DATA %>%
+    pivot_wider(
+      id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$INSTRES,
+      names_glue = "{INSTRES}_{.value}",
+      values_from = c(.data$INOCCUR, .data$DAY),
+      names_sort = T, names_vary = "slowest",
+      values_fn = first
+    )
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     clean_names(case = "all_caps")
 
-  colnames(DATA) = gsub("_INOCCUR", "", colnames(DATA))
-  colnames(DATA) = gsub("_INPRESP", "_PRESP", colnames(DATA))
+  colnames(DATA) <- gsub("_INOCCUR", "", colnames(DATA))
+  colnames(DATA) <- gsub("_INPRESP", "_PRESP", colnames(DATA))
 
   return(DATA)
 }

@@ -17,51 +17,55 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_MB_BL_VL = function(DATA_MB){
-  MB_VARS = c("LSHMANIA", "LDONOV", "LMAJOR")
+PREP_MB_BL_VL <- function(DATA_MB) {
+  MB_VARS <- c("LSHMANIA", "LDONOV", "LMAJOR")
 
-  DATA = DATA_MB %>%
+  DATA <- DATA_MB %>%
     convert_blanks_to_na() %>%
     filter(.data$MBTESTCD %in% MB_VARS) %>%
     DERIVE_TIMING() %>%
     CLEAN_MB_VL() %>%
-    mutate(MBSTRES = as.character(.data$MBSTRESN),
-           MBUNITS = as.character(.data$MBSTRESU),
-           MBSTRESC = as.character(.data$MBSTRESC),
-           MBMODIFY = as.character(.data$MBMODIFY),
-           MBORRES = as.character(.data$MBORRES),
-           MBUNITS = as.character(NA))
+    mutate(
+      MBSTRES = as.character(.data$MBSTRESN),
+      MBUNITS = as.character(.data$MBSTRESU),
+      MBSTRESC = as.character(.data$MBSTRESC),
+      MBMODIFY = as.character(.data$MBMODIFY),
+      MBORRES = as.character(.data$MBORRES),
+      MBUNITS = as.character(NA)
+    )
 
-  DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] =
+  DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] <-
     DATA[which(is.na(DATA$MBSTRES)), "MBSTRESC"]
-  DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] =
+  DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] <-
     DATA[which(is.na(DATA$MBSTRES)), "MBMODIFY"]
-  DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] =
+  DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] <-
     DATA[which(is.na(DATA$MBSTRES)), "MBORRES"]
 
-  DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBUNITS"] =
+  DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBUNITS"] <-
     DATA[which(!is.na(DATA$MBSTRESC) | !is.na(DATA$MBSTRESN)), "MBSTRESU"]
-  DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBUNITS"] =
+  DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBUNITS"] <-
     DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBORRESU"]
 
-  DATA$MBSTRES = str_replace_all(DATA$MBSTRES, "01-Oct", "1-10")
-  DATA$MBSTRES = str_replace_all(DATA$MBSTRES, "01-OCT", "1-10")
+  DATA$MBSTRES <- str_replace_all(DATA$MBSTRES, "01-Oct", "1-10")
+  DATA$MBSTRES <- str_replace_all(DATA$MBSTRES, "01-OCT", "1-10")
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
     filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
-    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
-                names_glue = "{MBTESTCD}_{.value}",
-                values_from = c(.data$MBSTRES, .data$MBUNITS, .data$MBLOC, .data$MBSPEC),
-                names_sort = T, names_vary = "slowest",
-                values_fn = first)
+    pivot_wider(
+      id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
+      names_glue = "{MBTESTCD}_{.value}",
+      values_from = c(.data$MBSTRES, .data$MBUNITS, .data$MBLOC, .data$MBSPEC),
+      names_sort = T, names_vary = "slowest",
+      values_fn = first
+    )
 
-  colnames(DATA) = gsub("_MBSTRES", "", colnames(DATA))
-  colnames(DATA) = gsub("MBUNITS", "UNITS", colnames(DATA))
-  colnames(DATA) = gsub("MBLOC", "LOC", colnames(DATA))
-  colnames(DATA) = gsub("MBSPEC", "SPEC", colnames(DATA))
+  colnames(DATA) <- gsub("_MBSTRES", "", colnames(DATA))
+  colnames(DATA) <- gsub("MBUNITS", "UNITS", colnames(DATA))
+  colnames(DATA) <- gsub("MBLOC", "LOC", colnames(DATA))
+  colnames(DATA) <- gsub("MBSPEC", "SPEC", colnames(DATA))
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     clean_names(case = "all_caps")
 
   return(DATA)

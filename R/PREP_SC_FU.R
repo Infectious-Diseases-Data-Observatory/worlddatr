@@ -18,52 +18,60 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_SC_FU = function(DATA_SC, VARS = NULL){
-  SC_VARS = c(str_to_upper(VARS))
+PREP_SC_FU <- function(DATA_SC, VARS = NULL) {
+  SC_VARS <- c(str_to_upper(VARS))
 
-  DATA_SC = DATA_SC %>%
+  DATA_SC <- DATA_SC %>%
     convert_blanks_to_na() %>%
     filter(.data$SCTESTCD %in% SC_VARS) %>%
-    mutate(SCSTRES = as.character(str_to_upper(.data$SCSTRESC)),
-           SCORRES = as.character(str_to_upper(.data$SCORRES)),
-           DAY = .data$SCDY,
-           SCUNITS = as.character(str_to_upper(.data$SCSTRESN)),
-           SCORRESU = as.character(str_to_upper(.data$SCORRESU)))
+    mutate(
+      SCSTRES = as.character(str_to_upper(.data$SCSTRESC)),
+      SCORRES = as.character(str_to_upper(.data$SCORRES)),
+      DAY = .data$SCDY,
+      SCUNITS = as.character(str_to_upper(.data$SCSTRESN)),
+      SCORRESU = as.character(str_to_upper(.data$SCORRESU))
+    )
 
-  DATA_EMPTY = DATA_SC %>%
+  DATA_EMPTY <- DATA_SC %>%
     filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
     DERIVE_EMPTY_TIME()
 
-  DATA = DATA_SC %>%
+  DATA <- DATA_SC %>%
     left_join(DATA_EMPTY)
 
-  DATA[which(is.na(DATA$SCSTRES)), "SCSTRES"] =
+  DATA[which(is.na(DATA$SCSTRES)), "SCSTRES"] <-
     DATA[which(is.na(DATA$SCSTRES)), "SCORRES"]
 
-  DATA[which(is.na(DATA$SCUNITS)), "SCUNITS"] =
+  DATA[which(is.na(DATA$SCUNITS)), "SCUNITS"] <-
     DATA[which(is.na(DATA$SCUNITS)), "SCORRESU"]
 
-  if("DSTHOSP" %in% SC_VARS){
-    DATA = DATA %>%
+  if ("DSTHOSP" %in% SC_VARS) {
+    DATA <- DATA %>%
       filter(.data$SCTESTCD == "DSTHOSP") %>%
-      pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY,
-                              .data$VISITNUM, .data$DAY, .data$EMPTY_TIME),
-                  names_from = .data$SCTESTCD, values_from = c(.data$SCSTRES, .data$SCUNITS),
-                  names_sort = T, names_vary = "slowest",
-                  values_fn = first)
-  }
-
-  else{
-    DATA = DATA %>%
+      pivot_wider(
+        id_cols = c(
+          .data$STUDYID, .data$USUBJID, .data$VISITDY,
+          .data$VISITNUM, .data$DAY, .data$EMPTY_TIME
+        ),
+        names_from = .data$SCTESTCD, values_from = c(.data$SCSTRES, .data$SCUNITS),
+        names_sort = T, names_vary = "slowest",
+        values_fn = first
+      )
+  } else {
+    DATA <- DATA %>%
       filter(.data$SCTESTCD != "DSTHOSP") %>%
-      pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY,
-                              .data$VISITNUM, .data$DAY, .data$EMPTY_TIME),
-                  names_from = .data$SCTESTCD, values_from = .data$SCSTRES,
-                  names_sort = T, names_vary = "slowest",
-                  values_fn = first)
+      pivot_wider(
+        id_cols = c(
+          .data$STUDYID, .data$USUBJID, .data$VISITDY,
+          .data$VISITNUM, .data$DAY, .data$EMPTY_TIME
+        ),
+        names_from = .data$SCTESTCD, values_from = .data$SCSTRES,
+        names_sort = T, names_vary = "slowest",
+        values_fn = first
+      )
   }
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     clean_names(case = "all_caps")
 
   return(DATA)

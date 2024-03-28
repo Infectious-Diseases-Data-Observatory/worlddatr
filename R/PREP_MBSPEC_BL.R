@@ -23,71 +23,73 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_MBSPEC_BL = function(DATA_MB, DISEASE = "", VARS = NULL){
-  DISEASE = str_to_upper(DISEASE)
+PREP_MBSPEC_BL <- function(DATA_MB, DISEASE = "", VARS = NULL) {
+  DISEASE <- str_to_upper(DISEASE)
 
-  if(DISEASE == "MALARIA"){
-    MB_VARS = c("HIV", "AFB", "MTB", str_to_upper(VARS))
+  if (DISEASE == "MALARIA") {
+    MB_VARS <- c("HIV", "AFB", "MTB", str_to_upper(VARS))
+  } else if (DISEASE == "VL") {
+    MB_VARS <- c("AFB", "HIV", "MTB", "PLSMDM", "PVIVAX", str_to_upper(VARS))
+  } else {
+    MB_VARS <- c("HIV", "AFB", "MTB", str_to_upper(VARS))
   }
 
-  else if(DISEASE == "VL"){
-    MB_VARS = c("AFB", "HIV", "MTB", "PLSMDM", "PVIVAX", str_to_upper(VARS))
-  }
-
-  else{
-    MB_VARS = c("HIV", "AFB", "MTB", str_to_upper(VARS))
-  }
-
-  DATA = DATA_MB %>%
+  DATA <- DATA_MB %>%
     convert_blanks_to_na() %>%
     filter(.data$MBTESTCD %in% MB_VARS) %>%
     DERIVE_TIMING()
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
-    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
-                values_from = c(.data$MBLOC, .data$MBSPEC),
-                names_sort = T, names_vary = "slowest",
-                values_fn = first, names_glue = "{.name}_{.value}")
+    pivot_wider(
+      id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
+      values_from = c(.data$MBLOC, .data$MBSPEC),
+      names_sort = T, names_vary = "slowest",
+      values_fn = first, names_glue = "{.name}_{.value}"
+    )
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     clean_names(case = "all_caps")
 
-  colnames(DATA) = gsub("MBLOC", "LOC", colnames(DATA))
-  colnames(DATA) = gsub("MBSPEC", "SPEC", colnames(DATA))
+  colnames(DATA) <- gsub("MBLOC", "LOC", colnames(DATA))
+  colnames(DATA) <- gsub("MBSPEC", "SPEC", colnames(DATA))
 
-  if("AFB_LOC" %in% names(DATA) | "MTB_LOC" %in% names(DATA)){
-    if("AFB_LOC" %in% names(DATA) & "MTB_LOC" %in% names(DATA)){
-      DATA = DATA %>%
-        mutate(TB_LOC = as.character(.data$MTB_LOC),
-               TB_SPEC = as.character(.data$MTB_SPEC),
-               AFB_LOC = as.character(.data$AFB_LOC),
-               AFB_SPEC = as.character(.data$AFB_SPEC),
-               MB_IND = NA)
+  if ("AFB_LOC" %in% names(DATA) | "MTB_LOC" %in% names(DATA)) {
+    if ("AFB_LOC" %in% names(DATA) & "MTB_LOC" %in% names(DATA)) {
+      DATA <- DATA %>%
+        mutate(
+          TB_LOC = as.character(.data$MTB_LOC),
+          TB_SPEC = as.character(.data$MTB_SPEC),
+          AFB_LOC = as.character(.data$AFB_LOC),
+          AFB_SPEC = as.character(.data$AFB_SPEC),
+          MB_IND = NA
+        )
 
-      DATA[which(!is.na(DATA$MTB_LOC) | !is.na(DATA$MTB_SPEC)), "MB_IND"] = "MTB"
+      DATA[which(!is.na(DATA$MTB_LOC) | !is.na(DATA$MTB_SPEC)), "MB_IND"] <- "MTB"
 
-      DATA[which(is.na(DATA$MB_IND)), "TB_LOC"] =
+      DATA[which(is.na(DATA$MB_IND)), "TB_LOC"] <-
         DATA[which(is.na(DATA$MB_IND)), "AFB_LOC"]
 
-      DATA[which(is.na(DATA$MB_IND)), "TB_SPEC"] =
+      DATA[which(is.na(DATA$MB_IND)), "TB_SPEC"] <-
         DATA[which(is.na(DATA$MB_IND)), "AFB_SPEC"]
 
-      DATA = DATA %>%
-        dplyr::select(-"AFB_LOC", -"MTB_LOC", -"MB_IND",
-                      -"AFB_SPEC", -"MTB_SPEC")
-    }
-
-    else if("AFB_LOC" %in% names(DATA) & "MTB_LOC" %!in% names(DATA)){
-      DATA = DATA %>%
-        rename("TB_LOC" = "AFB_LOC",
-               "TB_SPEC" = "AFB_SPEC")
-    }
-
-    else if("AFB_LOC" %!in% names(DATA) & "MTB_LOC" %in% names(DATA)){
-      DATA = DATA %>%
-        rename("TB_LOC" = "MTB_LOC",
-               "TB_SPEC" = "MTB_SPEC")
+      DATA <- DATA %>%
+        dplyr::select(
+          -"AFB_LOC", -"MTB_LOC", -"MB_IND",
+          -"AFB_SPEC", -"MTB_SPEC"
+        )
+    } else if ("AFB_LOC" %in% names(DATA) & "MTB_LOC" %!in% names(DATA)) {
+      DATA <- DATA %>%
+        rename(
+          "TB_LOC" = "AFB_LOC",
+          "TB_SPEC" = "AFB_SPEC"
+        )
+    } else if ("AFB_LOC" %!in% names(DATA) & "MTB_LOC" %in% names(DATA)) {
+      DATA <- DATA %>%
+        rename(
+          "TB_LOC" = "MTB_LOC",
+          "TB_SPEC" = "MTB_SPEC"
+        )
     }
   }
 

@@ -55,43 +55,41 @@
 #'
 #' @author Rhys Peploe
 #'
-ANALYSE_FIRST_OCCURRENCE = function(DISEASE_THEME = "",
-                                    DATA_DM, DATA_LB = NULL, DATA_VS = NULL,
-                                    DATA_IN = NULL, DATA_SA = NULL,
-                                    DATA_ER = NULL, DATA_MB = NULL,
+ANALYSE_FIRST_OCCURRENCE <- function(DISEASE_THEME = "",
+                                     DATA_DM, DATA_LB = NULL, DATA_VS = NULL,
+                                     DATA_IN = NULL, DATA_SA = NULL,
+                                     DATA_ER = NULL, DATA_MB = NULL,
+                                     DM_VARS = NULL, LB_VARS = NULL, VS_VARS = NULL,
+                                     IN_VARS = NULL, SA_VARS = NULL, MB_VARS = NULL) {
+  FIRST_OCCURANCE <- PREP_DM(DATA_DM, DISEASE = DISEASE_THEME, VARS = DM_VARS)
 
-                                    DM_VARS = NULL, LB_VARS = NULL, VS_VARS = NULL,
-                                    IN_VARS = NULL, SA_VARS = NULL, MB_VARS = NULL
-){
-  FIRST_OCCURANCE = PREP_DM(DATA_DM, DISEASE = DISEASE_THEME, VARS = DM_VARS)
-
-  if(is.null(DATA_LB) == FALSE){
-    FIRST_OCCURANCE = FIRST_OCCURANCE %>%
+  if (is.null(DATA_LB) == FALSE) {
+    FIRST_OCCURANCE <- FIRST_OCCURANCE %>%
       left_join(PREP_LB_FIRST(DATA_LB, DISEASE = DISEASE_THEME, VARS = LB_VARS))
   }
 
-  if(is.null(DATA_VS) == FALSE){
-    FIRST_OCCURANCE = FIRST_OCCURANCE %>%
+  if (is.null(DATA_VS) == FALSE) {
+    FIRST_OCCURANCE <- FIRST_OCCURANCE %>%
       left_join(PREP_VS_FIRST(DATA_VS, DISEASE = DISEASE_THEME, VARS = VS_VARS))
   }
 
-  if(is.null(DATA_IN) == FALSE){
-    FIRST_OCCURANCE = FIRST_OCCURANCE %>%
+  if (is.null(DATA_IN) == FALSE) {
+    FIRST_OCCURANCE <- FIRST_OCCURANCE %>%
       left_join(PREP_IN_FIRST(DATA_IN, DISEASE = DISEASE_THEME, VARS = IN_VARS))
   }
 
-  if(is.null(DATA_SA) == FALSE){
-    FIRST_OCCURANCE = FIRST_OCCURANCE %>%
+  if (is.null(DATA_SA) == FALSE) {
+    FIRST_OCCURANCE <- FIRST_OCCURANCE %>%
       left_join(PREP_SA_FIRST(DATA_SA, DISEASE = DISEASE_THEME, VARS = SA_VARS))
   }
 
-  if(is.null(DATA_ER) == FALSE){
-    FIRST_OCCURANCE = FIRST_OCCURANCE %>%
+  if (is.null(DATA_ER) == FALSE) {
+    FIRST_OCCURANCE <- FIRST_OCCURANCE %>%
       left_join(PREP_ER_FIRST(DATA_ER))
   }
 
-  if(is.null(DATA_MB) == FALSE){
-    FIRST_OCCURANCE = FIRST_OCCURANCE %>%
+  if (is.null(DATA_MB) == FALSE) {
+    FIRST_OCCURANCE <- FIRST_OCCURANCE %>%
       left_join(PREP_MB_FIRST(DATA_MB, DISEASE = DISEASE_THEME, VARS = MB_VARS))
   }
 
