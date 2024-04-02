@@ -78,98 +78,94 @@
 #'
 #' @author Rhys Peploe
 #'
-ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB = NULL,
-                             DATA_IN = NULL, DATA_MB = NULL, DATA_MP = NULL, DATA_RP = NULL,
-                             DATA_SA = NULL, DATA_TS = NULL, DATA_VS = NULL, DATA_SC = NULL,
-                             DATA_PO = NULL,
+ANALYSE_FOLLOW_UP <- function(DISEASE_THEME = "", DATA_DM, DATA_LB = NULL,
+                              DATA_IN = NULL, DATA_MB = NULL, DATA_MP = NULL, DATA_RP = NULL,
+                              DATA_SA = NULL, DATA_TS = NULL, DATA_VS = NULL, DATA_SC = NULL,
+                              DATA_PO = NULL,
+                              DM_VARS = NULL, LB_VARS = NULL, IN_VARS = NULL, MB_VARS = NULL, # User can specify extra variables
+                              MP_VARS = NULL, RP_VARS = NULL, SA_VARS = NULL, VS_VARS = NULL,
+                              SC_VARS = NULL, PO_VARS = NULL,
+                              MP_TESTCD = "LENGTH") {
+  DM <- PREP_DM(DATA_DM, DISEASE = "", VARS = DM_VARS)
 
-                             DM_VARS = NULL, LB_VARS = NULL, IN_VARS = NULL, MB_VARS = NULL,   #User can specify extra variables
-                             MP_VARS = NULL, RP_VARS = NULL, SA_VARS = NULL, VS_VARS = NULL,
-                             SC_VARS = NULL, PO_VARS = NULL,
-
-                             MP_TESTCD = "LENGTH"){
-  DM = PREP_DM(DATA_DM, DISEASE = "", VARS = DM_VARS)
-
-  if(is.null(DATA_TS) == FALSE){
-    DM = DM %>%
+  if (is.null(DATA_TS) == FALSE) {
+    DM <- DM %>%
       left_join(PREP_TS(DATA_TS, DATA_DM)) %>%
       dplyr::select("STUDYID", "DISEASE", everything())
-  }
-
-  else{
-    DM = DM %>%
+  } else {
+    DM <- DM %>%
       mutate(DISEASE = NA) %>%
       dplyr::select("STUDYID", "DISEASE", everything())
   }
 
-  if(is.null(DATA_LB) == FALSE){
-    FU = PREP_LB_FU(DATA_LB, DISEASE = DISEASE_THEME, VARS = LB_VARS) %>%
-      mutate(START_DAY = NA,
-             END_DAY = NA)
+  if (is.null(DATA_LB) == FALSE) {
+    FU <- PREP_LB_FU(DATA_LB, DISEASE = DISEASE_THEME, VARS = LB_VARS) %>%
+      mutate(
+        START_DAY = NA,
+        END_DAY = NA
+      )
+  } else {
+    FU <- data.frame(STUDYID = NA) %>%
+      mutate(
+        START_DAY = NA,
+        END_DAY = NA
+      )
   }
 
-  else{
-    FU = data.frame(STUDYID = NA) %>%
-      mutate(START_DAY = NA,
-             END_DAY = NA)
-  }
-
-  if(is.null(DATA_MB) == FALSE){
-    MB_JOIN = PREP_MB_FU(DATA_MB, DISEASE = DISEASE_THEME, VARS = MB_VARS) %>%
+  if (is.null(DATA_MB) == FALSE) {
+    MB_JOIN <- PREP_MB_FU(DATA_MB, DISEASE = DISEASE_THEME, VARS = MB_VARS) %>%
       left_join(PREP_MBSPEC_FU(DATA_MB, DISEASE = DISEASE_THEME, VARS = MB_VARS))
 
-    MB_JOIN = MB_JOIN %>%
+    MB_JOIN <- MB_JOIN %>%
       dplyr::select(sort(colnames(MB_JOIN)))
 
-    if("VISCERAL LEISHMANIASIS" %in% DM$DISEASE | DISEASE_THEME == "VL"){
-      FU = FU %>%
+    if ("VISCERAL LEISHMANIASIS" %in% DM$DISEASE | DISEASE_THEME == "VL") {
+      FU <- FU %>%
         full_join(PREP_MB_FU_VL(DATA_MB)) %>%
         dplyr::select("USUBJID", "VISITDY", everything()) %>%
         full_join(MB_JOIN)
-    }
-
-    else if("MALARIA" %in% DM$DISEASE | DISEASE_THEME == "MALARIA"){
-      FU = FU %>%
-        full_join(PREP_MB_FU_MAL(DATA_MB))%>%
+    } else if ("MALARIA" %in% DM$DISEASE | DISEASE_THEME == "MALARIA") {
+      FU <- FU %>%
+        full_join(PREP_MB_FU_MAL(DATA_MB)) %>%
         dplyr::select("USUBJID", "VISITDY", everything()) %>%
         full_join(MB_JOIN)
     }
   }
 
-  if(is.null(DATA_MP) == FALSE){
-    FU = FU %>%
+  if (is.null(DATA_MP) == FALSE) {
+    FU <- FU %>%
       full_join(PREP_MP_FU(DATA_MP, MPTEST = MP_TESTCD, VARS = MP_VARS))
   }
 
-  if(is.null(DATA_IN) == FALSE){
-    FU = FU %>%
+  if (is.null(DATA_IN) == FALSE) {
+    FU <- FU %>%
       full_join(PREP_IN_B_FU(DATA_IN)) %>%
       full_join(PREP_IN_FU(DATA_IN, VARS = IN_VARS))
   }
 
-  if(is.null(DATA_VS) == FALSE){
-    FU = FU %>%
+  if (is.null(DATA_VS) == FALSE) {
+    FU <- FU %>%
       full_join(PREP_VS_FU(DATA_VS, DISEASE = DISEASE_THEME, VARS = VS_VARS)) %>%
       full_join(PREP_VS_TEMP_FU(DATA_VS))
   }
 
-  if(is.null(DATA_SA) == FALSE){
-    FU = FU %>%
+  if (is.null(DATA_SA) == FALSE) {
+    FU <- FU %>%
       full_join(PREP_SA_FU(DATA_SA, DISEASE = DISEASE_THEME, VARS = SA_VARS)) %>%
       full_join(PREP_SA_MV_FU(DATA_SA))
   }
 
-  if(is.null(DATA_RP) == FALSE){
-    FU = FU %>%
+  if (is.null(DATA_RP) == FALSE) {
+    FU <- FU %>%
       full_join(PREP_RP_FU(DATA_RP, VARS = RP_VARS))
   }
 
-  if(is.null(DATA_PO) == FALSE){
-    FU = FU %>%
+  if (is.null(DATA_PO) == FALSE) {
+    FU <- FU %>%
       full_join(PREP_PO_FU(DATA_PO, VARS = PO_VARS))
   }
 
-  FU = right_join(DM, FU) %>%
+  FU <- right_join(DM, FU) %>%
     relocate(ends_with("DY"), .after = "VISITNUM") %>%
     relocate(ends_with("DAY"), .after = "VISITDY") %>%
     DERIVE_BMI() %>%
@@ -177,17 +173,15 @@ ANALYSE_FOLLOW_UP = function(DISEASE_THEME = "", DATA_DM, DATA_LB = NULL,
     JOIN_HIV() %>%
     filter(!is.na("STUDYID") & !is.na("USUBJID"))
 
-  if(("HEIGHT" %in% names(FU)) | ("WEIGHT" %in% names(FU))){
-    FU = FU %>%
+  if (("HEIGHT" %in% names(FU)) | ("WEIGHT" %in% names(FU))) {
+    FU <- FU %>%
       left_join(DERIVE_ANTHRO(FU))
   }
 
-  if("START_DAY" %in% names(FU)){
-    FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY, FU$START_DAY, FU$END_DAY), ]
-  }
-
-  else{
-    FU = FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY), ]
+  if ("START_DAY" %in% names(FU)) {
+    FU <- FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY, FU$START_DAY, FU$END_DAY), ]
+  } else {
+    FU <- FU[order(FU$USUBJID, FU$VISITNUM, FU$VISITDY, FU$DAY), ]
   }
 
   return(FU)

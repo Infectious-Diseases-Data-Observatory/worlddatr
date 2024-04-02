@@ -21,198 +21,218 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_IN_BMV_BL = function(DATA_IN, inc_DUR = FALSE, inc_TIME = FALSE){
-  DATA_IN = DATA_IN %>%
+PREP_IN_BMV_BL <- function(DATA_IN, inc_DUR = FALSE, inc_TIME = FALSE) {
+  DATA_IN <- DATA_IN %>%
     convert_blanks_to_na() %>%
-    mutate(INSTRES = str_to_upper(as.character(.data$INDECOD)),
-           INMODIFY = str_to_upper(as.character(.data$INMODIFY)),
-           INTRT = str_to_upper(as.character(.data$INTRT))) %>%
+    mutate(
+      INSTRES = str_to_upper(as.character(.data$INDECOD)),
+      INMODIFY = str_to_upper(as.character(.data$INMODIFY)),
+      INTRT = str_to_upper(as.character(.data$INTRT))
+    ) %>%
     CLEAN_IN()
 
-  DATA_IN[which(is.na(DATA_IN$INSTRES)), "INSTRES"] =
+  DATA_IN[which(is.na(DATA_IN$INSTRES)), "INSTRES"] <-
     DATA_IN[which(is.na(DATA_IN$INSTRES)), "INMODIFY"]
-  DATA_IN[which(is.na(DATA_IN$INSTRES)), "INSTRES"] =
+  DATA_IN[which(is.na(DATA_IN$INSTRES)), "INSTRES"] <-
     DATA_IN[which(is.na(DATA_IN$INSTRES)), "INTRT"]
 
-  DATA_IN = DATA_IN %>%
+  DATA_IN <- DATA_IN %>%
     filter(.data$INSTRES %in% c("BLOOD_TRANSFUSION", "MALARIA", "VL")) %>%
     DERIVE_TIMING()
 
-  if(any(is.na(DATA_IN$INPRESP))) {
-    DATA_IN[which(is.na(DATA_IN$INPRESP)), "INPRESP"] = "N"
-    DATA_IN[which(DATA_IN$INPRESP == "N"), "INOCCUR"] = "Y"
+  if (any(is.na(DATA_IN$INPRESP))) {
+    DATA_IN[which(is.na(DATA_IN$INPRESP)), "INPRESP"] <- "N"
+    DATA_IN[which(DATA_IN$INPRESP == "N"), "INOCCUR"] <- "Y"
   }
 
-  if(inc_DUR == FALSE & inc_TIME == FALSE){
-    if("INCAT" %in% names(DATA_IN)){
-      DATA_HIST = DATA_IN %>%
+  if (inc_DUR == FALSE & inc_TIME == FALSE) {
+    if ("INCAT" %in% names(DATA_IN)) {
+      DATA_HIST <- DATA_IN %>%
         filter(.data$INCAT == "MEDICAL HISTORY") %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
-        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
-                    names_from = .data$INSTRES, names_glue = "HISTORY_{INSTRES}_{.value}",
-                    values_from = .data$INOCCUR,
-                    values_fn = first)
+        pivot_wider(
+          id_cols = c(.data$STUDYID, .data$USUBJID),
+          names_from = .data$INSTRES, names_glue = "HISTORY_{INSTRES}_{.value}",
+          values_from = .data$INOCCUR,
+          values_fn = first
+        )
 
-      DATA_INT = DATA_IN %>%
+      DATA_INT <- DATA_IN %>%
         filter((.data$INCAT != "MEDICAL HISTORY" | is.na(.data$INCAT)) &
-                 (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+          (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
-        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
-                    names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
-                    values_from = .data$INOCCUR,
-                    values_fn = first)
+        pivot_wider(
+          id_cols = c(.data$STUDYID, .data$USUBJID),
+          names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
+          values_from = .data$INOCCUR,
+          values_fn = first
+        )
 
-      DATA = full_join(DATA_HIST, DATA_INT)
-    }
-
-    else{
-      DATA = DATA_IN %>%
+      DATA <- full_join(DATA_HIST, DATA_INT)
+    } else {
+      DATA <- DATA_IN %>%
         filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
-        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
-                    names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
-                    values_from = .data$INOCCUR,
-                    values_fn = first)
+        pivot_wider(
+          id_cols = c(.data$STUDYID, .data$USUBJID),
+          names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
+          values_from = .data$INOCCUR,
+          values_fn = first
+        )
     }
   }
 
-  if(inc_DUR == TRUE & inc_TIME == FALSE){
-    DATA_IN = DATA_IN %>%
+  if (inc_DUR == TRUE & inc_TIME == FALSE) {
+    DATA_IN <- DATA_IN %>%
       mutate(INDUR = str_to_upper(.data$INDUR))
 
-    if("INCAT" %in% names(DATA_IN)){
-      DATA_HIST = DATA_IN %>%
+    if ("INCAT" %in% names(DATA_IN)) {
+      DATA_HIST <- DATA_IN %>%
         filter(.data$INCAT == "MEDICAL HISTORY") %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
-        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
-                    names_from = .data$INSTRES, names_glue = "HISTORY_{INSTRES}_{.value}",
-                    values_from = c(.data$INOCCUR, .data$INDUR),
-                    names_sort = T, names_vary = "slowest",
-                    values_fn = first)
+        pivot_wider(
+          id_cols = c(.data$STUDYID, .data$USUBJID),
+          names_from = .data$INSTRES, names_glue = "HISTORY_{INSTRES}_{.value}",
+          values_from = c(.data$INOCCUR, .data$INDUR),
+          names_sort = T, names_vary = "slowest",
+          values_fn = first
+        )
 
-      DATA_INT = DATA_IN %>%
+      DATA_INT <- DATA_IN %>%
         filter((.data$INCAT != "MEDICAL HISTORY" | is.na(.data$INCAT)) &
-                 (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+          (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
-        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
-                    names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
-                    values_from = c(.data$INOCCUR, .data$INDUR),
-                    names_sort = T, names_vary = "slowest",
-                    values_fn = first)
+        pivot_wider(
+          id_cols = c(.data$STUDYID, .data$USUBJID),
+          names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
+          values_from = c(.data$INOCCUR, .data$INDUR),
+          names_sort = T, names_vary = "slowest",
+          values_fn = first
+        )
 
-      DATA = full_join(DATA_HIST, DATA_INT)
-    }
-
-    else{
-      DATA = DATA_IN %>%
+      DATA <- full_join(DATA_HIST, DATA_INT)
+    } else {
+      DATA <- DATA_IN %>%
         filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
-        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
-                    names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
-                    values_from = c(.data$INOCCUR, .data$INDUR),
-                    names_sort = T, names_vary = "slowest",
-                    values_fn = first)
+        pivot_wider(
+          id_cols = c(.data$STUDYID, .data$USUBJID),
+          names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
+          values_from = c(.data$INOCCUR, .data$INDUR),
+          names_sort = T, names_vary = "slowest",
+          values_fn = first
+        )
     }
   }
 
-  if(inc_DUR == FALSE & inc_TIME == TRUE){
-    DATA_IN = DATA_IN %>%
+  if (inc_DUR == FALSE & inc_TIME == TRUE) {
+    DATA_IN <- DATA_IN %>%
       mutate(INEVINTX = str_to_upper(.data$INEVINTX))
 
-    if("INCAT" %in% names(DATA_IN)){
-      DATA_HIST = DATA_IN %>%
+    if ("INCAT" %in% names(DATA_IN)) {
+      DATA_HIST <- DATA_IN %>%
         filter(.data$INCAT == "MEDICAL HISTORY") %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
-        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
-                    names_from = .data$INSTRES, names_glue = "HISTORY_{INSTRES}_{.value}",
-                    values_from = c(.data$INOCCUR, .data$INEVINTX),
-                    names_sort = T, names_vary = "slowest",
-                    values_fn = first)
+        pivot_wider(
+          id_cols = c(.data$STUDYID, .data$USUBJID),
+          names_from = .data$INSTRES, names_glue = "HISTORY_{INSTRES}_{.value}",
+          values_from = c(.data$INOCCUR, .data$INEVINTX),
+          names_sort = T, names_vary = "slowest",
+          values_fn = first
+        )
 
-      DATA_INT = DATA_IN %>%
+      DATA_INT <- DATA_IN %>%
         filter((.data$INCAT != "MEDICAL HISTORY" | is.na(.data$INCAT)) &
-                 (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+          (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
-        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
-                    names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
-                    values_from = c(.data$INOCCUR, .data$INEVINTX),
-                    names_sort = T, names_vary = "slowest",
-                    values_fn = first)
+        pivot_wider(
+          id_cols = c(.data$STUDYID, .data$USUBJID),
+          names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
+          values_from = c(.data$INOCCUR, .data$INEVINTX),
+          names_sort = T, names_vary = "slowest",
+          values_fn = first
+        )
 
-      DATA = full_join(DATA_HIST, DATA_INT)
-    }
-
-    else{
-      DATA = DATA_IN %>%
+      DATA <- full_join(DATA_HIST, DATA_INT)
+    } else {
+      DATA <- DATA_IN %>%
         filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
-        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
-                    names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
-                    values_from = c(.data$INOCCUR, .data$INEVINTX),
-                    names_sort = T, names_vary = "slowest",
-                    values_fn = first)
+        pivot_wider(
+          id_cols = c(.data$STUDYID, .data$USUBJID),
+          names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
+          values_from = c(.data$INOCCUR, .data$INEVINTX),
+          names_sort = T, names_vary = "slowest",
+          values_fn = first
+        )
     }
   }
 
-  if(inc_DUR == TRUE & inc_TIME == TRUE){
-    DATA_IN = DATA_IN %>%
-      mutate(INDUR = str_to_upper(.data$INDUR),
-             INEVINTX = str_to_upper(.data$INEVINTX))
+  if (inc_DUR == TRUE & inc_TIME == TRUE) {
+    DATA_IN <- DATA_IN %>%
+      mutate(
+        INDUR = str_to_upper(.data$INDUR),
+        INEVINTX = str_to_upper(.data$INEVINTX)
+      )
 
-    if("INCAT" %in% names(DATA_IN)){
-      DATA_HIST = DATA_IN %>%
+    if ("INCAT" %in% names(DATA_IN)) {
+      DATA_HIST <- DATA_IN %>%
         filter(.data$INCAT == "MEDICAL HISTORY") %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
-        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
-                    names_from = .data$INSTRES, names_glue = "HISTORY_{INSTRES}_{.value}",
-                    values_from = c(.data$INOCCUR, .data$INDUR, .data$INEVINTX),
-                    names_sort = T, names_vary = "slowest",
-                    values_fn = first)
+        pivot_wider(
+          id_cols = c(.data$STUDYID, .data$USUBJID),
+          names_from = .data$INSTRES, names_glue = "HISTORY_{INSTRES}_{.value}",
+          values_from = c(.data$INOCCUR, .data$INDUR, .data$INEVINTX),
+          names_sort = T, names_vary = "slowest",
+          values_fn = first
+        )
 
-      DATA_INT = DATA_IN %>%
+      DATA_INT <- DATA_IN %>%
         filter((.data$INCAT != "MEDICAL HISTORY" | is.na(.data$INCAT)) &
-                 (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+          (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
-        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
-                    names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
-                    values_from = c(.data$INOCCUR, .data$INDUR, .data$INEVINTX),
-                    names_sort = T, names_vary = "slowest",
-                    values_fn = first)
+        pivot_wider(
+          id_cols = c(.data$STUDYID, .data$USUBJID),
+          names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
+          values_from = c(.data$INOCCUR, .data$INDUR, .data$INEVINTX),
+          names_sort = T, names_vary = "slowest",
+          values_fn = first
+        )
 
-      DATA = full_join(DATA_HIST, DATA_INT)
-    }
-
-    else{
-      DATA = DATA_IN %>%
+      DATA <- full_join(DATA_HIST, DATA_INT)
+    } else {
+      DATA <- DATA_IN %>%
         filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
-        pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
-                    names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
-                    values_from = c(.data$INOCCUR, .data$INDUR, .data$INEVINTX),
-                    names_sort = T, names_vary = "slowest",
-                    values_fn = first)
+        pivot_wider(
+          id_cols = c(.data$STUDYID, .data$USUBJID),
+          names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
+          values_from = c(.data$INOCCUR, .data$INDUR, .data$INEVINTX),
+          names_sort = T, names_vary = "slowest",
+          values_fn = first
+        )
     }
   }
 
-  if("BLOOD_TRANSFUSION_INOCCUR" %in% names(DATA)){
-    DATA = DATA %>%
+  if ("BLOOD_TRANSFUSION_INOCCUR" %in% names(DATA)) {
+    DATA <- DATA %>%
       rename("BLOOD_TRANSFUSION" = "BLOOD_TRANSFUSION_INOCCUR")
   }
-  if("BLOOD_TRANSFUSION_INDUR" %in% names(DATA)){
-    DATA = DATA %>%
+  if ("BLOOD_TRANSFUSION_INDUR" %in% names(DATA)) {
+    DATA <- DATA %>%
       dplyr::select(-"BLOOD_TRANSFUSION_INDUR")
   }
-  if("BLOOD_TRANSFUSION_INEVINTX" %in% names(DATA)){
-    DATA = DATA %>%
+  if ("BLOOD_TRANSFUSION_INEVINTX" %in% names(DATA)) {
+    DATA <- DATA %>%
       rename("BLOOD_TRANSFUSION_TIME" = "BLOOD_TRANSFUSION_INEVINTX")
   }
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     dplyr::select(-starts_with("HISTORY_IN_BLOOD_TRANSFUSION")) %>%
     dplyr::select(-starts_with("VL")) %>%
     dplyr::select(-starts_with("MALARIA"))
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     clean_names(case = "all_caps")
 
   return(DATA)

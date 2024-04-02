@@ -14,32 +14,26 @@
 #'
 #' @author Rhys Peploe
 #'
-DERIVE_SEASON = function(DATA){
-  DATA$SEASON = NA
+DERIVE_SEASON <- function(DATA) {
+  DATA$SEASON <- NA
 
-  for(i in 1:nrow(DATA)){
-    if(is.na(DATA$RFSTDTC[i])){
+  for (i in 1:nrow(DATA)) {
+    if (is.na(DATA$RFSTDTC[i])) {
       next
     }
 
-    if(month(DATA$RFSTDTC[i]) <= 2 | month(DATA$RFSTDTC[i]) == 12){
-      DATA$SEASON[i] = "WINTER"
-    }
-
-    else if(month(DATA$RFSTDTC[i]) > 2 & month(DATA$RFSTDTC[i]) <= 5){
-      DATA$SEASON[i] = "SPRING"
-    }
-
-    else if(month(DATA$RFSTDTC[i]) > 5 & month(DATA$RFSTDTC[i]) <= 8){
-      DATA$SEASON[i] = "SUMMER"
-    }
-
-    else if(month(DATA$RFSTDTC[i]) > 8 & month(DATA$RFSTDTC[i]) <= 11){
-      DATA$SEASON[i] = "AUTUMN"
+    if (month(DATA$RFSTDTC[i]) <= 2 | month(DATA$RFSTDTC[i]) == 12) {
+      DATA$SEASON[i] <- "WINTER"
+    } else if (month(DATA$RFSTDTC[i]) > 2 & month(DATA$RFSTDTC[i]) <= 5) {
+      DATA$SEASON[i] <- "SPRING"
+    } else if (month(DATA$RFSTDTC[i]) > 5 & month(DATA$RFSTDTC[i]) <= 8) {
+      DATA$SEASON[i] <- "SUMMER"
+    } else if (month(DATA$RFSTDTC[i]) > 8 & month(DATA$RFSTDTC[i]) <= 11) {
+      DATA$SEASON[i] <- "AUTUMN"
     }
   }
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     relocate("SEASON", .after = "RFSTDTC")
 
   return(DATA)

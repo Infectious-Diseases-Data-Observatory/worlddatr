@@ -1,24 +1,4 @@
-#' Further prepare the MB domain for baseline analysis specifically for Malaria.
-#'
-#' Prepare the Microbiology (MB) domain for use in baseline analysis data sets
-#' with specific actions for Malaria. Takes a IDDO-SDTM curated MB domain,
-#' transforms and pivots it in order to merge it into a baseline analysis data
-#' set with other domains using the ANALYSE_BASELINE() function. PREP_MB_BL()
-#' and PREP_MB_MAL_BL() would be merged in the ANALYSE_BASELINE() function.
-#' Default variables are: "PFALCIPA", "PFALCIPS", "PFALCIP", "PVIVAXA",
-#' "PVIVAXS", "PVIVAX", "PLSMDMA", "PLSMDMS", "PLSMDM", "PKNOWLA", "PKNOWLS",
-#' "PKNOWL", "PMALARA", "PMALARS", "PMALAR", "POVALEA", "POVALES", "POVALE"
-#'
-#' @param DATA_MB The MB domain data frame, as named in the global environment.
-#'
-#' @return Data frame with one row per USUBJID/subject, with Malaria specific
-#'   MBTESTCDs and the units  as columns
-#'
-#' @export
-#'
-#' @author Rhys Peploe
-#'
-PREP_MB_BL_MAL <- function(DATA_MB) {
+PREP_MB_HR0_BL_MAL <- function(DATA_MB) {
   MB_VARS <- c(
     "PFALCIPA", "PFALCIPS", "PFALCIP",
     "PVIVAXA", "PVIVAXS", "PVIVAX",
@@ -31,13 +11,14 @@ PREP_MB_BL_MAL <- function(DATA_MB) {
   DATA <- DATA_MB %>%
     convert_blanks_to_na() %>%
     filter(.data$MBTESTCD %in% MB_VARS) %>%
-    DERIVE_TIMING() %>%
     mutate(
       MBSTRES = as.character(.data$MBSTRESN),
       MBSTRESC = as.character(.data$MBSTRESC),
       MBMODIFY = as.character(.data$MBMODIFY),
       MBORRES = as.character(.data$MBORRES),
-      MBUNITS = as.character(NA)
+      MBUNITS = as.character(NA),
+      TIMING = str_to_upper(as.character(.data$VISIT)),
+      EPOCH = str_to_upper(as.character(.data$EPOCH))
     )
 
   DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] <-
@@ -54,7 +35,7 @@ PREP_MB_BL_MAL <- function(DATA_MB) {
 
   DATA <- DATA %>%
     mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
-    filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+    filter(.data$TIMING == "HOUR 0") %>% # .data$TIMING == "BASELINE"
     pivot_wider(
       id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
       names_glue = "{MBTESTCD}_{.value}", values_from = c(.data$MBSTRES, .data$MBUNITS),

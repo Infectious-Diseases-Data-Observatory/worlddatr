@@ -14,34 +14,38 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_ER_FIRST = function(DATA_ER){
-  DATA = DATA_ER %>%
+PREP_ER_FIRST <- function(DATA_ER) {
+  DATA <- DATA_ER %>%
     convert_blanks_to_na() %>%
-    mutate(ERSTRES = as.character(.data$ERDECOD),
-           ERPRESP = str_to_upper(.data$ERPRESP),
-           EROCCUR = str_to_upper(.data$EROCCUR),
-           DAY = .data$ERDY) %>%
+    mutate(
+      ERSTRES = as.character(.data$ERDECOD),
+      ERPRESP = str_to_upper(.data$ERPRESP),
+      EROCCUR = str_to_upper(.data$EROCCUR),
+      DAY = .data$ERDY
+    ) %>%
     filter(.data$ERPRESP == "Y")
 
-  DATA[which(is.na(DATA$ERSTRES)), "ERSTRES"] =
+  DATA[which(is.na(DATA$ERSTRES)), "ERSTRES"] <-
     DATA[which(is.na(DATA$ERSTRES)), "ERMODIFY"]
-  DATA[which(is.na(DATA$ERSTRES)), "ERSTRES"] =
+  DATA[which(is.na(DATA$ERSTRES)), "ERSTRES"] <-
     DATA[which(is.na(DATA$ERSTRES)), "ERTERM"]
 
-  DATA = DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$DAY), ]
+  DATA <- DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$DAY), ]
 
-  DATA = DATA %>%
-    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$ERSTRES,
-                names_glue = "{ERSTRES}_{.value}",
-                values_from = c(.data$EROCCUR, .data$DAY),
-                names_sort = T, names_vary = "slowest",
-                values_fn = first)
+  DATA <- DATA %>%
+    pivot_wider(
+      id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$ERSTRES,
+      names_glue = "{ERSTRES}_{.value}",
+      values_from = c(.data$EROCCUR, .data$DAY),
+      names_sort = T, names_vary = "slowest",
+      values_fn = first
+    )
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     clean_names(case = "all_caps")
 
-  colnames(DATA) = gsub("_EROCCUR", "", colnames(DATA))
-  colnames(DATA) = gsub("_ERPRESP", "_PRESP", colnames(DATA))
+  colnames(DATA) <- gsub("_EROCCUR", "", colnames(DATA))
+  colnames(DATA) <- gsub("_ERPRESP", "_PRESP", colnames(DATA))
 
   return(DATA)
 }

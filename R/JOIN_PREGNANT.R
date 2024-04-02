@@ -16,27 +16,29 @@
 #'
 #' @author Rhys Peploe
 #'
-JOIN_PREGNANT = function(DATA){
-  if(("HCG" %in% names(DATA)) & ("PREGIND" %in% names(DATA))){
-    DATA$DOMAIN_IND = NA
+JOIN_PREGNANT <- function(DATA) {
+  if (("HCG" %in% names(DATA)) & ("PREGIND" %in% names(DATA))) {
+    DATA$DOMAIN_IND <- NA
 
-    DATA$PREGNANT = DATA$HCG
-    DATA$PREGNANT_UNITS = DATA$HCG_UNITS
+    DATA$PREGNANT <- DATA$HCG
+    DATA$PREGNANT_UNITS <- DATA$HCG_UNITS
 
-    DATA[which(!is.na(DATA$PREGNANT) | !is.na(DATA$PREGNANT_UNITS)), "DOMAIN_IND"] = "LB"
+    DATA[which(!is.na(DATA$PREGNANT) | !is.na(DATA$PREGNANT_UNITS)), "DOMAIN_IND"] <- "LB"
 
-    DATA[which(is.na(DATA$DOMAIN_IND)), "PREGNANT"] =
+    DATA[which(is.na(DATA$DOMAIN_IND)), "PREGNANT"] <-
       DATA[which(is.na(DATA$DOMAIN_IND)), "PREGIND"]
 
-    DATA[which(is.na(DATA$DOMAIN_IND)), "PREGNANT_UNITS"] =
+    DATA[which(is.na(DATA$DOMAIN_IND)), "PREGNANT_UNITS"] <-
       DATA[which(is.na(DATA$DOMAIN_IND)), "PREGIND_UNITS"]
 
-    DATA = DATA %>%
-      dplyr::select(-"PREGIND", -"HCG", -"DOMAIN_IND",
-                    -"PREGIND_UNITS", -"HCG_UNITS")
+    DATA <- DATA %>%
+      dplyr::select(
+        -"PREGIND", -"HCG", -"DOMAIN_IND",
+        -"PREGIND_UNITS", -"HCG_UNITS"
+      )
 
-    if("EGA" %in% names(DATA)){
-      DATA = DATA %>%
+    if ("EGA" %in% names(DATA)) {
+      DATA <- DATA %>%
         relocate("EGA_UNITS", .after = "PREGNANT_UNITS") %>%
         relocate("EGA", .after = "PREGNANT_UNITS")
     }

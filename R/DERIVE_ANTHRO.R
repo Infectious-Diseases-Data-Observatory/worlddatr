@@ -18,31 +18,35 @@
 #'
 #' @importFrom anthro anthro_zscores
 #'
-DERIVE_ANTHRO = function(DATA){
-  DATA_ANTHRO = DATA %>%
+DERIVE_ANTHRO <- function(DATA) {
+  DATA_ANTHRO <- DATA %>%
     filter(DATA$AGE < 5 | DATA$AGE_DAYS < 1826)
 
-  if(nrow(DATA_ANTHRO) == 0){
+  if (nrow(DATA_ANTHRO) == 0) {
     return(DATA_ANTHRO)
-  }
+  } else {
+    BIND_ANTHRO <- cbind(
+      DATA_ANTHRO,
+      anthro_zscores(
+        sex = DATA_ANTHRO$SEX,
+        age = as.numeric(DATA_ANTHRO$AGE_DAYS),
+        weight = as.numeric(DATA_ANTHRO$WEIGHT),
+        lenhei = as.numeric(DATA_ANTHRO$HEIGHT)
+      ) %>%
+        dplyr::select(
+          "zlen", "flen", "zwei",
+          "fwei", "zwfl", "fwfl"
+        )
+    ) %>%
+      rename(
+        "HAZ" = "zlen",
+        "HAZ_FLAG" = "flen",
+        "WAZ" = "zwei",
+        "WAZ_FLAG" = "fwei",
+        "WHZ" = "zwfl",
+        "WHZ_FLAG" = "fwfl"
+      )
 
-  else{
-  BIND_ANTHRO = cbind(DATA_ANTHRO,
-                      anthro_zscores(
-                        sex = DATA_ANTHRO$SEX,
-                        age = as.numeric(DATA_ANTHRO$AGE_DAYS),
-                        weight = as.numeric(DATA_ANTHRO$WEIGHT),
-                        lenhei = as.numeric(DATA_ANTHRO$HEIGHT)) %>%
-
-                        dplyr::select("zlen", "flen", "zwei",
-                                      "fwei", "zwfl", "fwfl")) %>%
-    rename("HAZ" = "zlen",
-           "HAZ_FLAG" = "flen",
-           "WAZ" = "zwei",
-           "WAZ_FLAG" = "fwei",
-           "WHZ" = "zwfl",
-           "WHZ_FLAG" = "fwfl")
-
-  return(BIND_ANTHRO)
+    return(BIND_ANTHRO)
   }
 }

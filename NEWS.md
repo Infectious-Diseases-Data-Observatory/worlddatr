@@ -1,3 +1,10 @@
+# iddoverse 0.4.0
+* styler package implemented, improvements to comply with good practices.
+* Data, code and poster for the CDISC Europe Interchange 2024 uploaded
+* New functions using screening as a filter instead of DERIVE_TIMING: ANALYSE_HR0SCR_BASELINE, PREP_VS_SCR_BL, PREP_VS_SCR_TEMP_BL
+* New functions using hour 0 as a filter instead of DERIVE_TIMING: ANALYSE_HR0SCR_BASELINE, PREP_LB_HR0_BL, PREP_MBSPEC_HR0_BL, PREP_MB_HR0_BL, PREP_MB_HR0_BL_MAL
+* MBSPEC: Output variable name change, edit to names_glue in pivot_wider function. Previously there was duplicated elements in the variable name in analysis dataset, this is rectified.
+
 # iddoverse 0.3.1
 * Data exported with package as opposed to read.csv 
 * Data documented

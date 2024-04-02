@@ -1,29 +1,4 @@
-#' Prepare the Specimen Material Type (SPEC) and Specimen Collection Location
-#' (LOC) of baseline MB Tests.
-#'
-#' Prepare the Microbiology (MB) variables MBSPEC and MBLOC for use in baseline
-#' analysis data sets. Takes a IDDO-SDTM curated MB domain, transforms and
-#' pivots it in order to merge it into a baseline analysis data set with other
-#' domains using the ANALYSE_BASELINE() function.
-#'
-#' @param DATA_MB The MB domain data frame, as named in the global environment.
-#' @param DISEASE The name of the disease theme being analysed. Character
-#'   string. Default is empty (selects base variables). Select from: "MALARIA"
-#'   or "VL". If selection is missing or misspelt, then the default variables
-#'   will be used.
-#' @param VARS Specify additional variables to be included in the output
-#'   dataset. Character string. Use controlled terminology for MBTESTCD as
-#'   specified in the LB section of the 'IDDO SDTM Implementation Manual'. i.e.
-#'   c("CRONAVIR").
-#'
-#' @return Data frame with row per USUBJID/subject and MBTESTCDs, with MBSPEC
-#'   and MBLOC, as columns
-#'
-#' @export
-#'
-#' @author Rhys Peploe
-#'
-PREP_MBSPEC_BL <- function(DATA_MB, DISEASE = "", VARS = NULL) {
+PREP_MBSPEC_HR0_BL <- function(DATA_MB, DISEASE = "", VARS = NULL) {
   DISEASE <- str_to_upper(DISEASE)
 
   if (DISEASE == "MALARIA") {
@@ -37,10 +12,13 @@ PREP_MBSPEC_BL <- function(DATA_MB, DISEASE = "", VARS = NULL) {
   DATA <- DATA_MB %>%
     convert_blanks_to_na() %>%
     filter(.data$MBTESTCD %in% MB_VARS) %>%
-    DERIVE_TIMING()
+    mutate(
+      TIMING = str_to_upper(as.character(.data$VISIT)),
+      EPOCH = str_to_upper(as.character(.data$EPOCH))
+    )
 
   DATA <- DATA %>%
-    filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+    filter(.data$TIMING == "HOUR 0") %>% # .data$TIMING == "BASELINE"
     pivot_wider(
       id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
       values_from = c(.data$MBLOC, .data$MBSPEC),

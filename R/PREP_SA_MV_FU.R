@@ -17,53 +17,59 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_SA_MV_FU = function(DATA_SA){
-  DATA_SA = DATA_SA %>%
+PREP_SA_MV_FU <- function(DATA_SA) {
+  DATA_SA <- DATA_SA %>%
     convert_blanks_to_na() %>%
-    mutate(SASTRES = str_to_upper(as.character(.data$SADECOD)),
-           SAMODIFY = str_to_upper(as.character(.data$SAMODIFY)),
-           SATERM = str_to_upper(as.character(.data$SATERM)),
-           DAY = .data$SADY,
-           START_DAY = .data$SASTDY,
-           END_DAY = .data$SAENDY) %>%
+    mutate(
+      SASTRES = str_to_upper(as.character(.data$SADECOD)),
+      SAMODIFY = str_to_upper(as.character(.data$SAMODIFY)),
+      SATERM = str_to_upper(as.character(.data$SATERM)),
+      DAY = .data$SADY,
+      START_DAY = .data$SASTDY,
+      END_DAY = .data$SAENDY
+    ) %>%
     CLEAN_SA()
 
-  DATA_SA[which(is.na(DATA_SA$SASTRES)), "SASTRES"] =
+  DATA_SA[which(is.na(DATA_SA$SASTRES)), "SASTRES"] <-
     DATA_SA[which(is.na(DATA_SA$SASTRES)), "SAMODIFY"]
-  DATA_SA[which(is.na(DATA_SA$SASTRES)), "SASTRES"] =
+  DATA_SA[which(is.na(DATA_SA$SASTRES)), "SASTRES"] <-
     DATA_SA[which(is.na(DATA_SA$SASTRES)), "SATERM"]
 
-  DATA_SA = DATA_SA %>%
+  DATA_SA <- DATA_SA %>%
     filter(.data$SASTRES %in% c("MALARIA"))
 
-  if(any(is.na(DATA_SA$SAPRESP))) {
-    DATA_SA[which(is.na(DATA_SA$SAPRESP)), "SAPRESP"] = "N"
-    DATA_SA[which(DATA_SA$SAPRESP == "N"), "SAOCCUR"] = "Y"
+  if (any(is.na(DATA_SA$SAPRESP))) {
+    DATA_SA[which(is.na(DATA_SA$SAPRESP)), "SAPRESP"] <- "N"
+    DATA_SA[which(DATA_SA$SAPRESP == "N"), "SAOCCUR"] <- "Y"
   }
 
-  DATA_EMPTY = DATA_SA %>%
+  DATA_EMPTY <- DATA_SA %>%
     filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY) &
-             is.na(.data$START_DAY) & is.na(.data$END_DAY)) %>%
+      is.na(.data$START_DAY) & is.na(.data$END_DAY)) %>%
     DERIVE_EMPTY_TIME()
 
-  MALARIA_SEVERE = DATA_SA %>%
+  MALARIA_SEVERE <- DATA_SA %>%
     filter(.data$SASTRES == "MALARIA" & .data$SASEV == "SEVERE") %>%
     mutate(MALARIA_SEV = "Y") %>%
     dplyr::select(.data$USUBJID, .data$MALARIA_SEV)
 
-  DATA = DATA_SA %>%
+  DATA <- DATA_SA %>%
     left_join(DATA_EMPTY) %>%
     mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
-    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
-                            .data$DAY, .data$START_DAY, .data$END_DAY, .data$EMPTY_TIME),
-                names_from = .data$SASTRES,
-                values_from = .data$SAOCCUR,
-                values_fn = first)
+    pivot_wider(
+      id_cols = c(
+        .data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
+        .data$DAY, .data$START_DAY, .data$END_DAY, .data$EMPTY_TIME
+      ),
+      names_from = .data$SASTRES,
+      values_from = .data$SAOCCUR,
+      values_fn = first
+    )
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     clean_names(case = "all_caps")
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     left_join(MALARIA_SEVERE)
 
   return(DATA)

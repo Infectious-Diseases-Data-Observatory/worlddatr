@@ -20,50 +20,50 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_DM = function(DATA_DM, DISEASE = NULL, VARS = NULL){
-  DISEASE = str_to_upper(DISEASE)
+PREP_DM <- function(DATA_DM, DISEASE = NULL, VARS = NULL) {
+  DISEASE <- str_to_upper(DISEASE)
 
-  if(DISEASE == "MALARIA"){
-    COLUMNS = c("STUDYID", "USUBJID", "SITEID", "AGE", "AGE_DAYS", "SEX", "ARMCD",
-                "ARM", "COUNTRY", "RFSTDTC", "RACE", "ETHNIC", str_to_upper(VARS))
+  if (DISEASE == "MALARIA") {
+    COLUMNS <- c(
+      "STUDYID", "USUBJID", "SITEID", "AGE", "AGE_DAYS", "SEX", "ARMCD",
+      "ARM", "COUNTRY", "RFSTDTC", "RACE", "ETHNIC", str_to_upper(VARS)
+    )
+  } else if (DISEASE == "VL") {
+    COLUMNS <- c(
+      "STUDYID", "USUBJID", "SITEID", "AGE", "AGE_DAYS", "SEX", "ARMCD",
+      "ARM", "COUNTRY", "RFSTDTC", "ETHNIC", str_to_upper(VARS)
+    )
+  } else if (DISEASE == "EBOLA") {
+    COLUMNS <- c(
+      "STUDYID", "USUBJID", "SITEID", "AGE", "SEX", "ARMCD",
+      "ARM", "COUNTRY", str_to_upper(VARS)
+    )
+  } else {
+    COLUMNS <- c(
+      "STUDYID", "USUBJID", "SITEID", "AGE", "AGE_DAYS", "SEX", "ARMCD",
+      "ARM", "COUNTRY", "RFSTDTC", "RACE", "ETHNIC", str_to_upper(VARS)
+    )
   }
 
-  else if(DISEASE == "VL"){
-    COLUMNS = c("STUDYID", "USUBJID", "SITEID", "AGE", "AGE_DAYS", "SEX", "ARMCD",
-                "ARM", "COUNTRY", "RFSTDTC", "ETHNIC", str_to_upper(VARS))
-  }
-
-  else if(DISEASE == "EBOLA"){
-    COLUMNS = c("STUDYID", "USUBJID", "SITEID", "AGE", "SEX", "ARMCD",
-                "ARM", "COUNTRY", str_to_upper(VARS))
-  }
-
-  else{
-    COLUMNS = c("STUDYID", "USUBJID", "SITEID", "AGE", "AGE_DAYS", "SEX", "ARMCD",
-                "ARM", "COUNTRY", "RFSTDTC", "RACE", "ETHNIC", str_to_upper(VARS))
-  }
-
-  if("AGE_DAYS" %in% COLUMNS){
-    DATA = DATA_DM %>%
+  if ("AGE_DAYS" %in% COLUMNS) {
+    DATA <- DATA_DM %>%
       convert_blanks_to_na() %>%
       DERIVE_AGE_DAYS() %>%
       DERIVE_AGE_YEARS() %>%
       relocate("AGE_DAYS", .after = "AGE")
-  }
-
-  else{
-    DATA = DATA_DM %>%
+  } else {
+    DATA <- DATA_DM %>%
       convert_blanks_to_na() %>%
       DERIVE_AGE_YEARS()
   }
 
-  DATA = DATA[, which(names(DATA) %in% COLUMNS)]
+  DATA <- DATA[, which(names(DATA) %in% COLUMNS)]
 
-  DATA = DATA %>%
+  DATA <- DATA %>%
     rename("TREATMENT" = "ARM")
 
-  if("ETHNIC" %in% names(DATA)){
-    DATA = DATA %>%
+  if ("ETHNIC" %in% names(DATA)) {
+    DATA <- DATA %>%
       mutate(ETHNIC = str_to_upper(.data$ETHNIC))
   }
 

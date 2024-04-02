@@ -1,24 +1,4 @@
-#' Prepare the Temperature variable in the VS domain for baseline analysis.
-#'
-#' Prepare the Temperature variable in the Vital Signs (VS) domain for use in
-#' baseline analysis data sets. Takes a IDDO-SDTM curated VS domain, filters
-#' just the temperature records, transforms and pivots it in order to merge it
-#' into a baseline analysis data set with other domains using the
-#' ANALYSE_BASELINE() function.
-#'
-#' This allows the Temperature location to be recorded in the analysis dataset
-#' without including the location for all of the other VS variables
-#'
-#' @param DATA_VS The VS domain data frame, as named in the global environment.
-#'
-#' @return Data frame with one row per USUBJID/subject, with TEMP, TEMP_UNITS
-#'   and TEMP_LOC as columns
-#'
-#' @export
-#'
-#' @author Rhys Peploe
-#'
-PREP_VS_TEMP_BL <- function(DATA_VS) {
+PREP_VS_SCR_TEMP_BL <- function(DATA_VS) {
   DATA <- DATA_VS %>%
     convert_blanks_to_na() %>%
     filter(.data$VSTESTCD == "TEMP") %>%
@@ -43,7 +23,7 @@ PREP_VS_TEMP_BL <- function(DATA_VS) {
     DATA[which(is.na(DATA$VSSTRESC) & is.na(DATA$VSSTRESN)), "VSORRESU"]
 
   DATA <- DATA %>%
-    filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+    filter(.data$TIMING == 1 | .data$TIMING == "SCREENING") %>%
     pivot_wider(
       id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$VSTESTCD,
       values_from = c(.data$VSSTRES, .data$VSUNITS, .data$VSLOC),
