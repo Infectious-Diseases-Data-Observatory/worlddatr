@@ -1,3 +1,7 @@
+# iddoverse 0.4.1
+* Documented and exported new functions from v0.4.1
+* Few good practice changes 'T' -> TRUE
+
 # iddoverse 0.4.0
 * styler package implemented, improvements to comply with good practices.
 * Data, code and poster for the CDISC Europe Interchange 2024 uploaded
