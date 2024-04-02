@@ -1,3 +1,89 @@
+#' Create baseline analysis dataset, using different timing filters.
+#'
+#' Baseline analysis datasets includes events and tests conducted on the
+#' subject's first day in the study; this also included medical history. This
+#' function prepares, cleans, filters and pivots multiple IDDO-SDTM domains and
+#' finally merges them into a single dataset, which can be used for research and
+#' analysis. The choice of DISEASE preselects a number of variables which have
+#' been chosen with input from Subject Matter Experts. The DM domain is the only
+#' one which is required for the code to run, the rest can be optional.
+#'
+#' Some domains do not use the typical TIMING = 1 or BASELINE; MB and LB use
+#' VISIT = Hour 0, and VS uses SCREENING
+#'
+#' If issues are found with the code, please log them at:
+#' https://github.com/RhysPeploe/iddoverse/issues
+#'
+#' @param DISEASE_THEME The name of the disease theme being analysed. Character
+#'   string. Default is empty (selects base variables). Select from: "MALARIA",
+#'   "VL" or "EBOLA". If selection is missing or misspelt, then the base
+#'   variables will be used.
+#' @param DATA_DM The DM domain data frame, as named in the global environment.
+#'   Required.
+#' @param DATA_IN The IN domain data frame, as named in the global environment.
+#' @param DATA_LB The LB domain data frame, as named in the global environment.
+#' @param DATA_MB The MB domain data frame, as named in the global environment.
+#' @param DATA_MP The MP domain data frame, as named in the global environment.
+#' @param DATA_RP The RP domain data frame, as named in the global environment.
+#' @param DATA_SA The SA domain data frame, as named in the global environment.
+#' @param DATA_TS The TS domain data frame, as named in the global environment.
+#' @param DATA_VS The VS domain data frame, as named in the global environment.
+#'
+#' @param DM_VARS Specify additional variables to be included in the output
+#'   dataset. Character string. Use column names as specified in the DM section
+#'   of the 'IDDO SDTM Implementation Manual'. i.e. c("DTHFL", "DTHDTC").
+#' @param IN_VARS Specify additional variables to be included in the output
+#'   dataset. Character string. Use controlled terminology for INDECOD as
+#'   specified in the IN section of the 'IDDO SDTM Implementation Manual'. i.e.
+#'   c("PARACETAMOL").
+#' @param LB_VARS Specify additional variables to be included in the output
+#'   dataset. Character string. Use controlled terminology for LBTESTCD as
+#'   specified in the LB section of the 'IDDO SDTM Implementation Manual'. i.e.
+#'   c("CHOL").
+#' @param MB_VARS Specify additional variables to be included in the output
+#'   dataset. Character string. Use controlled terminology for MBTESTCD as
+#'   specified in the MB section of the 'IDDO SDTM Implementation Manual'. i.e.
+#'   c("CRONAVIR").
+#' @param MB_VARS_SPEC See MB_VARS above.
+#' @param MP_VARS Specify additional variables to be included in the output
+#'   dataset. Character string. Use controlled terminology for MPLOC as
+#'   specified in the MP section of the 'IDDO SDTM Implementation Manual'. Note
+#'   this is only for LENGTH of the organ, not the WIDTH.
+#' @param RP_VARS Specify additional variables to be included in the output
+#'   dataset. Character string. Use controlled terminology for RPTESTCD as
+#'   specified in the RP section of the 'IDDO SDTM Implementation Manual'. i.e.
+#'   c("EGESTAGE", "LMPSTDTC").
+#' @param SA_VARS Specify additional variables to be included in the output
+#'   dataset. Character string. Use controlled terminology for SADECOD as
+#'   specified in the SA section of the 'IDDO SDTM Implementation Manual'. i.e.
+#'   c("BLEEDING").
+#' @param VS_VARS Specify additional variables to be included in the output
+#'   dataset. Character string. Use controlled terminology for VSTESTCD as
+#'   specified in the VS section of the 'IDDO SDTM Implementation Manual'. i.e.
+#'   c("MAP").
+#'
+#' @param IN_DUR Should the analysis dataset include the duration of the
+#'   Treatment / Intervention event? This is the time from the start of the
+#'   event till the end. Boolean, default is FALSE.
+#' @param IN_TIME Should the analysis dataset include the time since the
+#'   Treatment / Intervention event? This is the time since the end of the
+#'   event. Boolean, default is FALSE.
+#' @param SA_DUR Should the analysis dataset include the duration of the
+#'   Clinical / Adverse Effect event? This is the time from the start of the
+#'   event till the end. Boolean, default is FALSE.
+#' @param SA_TIME Should the analysis dataset include the time since the
+#'   Clinical / Adverse Effect event? This is the time since the end of the
+#'   event. Boolean, default is FALSE.
+#' @param MP_TESTCD Specify which MPTESTCD is desired in the output. Options
+#'   are: "LENGTH", "WIDTH" or "BOTH". Default is Length.
+#'
+#' @return A dataset with one row per subject, and variables from each of the
+#'   domains listed in the parameters above.
+#'
+#' @export
+#'
+#' @author Rhys Peploe
+#'
 ANALYSE_HR0SCR_BASELINE <- function(DISEASE_THEME = "", DATA_DM,
                                     DATA_IN = NULL, DATA_LB = NULL, DATA_MB = NULL,
                                     DATA_MP = NULL, DATA_RP = NULL, DATA_SA = NULL,

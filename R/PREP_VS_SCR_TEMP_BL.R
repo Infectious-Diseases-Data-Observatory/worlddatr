@@ -1,3 +1,24 @@
+#' Prepare the Temperature variable in the VS domain for baseline analysis,
+#' using 'Screening' as the timing filter.
+#'
+#' Prepare the Temperature variable in the Vital Signs (VS) domain for use in
+#' baseline analysis data sets. Instead of the typical TIMING == 1 or BASELINE,
+#' this takes EPOCH = SCREENING as the definition of baseline. Takes a IDDO-SDTM
+#' curated VS domain, filters just the temperature records, transforms and
+#' pivots it in order to merge it into a baseline analysis data set with other
+#' domains using the ANALYSE_BASELINE() function.
+#'
+#' This allows the Temperature location to be recorded in the analysis dataset
+#' without including the location for all of the other VS variables
+#'
+#' @param DATA_VS The VS domain data frame, as named in the global environment.
+#'
+#' @return Data frame with one row per USUBJID/subject, with TEMP, TEMP_UNITS
+#'   and TEMP_LOC as columns
+#'
+#' @export
+#'
+#' @author Rhys Peploe
 PREP_VS_SCR_TEMP_BL <- function(DATA_VS) {
   DATA <- DATA_VS %>%
     convert_blanks_to_na() %>%

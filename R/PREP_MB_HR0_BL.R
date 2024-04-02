@@ -1,3 +1,36 @@
+#' Prepare the MB domain for baseline analysis, using Hour 0 as the timing
+#' filter.
+#'
+#' Prepare the Microbiology (MB) domain for use in baseline analysis data sets.
+#' Instead of the typical TIMING == 1 or BASELINE, this takes VISIT = HOUR 0 as
+#' the definition of baseline. Takes a IDDO-SDTM curated MB domain, transforms
+#' and pivots it in order to merge it into a baseline analysis data set with
+#' other domains using the ANALYSE_BASELINE() function. Default variables are:
+#' "HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM". Disease specific options
+#' are listed in 'Details'.
+#'
+#' VL: "HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM", "PLSMDM", "PLSMDMA",
+#' "PLSMDMS", "PFALCIP", "PFALCIPA", "PFALCIPS", "PVIVAX", "PVIVAXA", "PVIVAXS"
+#'
+#' Ebola: "ZEBOV"
+#'
+#' @param DATA_MB The MB domain data frame, as named in the global environment.
+#' @param DISEASE The name of the disease theme being analysed. Character
+#'   string. Default is empty (selects base variables). Select from: "MALARIA",
+#'   "VL" or "EBOLA". If selection is missing or misspelt, then the default
+#'   variables will be used.
+#' @param VARS Specify additional variables to be included in the output
+#'   dataset. Character string. Use controlled terminology for MBTESTCD as
+#'   specified in the MB section of the 'IDDO SDTM Implementation Manual'. i.e.
+#'   c("CRONAVIR").
+#'
+#' @return Data frame with one row per USUBJID/subject, with MBTESTCDs and the
+#'   units as columns
+#'
+#' @export
+#'
+#' @author Rhys Peploe
+#'
 PREP_MB_HR0_BL <- function(DATA_MB, DISEASE = "", VARS = NULL) {
   DISEASE <- str_to_upper(DISEASE)
 

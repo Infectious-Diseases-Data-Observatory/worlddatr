@@ -1,3 +1,26 @@
+#' Further prepare the MB domain for baseline analysis specifically for Malaria,
+#' using Hour 0 as the timing filter..
+#'
+#' Prepare the Microbiology (MB) domain for use in baseline analysis data sets
+#' with specific actions for Malaria. Instead of the typical TIMING == 1 or
+#' BASELINE, this takes VISIT = HOUR 0 as the definition of baseline. Takes a
+#' IDDO-SDTM curated MB domain, transforms and pivots it in order to merge it
+#' into a baseline analysis data set with other domains using the
+#' ANALYSE_BASELINE() function. PREP_MB_BL() and PREP_MB_MAL_BL() would be
+#' merged in the ANALYSE_BASELINE() function. Default variables are: "PFALCIPA",
+#' "PFALCIPS", "PFALCIP", "PVIVAXA", "PVIVAXS", "PVIVAX", "PLSMDMA", "PLSMDMS",
+#' "PLSMDM", "PKNOWLA", "PKNOWLS", "PKNOWL", "PMALARA", "PMALARS", "PMALAR",
+#' "POVALEA", "POVALES", "POVALE"
+#'
+#' @param DATA_MB The MB domain data frame, as named in the global environment.
+#'
+#' @return Data frame with one row per USUBJID/subject, with Malaria specific
+#'   MBTESTCDs and the units  as columns
+#'
+#' @export
+#'
+#' @author Rhys Peploe
+#'
 PREP_MB_HR0_BL_MAL <- function(DATA_MB) {
   MB_VARS <- c(
     "PFALCIPA", "PFALCIPS", "PFALCIP",
