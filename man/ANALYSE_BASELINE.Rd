@@ -113,8 +113,8 @@ event till the end. Boolean, default is FALSE.}
 Clinical / Adverse Effect event? This is the time since the end of the
 event. Boolean, default is FALSE.}
 
-\item{MP_TESTCD}{Specify which MPTESTCD is desired in the output. Options are:
-"LENGTH", "WIDTH" or "BOTH". Default is Length.}
+\item{MP_TESTCD}{Specify which MPTESTCD is desired in the output. Options
+are: "LENGTH", "WIDTH" or "BOTH". Default is Length.}
 }
 \value{
 A dataset with one row per subject, and variables from each of the
