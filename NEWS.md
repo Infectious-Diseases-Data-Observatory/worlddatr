@@ -1,3 +1,5 @@
+# iddoverse 0.4.2
+
 # iddoverse 0.4.1
 * Documented and exported new functions from v0.4.1
 * Few good practice changes 'T' -> TRUE
