@@ -29,15 +29,15 @@ LB_RPTESTD <- data.frame(
   USUBJID = c("RPTESTD_001", "RPTESTD_001", "RPTESTD_001",
               "RPTESTD_002", "RPTESTD_002", "RPTESTD_002"),
   LBSEQ = rep(1:3, 2),
-  LBTESTCD = c("HGB", "PLAT", "HGB", 
+  LBTESTCD = c("HGB", "PLAT", "HGB",
                "HGB", "PLAT", "HGB"),
-  LBTEST = c("Hemoglobin", "Platlets", "Hemoglobin", 
+  LBTEST = c("Hemoglobin", "Platlets", "Hemoglobin",
              "Hemoglobin", "Platlets", "Hemoglobin"),
   LBORRES = c(95, 181000, 88, 101, 100000, 99),
   LBMODIFY = NA,
   LBORRESU = c("g/L", "10^6/L", "g/L",
                "g/L", "10^6/L", "g/L"),
-  LBSTRESC = NA,
+  LBSTRESC = c("95", "181", "88", "101", "", "99"),
   LBSTRESN = c("95", "181", "88", "101", "", "99"),
   LBSTRESU = c("g/L", "10^9/L", "g/L",
                "g/L", "", "g/L"),
@@ -62,9 +62,9 @@ VS_RPTESTD <- data.frame(
   USUBJID = c("RPTESTD_001", "RPTESTD_001",
               "RPTESTD_002", "RPTESTD_002"),
   VSSEQ = rep(1:2, 2),
-  VSTESTCD = c("HEIGHT", "WEIGHT", 
+  VSTESTCD = c("HEIGHT", "WEIGHT",
                "HEIGHT", "WEIGHT"),
-  VSTEST = c("Height", "Weight", 
+  VSTEST = c("Height", "Weight",
              "Height", "Weight"),
   VSORRES = c(1.67, 60, 143, 42),
   VSORRESU = c("m", "kg", "cm", "kg"),
@@ -80,4 +80,4 @@ VS_RPTESTD <- data.frame(
   VSDY = c(1, 3, 2, 4)
 )
 
-  
+
