@@ -1,4 +1,6 @@
 # iddoverse 0.4.2
+* Minor updates to README.md, information on detaching the package
+* Uploaded data, code, abstract and poster for the 2024 CDISC Europe Interchange, where the iddoverse was presented
 
 # iddoverse 0.4.1
 * Documented and exported new functions from v0.4.1
