@@ -2,6 +2,9 @@
 library(tidyverse)
 library(iddoverse)
 
+### Load Data
+source("CDISC_EI_2024-Data_RPTESTD.R")
+
 ### Demographics Domain
 DM_RPTESTD                                    # Curated Data
 PREP_DM(DM_RPTESTD, DISEASE = "MALARIA")      # Pivoted Data using iddoverse
@@ -11,9 +14,9 @@ LB_RPTESTD
 PREP_LB_BL(LB_RPTESTD)
 PREP_LB_FU(LB_RPTESTD)
 
-# Subset Dataset (Table 1 in Poster) 
-LB_RPTESTD %>% 
-  select(USUBJID, LBTESTCD, LBORRES, LBORRESU, LBSTRESC, LBSTRESN, LBSTRESU, 
+# Subset Dataset (Table 1 in Poster)
+LB_RPTESTD %>%
+  select(USUBJID, LBTESTCD, LBORRES, LBORRESU, LBSTRESC, LBSTRESN, LBSTRESU,
          VISITNUM, VISITDY, LBDY, EPOCH)
 
 ### Vital Signs Domain
@@ -28,7 +31,7 @@ ANALYSE_FOLLOW_UP(
   DATA_DM = DM_RPTESTD,
   DATA_LB = LB_RPTESTD,
   DATA_VS = VS_RPTESTD
-) 
+)
 
 # Subset Dataset (Table 2 in Poster)
 ANALYSE_FOLLOW_UP(
@@ -36,7 +39,7 @@ ANALYSE_FOLLOW_UP(
   DATA_DM = DM_RPTESTD,
   DATA_LB = LB_RPTESTD,
   DATA_VS = VS_RPTESTD
-) %>% 
-  select(USUBJID, AGE, SEX, ARMCD, VISITNUM, VISITDY, DAY, 
-         HGB, HGB_UNITS, PLAT, PLAT_UNITS, 
+) %>%
+  select(USUBJID, AGE, SEX, ARMCD, VISITNUM, VISITDY, DAY,
+         HGB, HGB_UNITS, PLAT, PLAT_UNITS,
          HEIGHT, HEIGHT_UNITS, WEIGHT, WEIGHT_UNITS)
