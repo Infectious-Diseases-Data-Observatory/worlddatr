@@ -1,3 +1,8 @@
+# iddoverse 0.5.0
+* New functions for associated persons, and MIMBA project, which will be documented and tidied in future releases
+* Fixed error when DISEASE is blank in PREP_DM
+* SC domain included in ANALYSE_FOLLOW_UP
+
 # iddoverse 0.4.2
 * Minor updates to README.md, information on detaching the package
 * Uploaded data, code, abstract and poster for the 2024 CDISC Europe Interchange, where the iddoverse was presented
