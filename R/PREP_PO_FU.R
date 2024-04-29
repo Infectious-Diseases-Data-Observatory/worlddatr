@@ -73,4 +73,3 @@ PREP_PO_FU <- function(DATA_PO, VARS = NULL) {
 
   return(DATA)
 }
-# "STILL BIRTH", "MISCARRIAGE, <ANOMALIES>
