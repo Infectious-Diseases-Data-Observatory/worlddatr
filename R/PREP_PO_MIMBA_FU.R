@@ -1,24 +1,4 @@
-#' Prepare the PO domain for follow up analysis.
-#'
-#' Prepare the Pregnancy Outcomes (SC) domain for use in follow up analysis data
-#' sets. Takes a IDDO-SDTM curated PO domain, transforms and pivots it in order
-#' to merge it into a follow up analysis data set with other domains using the
-#' ANALYSE_FOLLOW_UP() function.
-#'
-#' @param DATA_PO The PO domain data frame, as named in the global environment.
-#' @param VARS Specify additional variables to be included in the output
-#'   dataset. Character string. Use controlled terminology for POTERM as
-#'   specified in the PO section of the 'IDDO SDTM Implementation Manual'. i.e.
-#'   c("ADEVAIND").
-#'
-#' @return Data frame with one row per USUBJID/subject per day and POTERMs as
-#'   columns.
-#'
-#' @export
-#'
-#' @author Rhys Peploe
-#'
-PREP_PO_FU <- function(DATA_PO, VARS = NULL) {
+PREP_PO_MIMBA_FU <- function(DATA_PO, VARS = NULL) {
   PO_VARS <- c(str_to_upper(VARS))
 
   DATA_PO <- DATA_PO %>%
@@ -53,7 +33,7 @@ PREP_PO_FU <- function(DATA_PO, VARS = NULL) {
 
   DATA_EMPTY <- DATA_PO %>%
     filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY) &
-      is.na(.data$START_DAY) & is.na(.data$END_DAY)) %>%
+             is.na(.data$START_DAY) & is.na(.data$END_DAY)) %>%
     DERIVE_EMPTY_TIME()
 
   DATA <- DATA_PO %>%
@@ -61,15 +41,17 @@ PREP_PO_FU <- function(DATA_PO, VARS = NULL) {
     mutate(POOCCUR = as.factor(.data$POOCCUR)) %>%
     pivot_wider(
       id_cols = c(
-        .data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,
-        .data$DAY, .data$START_DAY, .data$END_DAY, .data$EMPTY_TIME
+        .data$STUDYID, .data$USUBJID,
       ),
-      names_from = .data$POSTRES, values_from = .data$POOCCUR,
-      values_fn = first
-    )
+      names_from = .data$POSTRES, values_from = c(.data$POOCCUR, .data$PODTC),
+    names_vary = "slowest", names_glue = "{POSTRES}_{.value}")
+
+  colnames(DATA) <- gsub("POOCCUR", "", colnames(DATA))
+  colnames(DATA) <- gsub("PODTC", "DTC", colnames(DATA))
 
   DATA <- DATA %>%
     clean_names(case = "all_caps")
 
   return(DATA)
 }
+

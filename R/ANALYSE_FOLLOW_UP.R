@@ -165,6 +165,11 @@ ANALYSE_FOLLOW_UP <- function(DISEASE_THEME = "", DATA_DM, DATA_LB = NULL,
       full_join(PREP_PO_FU(DATA_PO, VARS = PO_VARS))
   }
 
+  if (is.null(DATA_SC) == FALSE) {
+    FU <- FU %>%
+      full_join(PREP_SC_FU(DATA_SC, VARS = SC_VARS))
+  }
+
   FU <- right_join(DM, FU) %>%
     relocate(ends_with("DY"), .after = "VISITNUM") %>%
     relocate(ends_with("DAY"), .after = "VISITDY") %>%
