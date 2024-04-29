@@ -20,7 +20,7 @@
 #'
 #' @author Rhys Peploe
 #'
-PREP_DM <- function(DATA_DM, DISEASE = NULL, VARS = NULL) {
+PREP_DM <- function(DATA_DM, DISEASE = "", VARS = NULL) {
   DISEASE <- str_to_upper(DISEASE)
 
   if (DISEASE == "MALARIA") {
