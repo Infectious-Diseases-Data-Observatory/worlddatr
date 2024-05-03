@@ -4,7 +4,7 @@
 \alias{PREP_DM}
 \title{Prepare the DM domain for all outputs.}
 \usage{
-PREP_DM(DATA_DM, DISEASE = NULL, VARS = NULL)
+PREP_DM(DATA_DM, DISEASE = "", VARS = NULL)
 }
 \arguments{
 \item{DATA_DM}{The DM domain data frame, as named in the global environment.}
