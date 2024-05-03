@@ -1,27 +1,35 @@
-PREP_IN_MIMBA_FU <- function(DATA_IN, VARS = NULL) {
-  IN_VARS <- c(str_to_upper(VARS))
+PREP_IN_MIMBA_FU = function(DATA_IN){
+  IN_VARS <- str_to_upper(c(
+    "Amodiaquine-artesunate",
+    "Artemether",
+    "Artemether-Lumefantrine",
+    "Artemether/Lumefantrine Paracetamol",
+    "Artemether/Lumefantrine Phloroglucinol tablet",
+    "DHA-Piperaquine",
+    "Pyronaridine-Artesunate",
+    "Quinine",
+    "Quinine (Oral)",
+    "QUININE (PARENTERAL/IV)",
+    "Quinine Paracetamol",
+    "Phloroglucinol Quinine",
+    "Paracetamol Quinine",
+    "Paracetamol Phloroglucinol Artemether"
+    ))
+
+  DATA_IN$INTRT <- str_replace_all(DATA_IN$INTRT, "Artemether/Lumefantrine Paracetamol", "Artemether-Lumefantrine")
+  DATA_IN$INTRT <- str_replace_all(DATA_IN$INTRT, "Artemether/Lumefantrine Phloroglucinol tablet", "Artemether-Lumefantrine")
+  DATA_IN$INTRT <- str_replace_all(DATA_IN$INTRT, "Quinine \\(oral\\)", "Quinine")
+  DATA_IN$INTRT <- str_replace_all(DATA_IN$INTRT, "Quinine Paracetamol", "Quinine")
+  DATA_IN$INTRT <- str_replace_all(DATA_IN$INTRT, "Paracetamol Quinine", "Quinine")
+  DATA_IN$INTRT <- str_replace_all(DATA_IN$INTRT, "Phloroglucinol QUININE", "Quinine")
+  DATA_IN$INTRT <- str_replace_all(DATA_IN$INTRT, "Paracetamol Phloroglucinol Artemether", "Artemether")
 
   DATA_IN <- DATA_IN %>%
     convert_blanks_to_na() %>%
     mutate(
-      INSTRES = str_to_upper(as.character(.data$INDECOD)),
-      INMODIFY = str_to_upper(as.character(.data$INMODIFY)),
-      INTRT = str_to_upper(as.character(.data$INTRT)),
-      DAY = .data$INDY,
-      START_DAY = .data$INSTDY,
-      END_DAY = .data$INENDY
-    )
-
-  DATA_IN[which(is.na(DATA_IN$INSTRES)), "INSTRES"] <-
-    DATA_IN[which(is.na(DATA_IN$INSTRES)), "INMODIFY"]
-  DATA_IN[which(is.na(DATA_IN$INSTRES)), "INSTRES"] <-
-    DATA_IN[which(is.na(DATA_IN$INSTRES)), "INTRT"]
-
-  DATA_IN <- DATA_IN %>%
-    filter(.data$INSTRES %in% IN_VARS) %>%
-    mutate(
       INPRESP = str_to_upper(.data$INPRESP),
-      INOCCUR = str_to_upper(.data$INOCCUR)
+      INOCCUR = str_to_upper(.data$INOCCUR),
+      INTRT = str_to_upper(INTRT)
     )
 
   DATA_IN$INPRESP <- str_replace_all(DATA_IN$INPRESP, "TRUE", "Y")
@@ -29,27 +37,20 @@ PREP_IN_MIMBA_FU <- function(DATA_IN, VARS = NULL) {
   DATA_IN$INOCCUR <- str_replace_all(DATA_IN$INOCCUR, "FALSE", "N")
   DATA_IN$INOCCUR <- str_replace_all(DATA_IN$INOCCUR, "UNKNOWN", "U")
 
-  if (any(is.na(DATA_IN$INPRESP) == T)) {
+  if (any(is.na(DATA_IN$INPRESP) == TRUE)) {
     DATA_IN[which(is.na(DATA_IN$INPRESP)), "INPRESP"] <- "N"
     DATA_IN[which(DATA_IN$INPRESP == "N"), "INOCCUR"] <- "Y"
   }
 
-  DATA_EMPTY <- DATA_IN %>%
-    filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY) &
-             is.na(.data$START_DAY) & is.na(.data$END_DAY)) %>%
-    DERIVE_EMPTY_TIME()
-
   DATA <- DATA_IN %>%
-    left_join(DATA_EMPTY) %>%
-    mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
-    pivot_wider(
-      id_cols = c(
-        .data$STUDYID, .data$USUBJID
-      ),
-      names_from = .data$INSTRES, names_glue = "{INSTRES}_{.value}",
-      values_from = c(.data$INOCCUR, .data$INROUTE, .data$INDTC),
-      values_fn = first, names_vary = "slowest"
-    )
+    filter(INTRT %in% IN_VARS) %>%
+    group_by(STUDYID, USUBJID) %>%
+    mutate(ANTIMAL_SEQ = row_number()) %>%
+    pivot_wider(id_cols = c(STUDYID, USUBJID),
+                names_from = ANTIMAL_SEQ,
+                values_from = c(INTRT, INROUTE, INEVINTX, INSTDTC, INDUR),
+                names_vary = "slowest",
+                names_glue = "ANTIMALARIAL_{ANTIMAL_SEQ}_{.value}")
 
   DATA <- DATA %>%
     clean_names(case = "all_caps")
