@@ -1,3 +1,12 @@
+#' Title
+#'
+#' @param DATA_RP
+#' @param VARS
+#'
+#' @return
+#' @export
+#'
+#' @examples
 PREP_RP_MIMBA_FU <- function(DATA_RP, VARS = NULL) {
   RP_VARS <- c("PREGIND", "EGESTAGE", str_to_upper(VARS))
 

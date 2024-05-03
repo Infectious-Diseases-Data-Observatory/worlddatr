@@ -1,3 +1,13 @@
+#' Title
+#'
+#' @param DATA_MB
+#' @param DISEASE
+#' @param VARS
+#'
+#' @return
+#' @export
+#'
+#' @examples
 PREP_MB_MIMBA_FU <- function(DATA_MB, DISEASE = "", VARS = NULL) {
   DISEASE <- str_to_upper(DISEASE)
 

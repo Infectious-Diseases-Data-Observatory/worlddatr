@@ -1,3 +1,11 @@
+#' Title
+#'
+#' @param DATA_IN
+#'
+#' @return
+#' @export
+#'
+#' @examples
 PREP_IN_MIMBA_FU = function(DATA_IN){
   IN_VARS <- str_to_upper(c(
     "Amodiaquine-artesunate",

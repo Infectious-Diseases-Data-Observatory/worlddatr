@@ -1,3 +1,13 @@
+#' Title
+#'
+#' @param DATA_SA
+#' @param DISEASE
+#' @param VARS
+#'
+#' @return
+#' @export
+#'
+#' @examples
 PREP_SA_MIMBA_FU <- function(DATA_SA, DISEASE = "", VARS = NULL) {
   DISEASE <- str_to_upper(DISEASE)
 

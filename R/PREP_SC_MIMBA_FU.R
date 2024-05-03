@@ -1,3 +1,12 @@
+#' Title
+#'
+#' @param DATA_SC
+#' @param VARS
+#'
+#' @return
+#' @export
+#'
+#' @examples
 PREP_SC_MIMBA_FU <- function(DATA_SC, VARS = NULL) {
   SC_VARS <- c(str_to_upper(VARS))
 

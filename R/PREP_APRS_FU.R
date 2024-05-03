@@ -1,3 +1,12 @@
+#' Title
+#'
+#' @param DATA_RS
+#' @param VARS
+#'
+#' @return
+#' @export
+#'
+#' @examples
 PREP_APRS_FU <- function(DATA_RS, VARS = NULL) {
   RS_VARS <- c(
     str_to_upper(VARS)

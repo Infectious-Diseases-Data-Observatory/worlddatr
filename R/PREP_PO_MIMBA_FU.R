@@ -1,3 +1,12 @@
+#' Title
+#'
+#' @param DATA_PO
+#' @param VARS
+#'
+#' @return
+#' @export
+#'
+#' @examples
 PREP_PO_MIMBA_FU <- function(DATA_PO, VARS = NULL) {
   PO_VARS <- c(str_to_upper(VARS))
 
