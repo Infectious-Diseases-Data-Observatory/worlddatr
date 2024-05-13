@@ -2,6 +2,9 @@
 # iddoverse
 
 <!-- badges: start -->
+
+# <img src="man/figures/logo.png" align="right" height="120"/>
+
 <!-- badges: end -->
 
 The {iddoverse} contains R functions to convert IDDO-curated SDTM
@@ -42,7 +45,7 @@ It is best to remove the package and reinstall the current version:
 detach("package:iddoverse", unload = TRUE)
 
 devtools::install_github("RhysPeploe/iddoverse")
-#> Skipping install of 'iddoverse' from a github remote, the SHA1 (e5cb2a76) has not changed since last install.
+#> Skipping install of 'iddoverse' from a github remote, the SHA1 (384660ec) has not changed since last install.
 #>   Use `force = TRUE` to force installation
 library(iddoverse)
 ```
