@@ -32,8 +32,20 @@ library(iddoverse)
 ```
 
 We recommend updating the install regularly as the package is developing
-constantly. Version 1.0 will be released in 2024. Until then, versions
-starting with ‘0.’ should be expected to change without notification.
+constantly. Version 1.0 will be released in 2024, development timeline
+is currently being created. Until then, versions starting with ‘0.’
+should be expected to change without notification.
+
+It is best to remove the package and reinstall the current version:
+
+``` r
+detach("package:iddoverse", unload = TRUE)
+
+devtools::install_github("RhysPeploe/iddoverse")
+#> Skipping install of 'iddoverse' from a github remote, the SHA1 (e5cb2a76) has not changed since last install.
+#>   Use `force = TRUE` to force installation
+library(iddoverse)
+```
 
 ## Why is this useful?
 
