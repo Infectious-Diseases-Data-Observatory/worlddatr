@@ -4,6 +4,8 @@
 
  <img src="man/figures/logo.png" align="right" height="120"/>
 
+[![CRAN status](https://www.r-pkg.org/badges/version/iddoverse)](https://CRAN.R-project.org/package=iddoverse)
+
 <!-- badges: end -->
 
 The {iddoverse} contains R functions to convert IDDO-curated SDTM
