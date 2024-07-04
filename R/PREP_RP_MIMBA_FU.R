@@ -74,12 +74,18 @@ PREP_RP_MIMBA_FU <- function(DATA_RP, VARS = NULL) {
       )
   }
 
-  colnames(DATA) <- gsub("EGESTAGE_1", "EGESTAGE_ENROL", colnames(DATA))
+
+
+  colnames(DATA) <- gsub("EGESTAGE_1", "EGESTAGE_DETECTION", colnames(DATA))
   colnames(DATA) <- gsub("EGESTAGE_2", "EGESTAGE_DELIVERY", colnames(DATA))
   colnames(DATA) <- gsub("RPMETHOD", "METHOD", colnames(DATA))
   colnames(DATA) <- gsub("_RPSTRES", "", colnames(DATA))
   colnames(DATA) <- gsub("RPDTC", "DTC", colnames(DATA))
   colnames(DATA) <- gsub("RPDY", "DAY", colnames(DATA))
+
+  DATA <- DATA %>%
+    mutate(EGESTAGE_DETECTION = as.numeric(EGESTAGE_DETECTION),
+           EGESTAGE_DELIVERY = as.numeric(EGESTAGE_DELIVERY))
 
   # if ("EGESTAGE" %in% names(DATA)) {
   #   DATA <- DATA %>%
