@@ -47,7 +47,7 @@ PREP_RP_MIMBA_FU <- function(DATA_RP, VARS = NULL) {
         id_cols = c(
           .data$STUDYID, .data$USUBJID
         ), names_from = .data$RPTESTCD,
-        values_from = c(.data$RPSTRES, .data$RPMETHOD, .data$RPDTC, .data$RPDY), names_vary = "slowest",
+        values_from = c(.data$RPSTRES, .data$RPMETHOD, .data$RPDTC, .data$RPDY, .data$RPEVINTX), names_vary = "slowest",
         names_sort = TRUE, values_fn = first,names_glue = "{RPTESTCD}_{.value}"
       )
 
