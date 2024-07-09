@@ -1,3 +1,6 @@
+# iddoverse 0.5.1
+* Changes to RP and PO MiMBa codes
+
 # iddoverse 0.5.0
 * New functions for associated persons, and MIMBA project, which will be documented and tidied in future releases
 * Fixed error when DISEASE is blank in PREP_DM
