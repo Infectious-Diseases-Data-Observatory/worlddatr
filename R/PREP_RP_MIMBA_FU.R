@@ -57,7 +57,7 @@ PREP_RP_MIMBA_FU <- function(DATA_RP, VARS = NULL) {
         id_cols = c(
           .data$STUDYID, .data$USUBJID
         ), names_from = c(.data$RPTESTCD, .data$VISITNUM),
-        values_from = c(.data$RPSTRES, .data$RPMETHOD, .data$RPDTC, .data$RPDY), names_vary = "slowest",
+        values_from = c(.data$RPSTRES, .data$RPMETHOD, .data$RPDTC, .data$RPDY, .data$RPEVINTX), names_vary = "slowest",
         names_sort = TRUE, names_glue = "{RPTESTCD}_{VISITNUM}_{.value}"
       )
 
@@ -73,8 +73,6 @@ PREP_RP_MIMBA_FU <- function(DATA_RP, VARS = NULL) {
         names_sort = T, values_fn = first, names_glue = "{RPTESTCD}_{.value}"
       )
   }
-
-
 
   colnames(DATA) <- gsub("EGESTAGE_1", "EGESTAGE_DETECTION", colnames(DATA))
   colnames(DATA) <- gsub("EGESTAGE_2", "EGESTAGE_DELIVERY", colnames(DATA))
