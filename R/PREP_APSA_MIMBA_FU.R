@@ -8,27 +8,9 @@
 #' @export
 #'
 #' @examples
-PREP_APSA_MIMBA_FU <- function(DATA_SA, DISEASE = "", VARS = NULL) {
-  DISEASE <- str_to_upper(DISEASE)
+PREP_APSA_MIMBA_FU <- function(DATA_SA, VARS = NULL) {
+  SA_VARS <- c(str_to_upper(VARS))
 
-  if (DISEASE == "MALARIA") {
-    SA_VARS <- c(
-      "FEVER", "ANEMIA", "HIV", "ANOREXIA", "DIARRHOEA", "NAUSEA", "VOMITING",
-      "ABDOMINAL PAIN", "DIZZINESS", "SHORTNESS OF BREATH", "JAUNDICE",
-      "DARK URINE", "ENLARGED SPLEEN", "ENLARGED LIVER", str_to_upper(VARS)
-    )
-  } else if (DISEASE == "VL") {
-    SA_VARS <- c("FEVER", "ANEMIA", "HIV", str_to_upper(VARS))
-  } else if (DISEASE == "EBOLA") {
-    SA_VARS <- c(
-      "FEVER", "LOSS OF APPETITE", "VOMITING", "NAUSEA AND VOMITING", "HEADACHE",
-      "DIARRHOEA", "ABDOMINAL PAIN", "BLEEDING", "DIFFICULTY SWALLOWING", "HICCOUGHS",
-      "DIFFICULTY BREATHING", "PAIN IN THROAT", "FATIGUE", "MUSCLE PAIN",
-      "JOINT PAIN", "GENERALIZED ACHES AND PAIN", "ERUPTION OF SKIN", str_to_upper(VARS)
-    )
-  } else {
-    SA_VARS <- c("FEVER", "ANEMIA", "HIV", str_to_upper(VARS))
-  }
 
   DATA_SA <- DATA_SA %>%
     convert_blanks_to_na() %>%

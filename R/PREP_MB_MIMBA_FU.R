@@ -8,25 +8,8 @@
 #' @export
 #'
 #' @examples
-PREP_MB_MIMBA_FU <- function(DATA_MB, DISEASE = "", VARS = NULL) {
-  DISEASE <- str_to_upper(DISEASE)
-
-  if (DISEASE == "VL") {
-    MB_VARS <- c(
-      "HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM",
-      "PLSMDM", "PLSMDMA", "PLSMDMS",
-      "PFALCIP", "PFALCIPA", "PFALCIPS",
-      "PVIVAX", "PVIVAXA", "PVIVAXS",
-      str_to_upper(VARS)
-    )
-  } else if (DISEASE == "EBOLA") {
-    MB_VARS <- c("ZEBOV", str_to_upper(VARS))
-  } else {
-    MB_VARS <- c(
-      "HIV", "AFB", "MTB", "ANCDUOD", "ANCLMTA", "ASCLUM",
-      str_to_upper(VARS)
-    )
-  }
+PREP_MB_MIMBA_FU <- function(DATA_MB, VARS = NULL) {
+  MB_VARS <- c("HIV", "PLSMDM", "TPA", str_to_upper(VARS))
 
   DATA_MB <- DATA_MB %>%
     convert_blanks_to_na() %>%
