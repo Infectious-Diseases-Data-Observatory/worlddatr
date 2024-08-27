@@ -9,7 +9,12 @@
 #'
 #' @examples
 PREP_MB_MIMBA_FU <- function(DATA_MB, VARS = NULL) {
-  MB_VARS <- c("HIV", "PLSMDM", "TPA", str_to_upper(VARS))
+  MB_VARS <- c(str_to_upper(VARS))
+
+  DATA_MB[which(DATA_MB$MBTESTCD == "HIV" &
+                  DATA_MB$MBTSTDTL == "VIRAL LOAD"), "MBSTRESN"] = NA
+  DATA_MB[which(DATA_MB$MBTESTCD == "HIV" &
+                  DATA_MB$MBTSTDTL == "VIRAL LOAD"), "MBSTRESC"] = "POSITIVE"
 
   DATA_MB <- DATA_MB %>%
     convert_blanks_to_na() %>%
@@ -44,14 +49,15 @@ PREP_MB_MIMBA_FU <- function(DATA_MB, VARS = NULL) {
 
   DATA <- DATA %>%
     mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
+    filter(MBSTRES == "POSITIVE") %>%
+    arrange(USUBJID, MBTESTCD, MBDTC, MBDY) %>%
     pivot_wider(
       id_cols = c(
-        .data$STUDYID, .data$USUBJID, .data$VISITDY,
-        .data$VISITNUM, .data$DAY, .data$EMPTY_TIME
+        .data$STUDYID, .data$USUBJID
       ),
-      names_from = .data$MBTESTCD, values_from = c(.data$MBSTRES, .data$MBUNITS),
+      names_from = .data$MBTESTCD, values_from = c(.data$MBSTRES, .data$MBDTC, .data$MBDY),
       names_sort = T, names_vary = "slowest",
-      values_fn = first, names_glue = "{MBTESTCD}_{.value}"
+       values_fn = first, names_glue = "{MBTESTCD}_{.value}"
     )
 
   colnames(DATA) <- gsub("_MBSTRES", "", colnames(DATA))
@@ -59,44 +65,6 @@ PREP_MB_MIMBA_FU <- function(DATA_MB, VARS = NULL) {
 
   DATA <- DATA %>%
     clean_names(case = "all_caps")
-
-  if ("AFB" %in% names(DATA) | "MTB" %in% names(DATA)) {
-    if ("AFB" %in% names(DATA) & "MTB" %in% names(DATA)) {
-      DATA <- DATA %>%
-        mutate(
-          TB = .data$MTB,
-          TB_UNITS = .data$MTB_UNITS,
-          MB_IND = NA
-        )
-
-      DATA[which(!is.na(DATA$MTB)), "MB_IND"] <- "MTB"
-
-      DATA[which(is.na(DATA$MB_IND)), "TB"] <-
-        DATA[which(is.na(DATA$MB_IND)), "AFB"]
-
-      DATA[which(is.na(DATA$MB_IND)), "TB_UNITS"] <-
-        DATA[which(is.na(DATA$MB_IND)), "AFB_UNITS"]
-
-      DATA <- DATA %>%
-        dplyr::select(
-          -"AFB", -"MTB",
-          -"AFB_UNITS", -"MTB_UNITS",
-          -"MB_IND"
-        )
-    } else if ("AFB" %in% names(DATA) & "MTB" %!in% names(DATA)) {
-      DATA <- DATA %>%
-        rename(
-          "TB" = "AFB",
-          "TB_UNITS" = "AFB_UNITS"
-        )
-    } else if ("AFB" %!in% names(DATA) & "MTB" %in% names(DATA)) {
-      DATA <- DATA %>%
-        rename(
-          "TB" = "MTB",
-          "TB_UNITS" = "MTB_UNITS"
-        )
-    }
-  }
 
   return(DATA)
 }
