@@ -4,7 +4,7 @@
 \alias{PREP_APSA_MIMBA_FU}
 \title{Title}
 \usage{
-PREP_APSA_MIMBA_FU(DATA_SA, VARS = NULL)
+PREP_APSA_MIMBA_FU(DATA_APSA, VARS = NULL)
 }
 \arguments{
 \item{VARS}{}
