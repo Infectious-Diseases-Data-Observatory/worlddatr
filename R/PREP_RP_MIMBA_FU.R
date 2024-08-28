@@ -41,7 +41,7 @@ PREP_RP_MIMBA_FU <- function(DATA_RP, VARS = NULL) {
 
   if ("EGESTAGE" %in% DATA$RPTESTCD){
     DATA_exc <- DATA %>%
-      filter(RPTESTCD != "EGESTAGE") %>%
+      filter(.data$RPTESTCD != "EGESTAGE") %>%
       pivot_wider(
         id_cols = c(
           .data$STUDYID, .data$USUBJID

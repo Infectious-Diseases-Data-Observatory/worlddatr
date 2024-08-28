@@ -38,7 +38,6 @@ PREP_IN_MIMBA_FU = function(DATA_IN){
   DATA_IN[which(DATA_IN$INTRT == "MALACUR"), "INTRT"] = "DHA-Piperaquine"
   DATA_IN[which(DATA_IN$INTRT == "IV QnSo4"), "INTRT"] = "Quinine"
 
-
   DATA_IN <- DATA_IN %>%
     convert_blanks_to_na() %>%
     mutate(
@@ -58,12 +57,12 @@ PREP_IN_MIMBA_FU = function(DATA_IN){
   }
 
   DATA <- DATA_IN %>%
-    filter(INTRT %in% IN_VARS) %>%
+    filter(.data$INTRT %in% IN_VARS) %>%
     group_by(.data$STUDYID, .data$USUBJID) %>%
     mutate(ANTIMAL_SEQ = row_number()) %>%
     dplyr::ungroup() %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
-                names_from = ANTIMAL_SEQ,
+                names_from = .data$ANTIMAL_SEQ,
                 values_from = c(.data$INTRT, .data$INROUTE, .data$INEVINTX,
                                 .data$INSTDTC, .data$INDUR),
                 names_vary = "slowest",

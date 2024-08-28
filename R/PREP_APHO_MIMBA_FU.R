@@ -43,7 +43,7 @@ PREP_APHO_MIMBA_FU <- function(DATA_APHO, VARS = NULL){
   DATA <- DATA_APHO  %>%
     pivot_wider(id_cols = c(.data$STUDYID, .data$APID),
                 names_from = .data$HOSTRES,
-                values_from = c(HOINC),
+                values_from = c(.data$HOINC),
                 # names_glue = "{HOSTRES}_{.value}",
                 values_fn = first, names_vary = "slowest")
 
