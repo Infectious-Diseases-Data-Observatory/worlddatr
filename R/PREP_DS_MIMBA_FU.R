@@ -1,3 +1,12 @@
+#' Title
+#'
+#' @param DATA_DS
+#' @param VARS
+#'
+#' @return
+#' @export
+#'
+#' @examples
 PREP_DS_MIMBA_FU <- function(DATA_DS, VARS = NULL) {
   DS_VARS <- c(str_to_upper(VARS))
 
