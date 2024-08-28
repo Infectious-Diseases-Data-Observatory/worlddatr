@@ -1,18 +1,16 @@
 #' Title
 #'
-#' @param DATA_SA
+#' @param DATA_APSA
 #' @param DISEASE
 #' @param VARS
 #'
 #' @return
 #' @export
 #'
-#' @examples
-PREP_APSA_MIMBA_FU <- function(DATA_SA, VARS = NULL) {
+PREP_APSA_MIMBA_FU <- function(DATA_APSA, VARS = NULL) {
   SA_VARS <- c(str_to_upper(VARS))
 
-
-  DATA_SA <- DATA_SA %>%
+  DATA_APSA <- DATA_APSA %>%
     convert_blanks_to_na() %>%
     mutate(
       SASTRES = str_to_upper(as.character(.data$SADECOD)),
@@ -23,12 +21,12 @@ PREP_APSA_MIMBA_FU <- function(DATA_SA, VARS = NULL) {
       END_DAY = .data$SAENDY
     )
 
-  DATA_SA[which(is.na(DATA_SA$SASTRES)), "SASTRES"] <-
-    DATA_SA[which(is.na(DATA_SA$SASTRES)), "SAMODIFY"]
-  DATA_SA[which(is.na(DATA_SA$SASTRES)), "SASTRES"] <-
-    DATA_SA[which(is.na(DATA_SA$SASTRES)), "SATERM"]
+  DATA_APSA[which(is.na(DATA_APSA$SASTRES)), "SASTRES"] <-
+    DATA_APSA[which(is.na(DATA_APSA$SASTRES)), "SAMODIFY"]
+  DATA_APSA[which(is.na(DATA_APSA$SASTRES)), "SASTRES"] <-
+    DATA_APSA[which(is.na(DATA_APSA$SASTRES)), "SATERM"]
 
-  DATA_SA <- DATA_SA %>%
+  DATA_APSA <- DATA_APSA %>%
     filter(.data$SASTRES %in% SA_VARS) %>%
     mutate(
       SAPRESP = str_to_upper(.data$SAPRESP),
@@ -36,43 +34,43 @@ PREP_APSA_MIMBA_FU <- function(DATA_SA, VARS = NULL) {
       SAOCCUR_ANYTIME = NA
     )
 
-  DATA_SA$SAPRESP <- str_replace_all(DATA_SA$SAPRESP, "TRUE", "Y")
-  DATA_SA$SAOCCUR <- str_replace_all(DATA_SA$SAOCCUR, "TRUE", "Y")
-  DATA_SA$SAOCCUR <- str_replace_all(DATA_SA$SAOCCUR, "FALSE", "N")
-  DATA_SA$SAOCCUR <- str_replace_all(DATA_SA$SAOCCUR, "UNKNOWN", "U")
+  DATA_APSA$SAPRESP <- str_replace_all(DATA_APSA$SAPRESP, "TRUE", "Y")
+  DATA_APSA$SAOCCUR <- str_replace_all(DATA_APSA$SAOCCUR, "TRUE", "Y")
+  DATA_APSA$SAOCCUR <- str_replace_all(DATA_APSA$SAOCCUR, "FALSE", "N")
+  DATA_APSA$SAOCCUR <- str_replace_all(DATA_APSA$SAOCCUR, "UNKNOWN", "U")
 
-  if (any(is.na(DATA_SA$SAPRESP))) {
-    DATA_SA[which(is.na(DATA_SA$SAPRESP)), "SAPRESP"] <- "N"
-    DATA_SA[which(DATA_SA$SAPRESP == "N"), "SAOCCUR"] <- "Y"
+  if (any(is.na(DATA_APSA$SAPRESP))) {
+    DATA_APSA[which(is.na(DATA_APSA$SAPRESP)), "SAPRESP"] <- "N"
+    DATA_APSA[which(DATA_APSA$SAPRESP == "N"), "SAOCCUR"] <- "Y"
   }
 
-  # DATA_EMPTY <- DATA_SA %>%
+  # DATA_EMPTY <- DATA_APSA %>%
   #   filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY) &
   #            is.na(.data$START_DAY) & is.na(.data$END_DAY)) %>%
   #   DERIVE_AP_EMPTY_TIME()
 
-  for (i in unique(DATA_SA$APID)) {
-    LOOP_DATA <- DATA_SA %>%
-      filter(APID == i)
+  for (i in unique(DATA_APSA$APID)) {
+    LOOP_DATA <- DATA_APSA %>%
+      filter(.data$APID == i)
 
     for (j in unique(LOOP_DATA$SASTRES)) {
       STRES_DATA = LOOP_DATA %>%
-        filter(SASTRES == j)
+        filter(.data$SASTRES == j)
 
       if(any(STRES_DATA$SAOCCUR == "Y")){
-        DATA_SA[which(DATA_SA$APID == i & DATA_SA$SASTRES == j), "SAOCCUR_ANYTIME"] = "Y"
+        DATA_APSA[which(DATA_APSA$APID == i & DATA_APSA$SASTRES == j), "SAOCCUR_ANYTIME"] = "Y"
       } else if (!any(STRES_DATA$SAOCCUR == "Y")) {
-        DATA_SA[which(DATA_SA$APID == i & DATA_SA$SASTRES == j), "SAOCCUR_ANYTIME"] = "N"
+        DATA_APSA[which(DATA_APSA$APID == i & DATA_APSA$SASTRES == j), "SAOCCUR_ANYTIME"] = "N"
       } else {
-        DATA_SA[which(DATA_SA$APID == i & DATA_SA$SASTRES == j), "SAOCCUR_ANYTIME"] = "U"
+        DATA_APSA[which(DATA_APSA$APID == i & DATA_APSA$SASTRES == j), "SAOCCUR_ANYTIME"] = "U"
       }
     }
   }
 
-  DATA <- DATA_SA  %>%
-    pivot_wider(id_cols = c(STUDYID, APID),
-                names_from = SASTRES,
-                values_from = c(SAPRESP, SAOCCUR_ANYTIME, SACAT, SASCAT),
+  DATA <- DATA_APSA  %>%
+    pivot_wider(id_cols = c(.data$STUDYID, .data$APID),
+                names_from = .data$SASTRES,
+                values_from = c(.data$SAPRESP, .data$SAOCCUR_ANYTIME, .data$SACAT, .data$SASCAT),
                 names_glue = "{SASTRES}_{.value}",
                 values_fn = first, names_vary = "slowest")
 
