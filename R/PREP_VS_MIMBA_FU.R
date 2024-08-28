@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-PREP_VS_MIMBA_FU = function(DATA_VS, VARS = NULL){
+PREP_VS_MIMBA_FU <- function(DATA_VS, VARS = NULL){
   VS_VARS <- c(str_to_upper(VARS))
 
   DATA_VS <- DATA_VS %>%
@@ -17,6 +17,7 @@ PREP_VS_MIMBA_FU = function(DATA_VS, VARS = NULL){
       VSSTRES = as.character(.data$VSSTRESN),
       VSSTRESC = as.character(.data$VSSTRESC),
       VSORRES = as.character(.data$VSORRES),
+      VSORRESU = as.character(.data$VSORRESU),
       DAY = .data$VSDY,
       VSUNITS = as.character(NA)
     )
