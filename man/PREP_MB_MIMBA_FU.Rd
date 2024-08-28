@@ -4,7 +4,7 @@
 \alias{PREP_MB_MIMBA_FU}
 \title{Title}
 \usage{
-PREP_MB_MIMBA_FU(DATA_MB, DISEASE = "", VARS = NULL)
+PREP_MB_MIMBA_FU(DATA_MB, VARS = NULL)
 }
 \arguments{
 \item{VARS}{}
