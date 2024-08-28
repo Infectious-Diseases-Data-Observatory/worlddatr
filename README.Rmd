@@ -57,7 +57,10 @@ It is best to remove the package and reinstall the current version:
 ```{r}
 detach("package:iddoverse", unload = TRUE)
 
+remove.packages("iddoverse")
+
 devtools::install_github("RhysPeploe/iddoverse")
+
 library(iddoverse)
 ```
 
