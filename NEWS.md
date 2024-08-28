@@ -1,6 +1,9 @@
 # iddoverse 0.6.0
+<<<<<<< HEAD
 * Further changes to MiMBa functions
 * New functions for LB, DS, VS domains
+=======
+>>>>>>> ef6e2d540ff858470381752c37f94ad8519de90e
 
 # iddoverse 0.5.1
 * Changes to RP and PO MiMBa codes
