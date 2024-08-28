@@ -6,7 +6,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 PREP_RP_MIMBA_FU <- function(DATA_RP, VARS = NULL) {
   RP_VARS <- c("PREGIND", "EGESTAGE", str_to_upper(VARS))
 
@@ -82,16 +81,8 @@ PREP_RP_MIMBA_FU <- function(DATA_RP, VARS = NULL) {
   colnames(DATA) <- gsub("RPDY", "DAY", colnames(DATA))
 
   DATA <- DATA %>%
-    mutate(EGESTAGE_DETECTION = as.numeric(EGESTAGE_DETECTION),
-           EGESTAGE_DELIVERY = as.numeric(EGESTAGE_DELIVERY))
-
-  # if ("EGESTAGE" %in% names(DATA)) {
-  #   DATA <- DATA %>%
-  #     rename(
-  #       "EGA" = "EGESTAGE",
-  #       "EGA_UNITS" = "EGESTAGE_UNITS"
-  #     )
-  # }
+    mutate(EGESTAGE_DETECTION = as.numeric(.data$EGESTAGE_DETECTION),
+           EGESTAGE_DELIVERY = as.numeric(.data$EGESTAGE_DELIVERY))
 
   return(DATA)
 }

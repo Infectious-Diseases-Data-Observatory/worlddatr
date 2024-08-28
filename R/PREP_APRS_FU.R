@@ -6,7 +6,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 PREP_APRS_FU <- function(DATA_RS, VARS = NULL) {
   RS_VARS <- c(
     str_to_upper(VARS)
@@ -35,7 +34,7 @@ PREP_APRS_FU <- function(DATA_RS, VARS = NULL) {
 
     DATA <- DATA %>%
       mutate(RSSTRES = str_to_upper(.data$RSSTRES),
-             RSTEST_TIME = paste(RSTESTCD, RSEVINTX)) %>%
+             RSTEST_TIME = paste(.data$RSTESTCD, .data$RSEVINTX)) %>%
       pivot_wider(
         id_cols = c(
           .data$STUDYID, .data$APID, .data$RSUBJID

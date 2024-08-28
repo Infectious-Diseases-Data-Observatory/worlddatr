@@ -5,7 +5,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 PREP_IN_MIMBA_FU = function(DATA_IN){
   IN_VARS <- str_to_upper(c(
     "Amodiaquine-artesunate",
@@ -45,7 +44,7 @@ PREP_IN_MIMBA_FU = function(DATA_IN){
     mutate(
       INPRESP = str_to_upper(.data$INPRESP),
       INOCCUR = str_to_upper(.data$INOCCUR),
-      INTRT = str_to_upper(INTRT)
+      INTRT = str_to_upper(.data$INTRT)
     )
 
   DATA_IN$INPRESP <- str_replace_all(DATA_IN$INPRESP, "TRUE", "Y")
@@ -60,12 +59,13 @@ PREP_IN_MIMBA_FU = function(DATA_IN){
 
   DATA <- DATA_IN %>%
     filter(INTRT %in% IN_VARS) %>%
-    group_by(STUDYID, USUBJID) %>%
+    group_by(.data$STUDYID, .data$USUBJID) %>%
     mutate(ANTIMAL_SEQ = row_number()) %>%
-    ungroup() %>%
-    pivot_wider(id_cols = c(STUDYID, USUBJID),
+    dplyr::ungroup() %>%
+    pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
                 names_from = ANTIMAL_SEQ,
-                values_from = c(INTRT, INROUTE, INEVINTX, INSTDTC, INDUR),
+                values_from = c(.data$INTRT, .data$INROUTE, .data$INEVINTX,
+                                .data$INSTDTC, .data$INDUR),
                 names_vary = "slowest",
                 names_glue = "ANTIMALARIAL_{ANTIMAL_SEQ}_{.value}")
 

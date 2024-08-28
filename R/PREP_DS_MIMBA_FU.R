@@ -6,7 +6,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 PREP_DS_MIMBA_FU <- function(DATA_DS, VARS = NULL) {
   DS_VARS <- c(str_to_upper(VARS))
 
@@ -32,7 +31,7 @@ PREP_DS_MIMBA_FU <- function(DATA_DS, VARS = NULL) {
 
   DATA <- DATA_DS %>%
     left_join(DATA_EMPTY) %>%
-    filter(DSSTRES %in% DS_VARS) %>%
+    filter(.data$DSSTRES %in% DS_VARS) %>%
     pivot_wider(
       id_cols = c(
         .data$STUDYID, .data$USUBJID,

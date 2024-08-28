@@ -6,7 +6,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 PREP_LB_MIMBA_FU = function(DATA_LB, VARS = NULL){
   LB_VARS <- c(str_to_upper(VARS))
 

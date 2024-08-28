@@ -6,7 +6,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 PREP_APDD_FU <- function(DATA_DD, VARS = NULL) {
   DD_VARS <- c(
     str_to_upper(VARS)

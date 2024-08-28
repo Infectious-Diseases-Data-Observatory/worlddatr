@@ -7,7 +7,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 PREP_SA_MIMBA_FU <- function(DATA_SA, VARS = NULL) {
   SA_VARS <- c(str_to_upper(VARS))
 
