@@ -7,7 +7,6 @@
 #' @return
 #' @export
 #'
-#' @examples
 PREP_MB_MIMBA_FU <- function(DATA_MB, VARS = NULL) {
   MB_VARS <- c(str_to_upper(VARS))
 
@@ -49,8 +48,8 @@ PREP_MB_MIMBA_FU <- function(DATA_MB, VARS = NULL) {
 
   DATA <- DATA %>%
     mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
-    filter(MBSTRES == "POSITIVE") %>%
-    arrange(USUBJID, MBTESTCD, MBDTC, MBDY) %>%
+    filter(.data$MBSTRES == "POSITIVE") %>%
+    dplyr::arrange(.data$USUBJID, .data$MBTESTCD, .data$MBDTC, .data$MBDY) %>%
     pivot_wider(
       id_cols = c(
         .data$STUDYID, .data$USUBJID
