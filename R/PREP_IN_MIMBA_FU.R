@@ -64,7 +64,7 @@ PREP_IN_MIMBA_FU = function(DATA_IN){
     pivot_wider(id_cols = c(.data$STUDYID, .data$USUBJID),
                 names_from = .data$ANTIMAL_SEQ,
                 values_from = c(.data$INTRT, .data$INROUTE, .data$INEVINTX,
-                                .data$INSTDTC, .data$INDUR),
+                                .data$INEVLINT, .data$INSTDTC, .data$INDUR),
                 names_vary = "slowest",
                 names_glue = "ANTIMALARIAL_{ANTIMAL_SEQ}_{.value}")
 
