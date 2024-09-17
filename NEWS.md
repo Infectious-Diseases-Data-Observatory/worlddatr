@@ -3,7 +3,7 @@
 
 # iddoverse 0.6.1
 * APHO and APVS functions created
-* Removed DISEASE parmeter for some MIMBA functions
+* Removed DISEASE parameter for some MIMBA functions
 * Exports and documentation changes for MIMBA functions
 * Renaming DATA in AP MIMBA domains
 
