@@ -25,7 +25,6 @@ the IDDO-SDTM format to IDDO-ADaM datasets.
     ADaM - Analysis Data Model, an internation data analysis model from CDISC.
 
 ## Installation
-### *NOTE: Ownership of this package will soon change to Infectious Diseases Data Observatory (https://github.com/Infectious-Diseases-Data-Observatory) which will change the path for downloading the package into R (exp Aug 2024)*
 
 You can install the development version of IDDOverse from
 [GitHub](https://github.com/) with:
