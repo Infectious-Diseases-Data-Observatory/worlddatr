@@ -73,5 +73,8 @@ PREP_RP_FU <- function(DATA_RP, VARS = NULL) {
       )
   }
 
+  DATA <- DATA %>%
+    clean_names(case = "all_caps")
+
   return(DATA)
 }
