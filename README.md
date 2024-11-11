@@ -46,8 +46,6 @@ It is best to remove the package and reinstall the current version:
 detach("package:iddoverse", unload = TRUE)
 
 devtools::install_github("Infectious-Diseases-Data-Observatory/iddoverse")
-#> Skipping install of 'iddoverse' from a github remote, the SHA1 (384660ec) has not changed since last install.
-#>   Use `force = TRUE` to force installation
 library(iddoverse)
 ```
 
