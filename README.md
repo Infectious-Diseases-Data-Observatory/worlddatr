@@ -58,14 +58,14 @@ their domains and the code should create an analysis dataset.
 ## Citation
 
 To cite iddoverse in publications, see
-[CITATION](https://github.com/RhysPeploe/iddoverse/blob/main/inst/CITATION)
+[CITATION](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/blob/main/inst/CITATION)
 
 ## Issues
 
 Improvements to the code are constantly being made, if you notice
 errors, bugs, want to suggest improvements or have ideas for better
 functionality, please describe them in
-[Issues](https://github.com/RhysPeploe/iddoverse/issues).
+[Issues](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/issues).
 
 ## Contact
 
