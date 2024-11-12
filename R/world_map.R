@@ -2,8 +2,8 @@
 #' Income Group Data
 #'
 #' A dataset with coordinate data of the perimeter of each country/territory in
-#' the world, along with information on the country/territory ISO codes and income
-#' group as defined by the World Bank.
+#' the world, along with information on the country/territory ISO codes and
+#' income group as defined by the World Bank.
 #'
 #' Note that region refers to the area which the points create a perimeter for
 #'
