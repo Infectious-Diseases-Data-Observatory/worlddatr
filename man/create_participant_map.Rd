@@ -94,7 +94,7 @@ create_participant_map(DATA_DM     = country_data,
                        colour_default = "#FDF3F4",
                        colour_borders = "black",
                        colour_background = "#FFFFFF",
-                       scale_breaks = pretty_breaks(),
+                       scale_breaks = c(25, 50, 100, 150, 175, 200),
                        log_scale = FALSE
                        )
 
