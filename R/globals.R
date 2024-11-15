@@ -4,5 +4,7 @@ globalVariables(c(
   "group",
   "COUNTRY",
   "world_map",
-  "n_participants"
+  "n_participants",
+  "n_trials",
+  "alpha_3_code"
   ))
