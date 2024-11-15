@@ -85,12 +85,12 @@ map_df[which(map_df$region == "Finland" & map_df$subregion == "Aland Islands"), 
 world_income <- left_join(country_codes,
                           CLASS,
                           by = c("alpha_3_code" = "code"))  %>%
-  select(alpha_3_code, alpha_2_code, country, economy, income_group)
+  select(alpha_3_code, alpha_2_code, numeric, country, economy, income_group)
 
 ### Join world income data to map of region coordinates
 world_map <- map_df %>%
   left_join(world_income) %>%
-  select(alpha_3_code, alpha_2_code, lat, long, group, order, region, subregion, country, economy, income_group)
+  select(alpha_3_code, alpha_2_code, numeric, lat, long, group, order, region, subregion, country, economy, income_group)
 
 ### Create datasets for worlddatr package
 write.csv(world_income,"data/world_income.csv", row.names = FALSE)
