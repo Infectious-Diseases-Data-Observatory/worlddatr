@@ -109,7 +109,9 @@ world_income <- left_join(country_codes,
                           CLASS,
                           by = c("alpha_3_code" = "code"))  %>%
   select(alpha_3_code, alpha_2_code, numeric, country, economy, income_group) %>%
-  left_join(redcap_codes, by = "alpha_3_code")
+  left_join(redcap_codes, by = "alpha_3_code") %>%
+  mutate(income_group = factor(income_group, levels = c("High income", "Upper middle income",
+                                                        "Lower middle income", "Low income")))
 
 ### Join world income data to map of region coordinates
 world_map <- map_df %>%
