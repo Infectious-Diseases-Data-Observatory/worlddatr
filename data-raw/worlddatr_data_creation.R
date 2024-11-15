@@ -38,6 +38,9 @@ country_codes[which(country_codes$alpha_3_code == "REU"), "country"] = "Reunion"
 country_codes[which(country_codes$alpha_3_code == "BLM"), "country"] = "Saint Barthelemy"
 
 #-------------------------------------------------------------------------------
+redcap_codes <- read_csv("data-raw/REDCap_codes.csv")
+
+#-------------------------------------------------------------------------------
 ### Import coordinate data for countries and regions
 map_df = map_data("world") %>%
   left_join(country_codes %>%
@@ -101,16 +104,17 @@ map_df[which(map_df$region == "Norway" & map_df$subregion == "Jan Mayen"), "alph
 map_df[which(map_df$region == "Finland" & map_df$subregion == "Aland Islands"), "alpha_3_code"] = "ALA"
 
 #-------------------------------------------------------------------------------
-### Join country_codes and world bank data, one rown per country/territory
+### Join country_codes, REDCap codes and world bank data, one rown per country/territory
 world_income <- left_join(country_codes,
                           CLASS,
                           by = c("alpha_3_code" = "code"))  %>%
-  select(alpha_3_code, alpha_2_code, numeric, country, economy, income_group)
+  select(alpha_3_code, alpha_2_code, numeric, country, economy, income_group) %>%
+  left_join(redcap_codes, by = "alpha_3_code")
 
 ### Join world income data to map of region coordinates
 world_map <- map_df %>%
-  left_join(world_income) %>%
-  select(alpha_3_code, alpha_2_code, numeric, lat, long, group, order, region, subregion, country, economy, income_group)
+  left_join(world_income, by = "alpha_3_code") %>%
+  select(alpha_3_code, alpha_2_code, numeric, lat, long, group, order, region, subregion, country, economy, income_group, redcap_number)
 
 ### Create datasets for worlddatr package
 write.csv(world_income,"data/world_income.csv", row.names = FALSE)
