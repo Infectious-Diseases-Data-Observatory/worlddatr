@@ -1,7 +1,10 @@
+#-------------------------------------------------------------------------------
+### Load packages
 library(readxl)
 library(tidyverse)
 library(janitor)
 
+#-------------------------------------------------------------------------------
 ### Import world bank data
 ### https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups
 CLASS <- read_excel("data-raw/CLASS.xlsx") %>%
@@ -16,16 +19,32 @@ CLASS <- read_excel("data-raw/CLASS.xlsx") %>%
       income_group = "High income")
   )
 
+#-------------------------------------------------------------------------------
 ### Import list of countries and respective codes
-country_codes <- read_csv("data-raw/country_codes.csv", show_col_types = FALSE)
+country_codes <- read_csv("data-raw/country code.csv", show_col_types = FALSE) %>%
+  clean_names() %>%
+  bind_rows(
+    data.frame(
+      country = "Kosovo",
+      alpha_2_code = NA,
+      alpha_3_code = "XKX",
+      numeric = NA
+    )
+  )
 
+# Rename countries with special / non-ASCII characters
+country_codes[which(country_codes$alpha_3_code == "CUW"), "country"] = "Curacao"
+country_codes[which(country_codes$alpha_3_code == "REU"), "country"] = "Reunion"
+country_codes[which(country_codes$alpha_3_code == "BLM"), "country"] = "Saint Barthelemy"
+
+#-------------------------------------------------------------------------------
 ### Import coordinate data for countries and regions
 map_df = map_data("world") %>%
   left_join(country_codes %>%
               select(country, alpha_3_code),
             by = c("region" = "country"))
 
-### Standarise country and regions to match country_codes and CLASS
+# Standarise country and regions to match country_codes and CLASS
 map_df[which(map_df$region == "French Southern and Antarctic Lands"), "alpha_3_code"] = "ATF"
 map_df[which(map_df$region == "Antigua"), "alpha_3_code"] = "ATG"
 map_df[which(map_df$region == "Barbuda"), "alpha_3_code"] = "ATG"
@@ -81,6 +100,7 @@ map_df[which(map_df$region == "Norway" & map_df$subregion == "Svalbard"), "alpha
 map_df[which(map_df$region == "Norway" & map_df$subregion == "Jan Mayen"), "alpha_3_code"] = "SJM"
 map_df[which(map_df$region == "Finland" & map_df$subregion == "Aland Islands"), "alpha_3_code"] = "ALA"
 
+#-------------------------------------------------------------------------------
 ### Join country_codes and world bank data, one rown per country/territory
 world_income <- left_join(country_codes,
                           CLASS,
