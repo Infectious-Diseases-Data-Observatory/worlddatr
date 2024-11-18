@@ -1,5 +1,5 @@
 Package: worlddatr
-Title: ISO Codes, World Bank and Location Data of Countries Around the World
+Title: A package for global spatial data analysis 
 Version: 1.2.1
 Authors@R: 
     person("Rhys", "Peploe", , "rhys.peploe@iddo.org", role = c("aut", "cre"),
