@@ -8,9 +8,10 @@
 #'   is `FALSE`.
 #' @param include_n Boolean. Should `n = X` where X is the number of
 #'   participants, be included in the map. Default is `TRUE`.
-#' @param title Character. Title of the choropleth map.
-#' @param subtitle Character. Subtitle of the choropleth map.
-#' @param legend Character. Legend title of the choropleth map.
+#' @param title Character. Title of the choropleth map. Default in blank.
+#' @param subtitle Character. Subtitle of the choropleth map. Default in blank.
+#' @param legend Character. Legend title of the choropleth map. Default is
+#'   'Nuber of Studies'
 #' @param colour_high Colour of the high end of the scale, either using the name
 #'   of a base colour or the HEX code, i.e. "red" or "#F9250C. This will be the
 #'   colour of the country with the highest value. Default is IDDO-branded blue
@@ -30,12 +31,11 @@
 #' @param scale_breaks Numeric list. Specify custom scale breaks for the legend,
 #'   i.e. c(100, 500, 1000, 2000). Default is pretty_breaks from the scales
 #'   package.
-#' @param log_scale Boolean. Should the number of trials be transformed
-#'   into the log scale for when the distribution of values is very uneven.
-#'   Default is `FALSE`.
+#' @param log_scale Boolean. Should the number of trials be transformed into the
+#'   log scale for when the distribution of values is very uneven. Default is
+#'   `FALSE`.
 #'
-#' @return A cloropleth map displaying the number of trial in each
-#'   country
+#' @return A cloropleth map displaying the number of studies in each country
 #'
 #' @export
 #'
@@ -69,7 +69,7 @@
 #'
 create_studies_map <- function(data, country_col,
                                include_ATA = FALSE, include_n = TRUE,
-                               title = "", subtitle = "", legend = "Number of Trials",
+                               title = "", subtitle = "", legend = "Number of Studies",
                                colour_high = "#14B1E7", colour_low = "#CCECF9",
                                colour_default = "#FDF3F4", colour_borders = "black",
                                colour_background = "#FFFFFF",
