@@ -1,0 +1,21 @@
+STUDYID,DOMAIN,VISITNUM,VISIT,VISITDY,ARMCD,ARM,TVSTRL
+RPTESTB,TV,1,Day 0,1,PBO,PLACEBO,"Baseline Measurements (Hemoglobin, vital signs, parasite), treatment/placebo courses comense, screening for pregnancy. Chest and lungs examined "
+RPTESTB,TV,2,Day 2,3,PBO,PLACEBO,"2nd dose of treatment/placebo, tempeture, parasite and platelet counts measured "
+RPTESTB,TV,3,Week 6,43,PBO,PLACEBO,"Genetic testing. Follow up, recording of any severe and adverse effects experienced"
+RPTESTB,TV,4,Week 12,85,PBO,PLACEBO,"Follow up, recording of any severe and adverse effects experienced. Parasites measured"
+RPTESTB,TV,5,Week 24,169,PBO,PLACEBO,"Follow up, recording of any severe and adverse effects experienced. Chest and lungs examined"
+RPTESTB,TV,6,Month 6,182,PBO,PLACEBO,"Follow up, recording of any severe and adverse effects experienced. Parasites measured"
+RPTESTB,TV,7,Month 7,213,PBO,PLACEBO,"Follow up, recording of any severe and adverse effects experienced"
+RPTESTB,TV,8,Month 8,243,PBO,PLACEBO,"Follow up, recording of any severe and adverse effects experienced"
+RPTESTB,TV,9,Month 9,273,PBO,PLACEBO,"Follow up, recording of any severe and adverse effects experienced. Parasites measured"
+RPTESTB,TV,10,Month 12,366,PBO,PLACEBO,End of study visit. Parasites measured
+RPTESTB,TV,1,Day 0,1,TRT,TREATMENT,"Baseline Measurements (Hemoglobin, vital signs), treatment/placebo courses comense, screening for pregnancy "
+RPTESTB,TV,2,Day 2,3,TRT,TREATMENT,"2nd dose of treatment/placebo, tempeture and platelet counts measured "
+RPTESTB,TV,3,Week 6,43,TRT,TREATMENT,"Genetic testing. Follow up, recording of any severe and adverse effects experienced"
+RPTESTB,TV,4,Week 12,85,TRT,TREATMENT,"Follow up, recording of any severe and adverse effects experienced"
+RPTESTB,TV,5,Week 24,169,TRT,TREATMENT,"Follow up, recording of any severe and adverse effects experienced"
+RPTESTB,TV,6,Month 6,182,TRT,TREATMENT,"Follow up, recording of any severe and adverse effects experienced"
+RPTESTB,TV,7,Month 7,213,TRT,TREATMENT,"Follow up, recording of any severe and adverse effects experienced"
+RPTESTB,TV,8,Month 8,243,TRT,TREATMENT,"Follow up, recording of any severe and adverse effects experienced"
+RPTESTB,TV,9,Month 9,273,TRT,TREATMENT,"Follow up, recording of any severe and adverse effects experienced"
+RPTESTB,TV,10,Month 12,366,TRT,TREATMENT,End of study visit
