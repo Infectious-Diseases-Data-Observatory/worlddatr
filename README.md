@@ -14,6 +14,13 @@ Country and Territory data including ISO codes, World Bank income
 groups, longitude and latitude. These can be used to plot choropleth
 maps and other spatial statistical analysis.
 
+Creating maps to showcase the global distribution of studies or participants is a powerful way to visualise data, however, extracting the necessary information and data cleaning can often be time-consuming and burdensome. Key features of worlddatr include:
+-	Pre-processed Datasets: Access to pre-cleaned datasets that are ready to merge with your data, reducing the time spent on data preparation.
+-	One-command Utilty: Functions that allow you to produce maps with a single command, while still providing control over customisation options such as colours, titles, and legends.
+-	Open Source and Community-driven: Being open-source, worlddatr invites users to build upon its code, tailor visualisations to their specific needs, and contribute improvements back to IDDO, enhancing the tool for the entire research community.
+  
+By using worlddatr, researchers can efficiently visualise and analyse global data trends, focusing more on their research and less on data manipulation. 
+
 ## Installation
 
 You can install the `worlddatr` package from
