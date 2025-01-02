@@ -1,7 +1,12 @@
 #' Country Codes and Income Groups of Countries and Territories
 #'
 #' A dataset containing a row per country/territory with information on the
-#' country/territory ISO codes and income group as defined by the World Bank
+#' country/territory ISO codes and income group as defined by the World Bank.
+#'
+#' Dates that data was accessed on:
+#'   - World Bank: 11/11/2024
+#'   - ISO:        18/06/2024
+#'   - REDCap:     15/11/2024
 #'
 #' @format ## A data frame with 250 rows and 5 columns:
 #' \describe{
