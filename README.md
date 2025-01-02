@@ -71,6 +71,14 @@ head(world_map)
 To cite `worlddatr`, see
 [CITATION](https://github.com/Infectious-Diseases-Data-Observatory/worlddatr/blob/main/inst/CITATION)
 
+Data comes from the following sources:
+ - World Bank (https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups)
+ - ISO (https://www.iso.org/obp/ui/#search)
+ - IDDO REDCap
+ - world-countries-centroids (https://github.com/gavinr/world-countries-centroids)
+
+Thanks to the owners and contributors to these sources and for making them accessible for reuse.
+
 ## Issues
 
 Improvements to the code are constantly being made, if you notice
