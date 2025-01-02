@@ -7,7 +7,6 @@
 #'   - World Bank: 11/11/2024
 #'   - ISO:        18/06/2024
 #'   - REDCap:     15/11/2024
-#'   - map_data:   18/11/2024 (ggplot2 v3.4.3)
 #'
 #' @format ## A data frame with 250 rows and 5 columns:
 #' \describe{
