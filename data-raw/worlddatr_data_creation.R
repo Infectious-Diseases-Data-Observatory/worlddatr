@@ -3,6 +3,7 @@
 library(readxl)
 library(tidyverse)
 library(janitor)
+library(devtools)
 
 #-------------------------------------------------------------------------------
 ### Import world bank data
