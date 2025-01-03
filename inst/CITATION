@@ -9,6 +9,6 @@ citEntry(
   url      = "https://github.com/Infectious-Diseases-Data-Observatory/worlddatr",
   note     = "Package Version 1.3.0",
   textVersion = paste(
-    "R. Peploe (2023), 'worlddatr', Infectious Disease Data Observatory, University of Oxford. Available: https://github.com/Infectious-Diseases-Data-Observatory/worlddatr"
+    "R. Peploe (2024), 'worlddatr', Infectious Disease Data Observatory, University of Oxford. Available: https://github.com/Infectious-Diseases-Data-Observatory/worlddatr"
   )
 )
