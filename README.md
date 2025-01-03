@@ -32,10 +32,7 @@ devtools::install_github("Infectious-Diseases-Data-Observatory/worlddatr")
 library(worlddatr)
 ```
 
-We recommend updating the install when a new version of the package is
-available.
-
-It is best to remove the package and reinstall the current version:
+We recommend updating the install when a new version of the package is available. It is best to remove the package and reinstall the current version:
 
 ``` r
 detach("package:worlddatr", unload = TRUE)
@@ -72,6 +69,8 @@ head(world_income)
 
 head(world_map)
 ```
+
+A vignette will be produced to demostrate how to use the data and functions.
 
 ## Citation
 
