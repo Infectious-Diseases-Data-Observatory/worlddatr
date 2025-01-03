@@ -2,7 +2,7 @@
 #'
 #' @param data Data frame with includes a column with 3 letter ISO country codes
 #'   which are to plotted on the map.
-#' @param country_col Charcter. The name of the column containing the 3 letter
+#' @param country_col Character. The name of the column containing the 3 letter
 #'   ISO country codes.
 #' @param include_ATA Boolean. Should Antarctica be included on the map? Default
 #'   is `FALSE`.
