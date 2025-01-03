@@ -4,12 +4,12 @@
 \name{worlddatr-package}
 \alias{worlddatr}
 \alias{worlddatr-package}
-\title{worlddatr: What the Package Does (One Line, Title Case)}
+\title{worlddatr: A package for global spatial data analysis and choropleth maps}
 \description{
-What the package does (one paragraph).
+Data and functions for working with country and territory data including ISO codes, World Bank income groups, longitude and latitude.
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Rhys Peploe \email{rhys.peploe@iddo.org} (\href{https://orcid.org/0009-0001-1669-3716}{ORCID})
 
 }
 \keyword{internal}
