@@ -11,7 +11,7 @@ create_studies_map(
   include_n = TRUE,
   title = "",
   subtitle = "",
-  legend = "Number of Trials",
+  legend = "Number of Studies",
   colour_high = "#14B1E7",
   colour_low = "#CCECF9",
   colour_default = "#FDF3F4",
@@ -25,7 +25,7 @@ create_studies_map(
 \item{data}{Data frame with includes a column with 3 letter ISO country codes
 which are to plotted on the map.}
 
-\item{country_col}{Charcter. The name of the column containing the 3 letter
+\item{country_col}{Character. The name of the column containing the 3 letter
 ISO country codes.}
 
 \item{include_ATA}{Boolean. Should Antarctica be included on the map? Default
@@ -34,11 +34,12 @@ is \code{FALSE}.}
 \item{include_n}{Boolean. Should \code{n = X} where X is the number of
 participants, be included in the map. Default is \code{TRUE}.}
 
-\item{title}{Character. Title of the choropleth map.}
+\item{title}{Character. Title of the choropleth map. Default in blank.}
 
-\item{subtitle}{Character. Subtitle of the choropleth map.}
+\item{subtitle}{Character. Subtitle of the choropleth map. Default in blank.}
 
-\item{legend}{Character. Legend title of the choropleth map.}
+\item{legend}{Character. Legend title of the choropleth map. Default is
+'Nuber of Studies'}
 
 \item{colour_high}{Colour of the high end of the scale, either using the name
 of a base colour or the HEX code, i.e. "red" or "#F9250C. This will be the
@@ -65,13 +66,12 @@ of a base colour or the HEX code, i.e. "red" or "#F9250C". Default is
 i.e. c(100, 500, 1000, 2000). Default is pretty_breaks from the scales
 package.}
 
-\item{log_scale}{Boolean. Should the number of trials be transformed
-into the log scale for when the distribution of values is very uneven.
-Default is \code{FALSE}.}
+\item{log_scale}{Boolean. Should the number of trials be transformed into the
+log scale for when the distribution of values is very uneven. Default is
+\code{FALSE}.}
 }
 \value{
-A cloropleth map displaying the number of trial in each
-country
+A cloropleth map displaying the number of studies in each country
 }
 \description{
 Create a cloropleth map of the number of trials in a dataset

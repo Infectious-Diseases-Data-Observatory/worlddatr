@@ -5,7 +5,8 @@
 \title{Create a cloropleth map of the number of participants in a dataset}
 \usage{
 create_participant_map(
-  DATA_DM,
+  data,
+  country_col,
   include_ATA = FALSE,
   include_n = TRUE,
   title = "",
@@ -21,9 +22,12 @@ create_participant_map(
 )
 }
 \arguments{
-\item{DATA_DM}{Data frame with includes the column "COUNTRY", listing the 3
-letter ISO country code where the participant is located in. The
-Demographics (DM) domain in SDTM and IDDO-SDTM for example.}
+\item{data}{Data frame with includes a column with 3 letter ISO country codes
+which are to plotted on the map. The Demographics (DM) domain in SDTM and
+IDDO-SDTM for example.}
+
+\item{country_col}{Character. The name of the column containing the 3 letter
+ISO country codes.}
 
 \item{include_ATA}{Boolean. Should Antarctica be included on the map? Default
 is \code{FALSE}.}
@@ -84,7 +88,12 @@ probabilities <- probabilities / sum(probabilities)
 
 country_data <- data.frame(COUNTRY = sample(countries, 10000, replace = TRUE, prob = probabilities))
 
-create_participant_map(DATA_DM     = country_data,
+create_participant_map(data        = country_data,
+                       country_col = "COUNTRY"
+                       )
+
+create_participant_map(data        = country_data,
+                       country_col = "COUNTRY",
                        include_ATA = FALSE,
                        include_n   = TRUE,
                        title       = "Number of Participants in Studies across Countries",
