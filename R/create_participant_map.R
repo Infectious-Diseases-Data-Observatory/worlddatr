@@ -1,8 +1,10 @@
 #' Create a cloropleth map of the number of participants in a dataset
 #'
-#' @param DATA_DM Data frame with includes the column "COUNTRY", listing the 3
-#'   letter ISO country code where the participant is located in. The
-#'   Demographics (DM) domain in SDTM and IDDO-SDTM for example.
+#' @param data Data frame with includes a column with 3 letter ISO country codes
+#'   which are to plotted on the map. The Demographics (DM) domain in SDTM and
+#'   IDDO-SDTM for example.
+#' @param country_col Character. The name of the column containing the 3 letter
+#'   ISO country codes.
 #' @param include_ATA Boolean. Should Antarctica be included on the map? Default
 #'   is `FALSE`.
 #' @param include_n Boolean. Should `n = X` where X is the number of
@@ -51,7 +53,12 @@
 #'
 #' country_data <- data.frame(COUNTRY = sample(countries, 10000, replace = TRUE, prob = probabilities))
 #'
-#' create_participant_map(DATA_DM     = country_data,
+#' create_participant_map(data        = country_data,
+#'                        country_col = "COUNTRY"
+#'                        )
+#'
+#' create_participant_map(data        = country_data,
+#'                        country_col = "COUNTRY",
 #'                        include_ATA = FALSE,
 #'                        include_n   = TRUE,
 #'                        title       = "Number of Participants in Studies across Countries",
@@ -65,37 +72,42 @@
 #'                        log_scale = FALSE
 #'                        )
 #'
-create_participant_map <- function(DATA_DM,
+create_participant_map <- function(data, country_col,
                                    include_ATA = FALSE, include_n = TRUE,
                                    title = "", subtitle = "", legend = "Number of Participants",
                                    colour_high = "#14B1E7", colour_low = "#CCECF9",
                                    colour_default = "#FDF3F4", colour_borders = "black",
                                    colour_background = "#FFFFFF",
                                    scale_breaks = pretty_breaks(), log_scale = FALSE){
-  group_dm = DATA_DM %>%
-    group_by(COUNTRY) %>%
+
+  country_col_index = which(names(data) == country_col)
+
+  group_df = data %>%
+    group_by_at(country_col_index) %>%
     summarise(n_participants = n()) %>%
     ungroup()
 
-  sum_participants = sum(group_dm$n_participants)
+  colnames(group_df)[1] = "alpha_3_code"
 
-  world_map_DM = group_dm %>%
+  sum_participants = sum(group_df$n_participants)
+
+  world_map_df = group_df %>%
     right_join(world_map,
-               by = c("COUNTRY" = "alpha_3_code"))
+               by = "alpha_3_code")
 
   if(include_ATA == FALSE){
-    world_map_DM = world_map_DM %>%
-      filter(COUNTRY != "ATA")
+    world_map_df = world_map_df %>%
+      filter(alpha_3_code != "ATA")
   }
 
   if(log_scale == TRUE){
-    world_map_DM = world_map_DM %>%
+    world_map_df = world_map_df %>%
       mutate(n_participants = log(n_participants))
   }
 
-  plot = ggplot(world_map_DM, aes(x = long, y = lat, group = group)) +
+  plot = ggplot(world_map_df, aes(x = long, y = lat, group = group)) +
     geom_polygon(colour = colour_borders, fill = colour_default, linewidth = 0.01) +
-    geom_polygon(data = world_map_DM %>%
+    geom_polygon(data = world_map_df %>%
                    filter(!is.na(n_participants)),
                  mapping = aes(x = long, y = lat, group = group, fill = n_participants),
                  alpha = 0.85, colour = colour_borders, linewidth = 0.01) +
