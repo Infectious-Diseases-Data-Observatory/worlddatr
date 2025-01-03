@@ -25,6 +25,14 @@ world_income
 }
 \description{
 A dataset containing a row per country/territory with information on the
-country/territory ISO codes and income group as defined by the World Bank
+country/territory ISO codes and income group as defined by the World Bank.
+}
+\details{
+Dates that data was accessed on:
+\itemize{
+\item World Bank: 11/11/2024
+\item ISO:        18/06/2024
+\item REDCap:     15/11/2024
+}
 }
 \keyword{datasets}

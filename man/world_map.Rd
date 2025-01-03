@@ -11,9 +11,9 @@ Income Group Data}
 \describe{
 \item{alpha_3_code}{The three digit ISO code for the country/territory}
 \item{alpha_2_code}{The two digit ISO code for the country/territory}
-\item{numeric}{}
-\item{lat}{Latitude of point}
+\item{numeric}{Numeric ISO code for the country/territory}
 \item{long}{Longitude of point}
+\item{lat}{Latitude of point}
 \item{group}{Numerical identifer for the region}
 \item{order}{Sequence of points within region}
 \item{region}{Name of Country or Territory}
@@ -22,6 +22,8 @@ Income Group Data}
 \item{economy}{Name of country or territory according to the World Bank data}
 \item{income_group}{Income classification of the country/territory}
 \item{redcap_number}{The numeric value for the country/territory in the IDDO REDCap codebook}
+\item{centroid_long}{Longitude of the country/territory centre point/centroid}
+\item{centroid_lat}{Latitude of the country/territory centre point/centroid}
 }
 }
 }
@@ -34,6 +36,14 @@ the world, along with information on the country/territory ISO codes and
 income group as defined by the World Bank.
 }
 \details{
-Note that region refers to the area which the points create a perimeter for
+Note that region refers to the area which the points create a perimeter for.
+
+Dates that data was accessed on:
+\itemize{
+\item World Bank: 11/11/2024
+\item ISO:        18/06/2024
+\item REDCap:     15/11/2024
+\item map_data:   18/11/2024 (ggplot2 v3.4.3)
+}
 }
 \keyword{datasets}
