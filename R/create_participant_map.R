@@ -77,7 +77,7 @@ create_participant_map <- function(data, country_col,
                                    title = "", subtitle = "", legend = "Number of Participants",
                                    colour_high = "#14B1E7", colour_low = "#CCECF9",
                                    colour_default = "#FDF3F4", colour_borders = "black",
-                                   colour_background = "#FFFFFF",
+                                   colour_background = "#FFFFFF", colour_text = "black",
                                    scale_breaks = pretty_breaks(), log_scale = FALSE){
 
   country_col_index = which(names(data) == country_col)
@@ -121,14 +121,18 @@ create_participant_map <- function(data, country_col,
           axis.text = element_blank(),
           axis.title = element_blank(),
           axis.ticks = element_blank(),
-          legend.key.height = unit(1, 'cm')) +
+          legend.key.height = unit(1, 'cm'),
+          legend.background = element_rect(fill = colour_background),
+          legend.text = element_text(colour = colour_text),
+          legend.title = element_text(colour = colour_text)) +
     labs(fill = legend,
          title = title,
          subtitle = subtitle)
 
   if(include_n == TRUE){
     plot = plot +
-      annotate("text", x = 165, y = -60, label = str_c("n = ", sum_participants))
+      annotate("text", x = 165, y = -60,
+               label = str_c("n = ", sum_participants), colour = colour_text)
   }
 
   return(plot)
