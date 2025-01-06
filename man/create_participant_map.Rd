@@ -17,6 +17,7 @@ create_participant_map(
   colour_default = "#FDF3F4",
   colour_borders = "black",
   colour_background = "#FFFFFF",
+  colour_text = "black",
   scale_breaks = pretty_breaks(),
   log_scale = FALSE
 )
