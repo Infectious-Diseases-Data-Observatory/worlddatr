@@ -5,11 +5,14 @@ vignette: >
   %\VignetteIndexEntry{worlddatr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  fig.width = 6,
+  fig.align = "center",
   comment = "#>"
 )
 ```
@@ -28,11 +31,9 @@ Typically, each researcher wanting to plot the globe would need to go through th
 
 ## Installing worlddatr
 
-You can install the `worlddatr` package from [GitHub](https://github.com/) with:
+You can install the `worlddatr` package from [GitHub](https://github.com/), there you can find the code required.
 
 ```{r setup}
-# install.packages("devtools") #if you have not previously installed 'devtools' on your machine
-devtools::install_github("Infectious-Diseases-Data-Observatory/worlddatr")
 library(worlddatr)
 ```
 
@@ -79,6 +80,7 @@ Now we can take our data, `country_data`, indicate the name of the column where 
 create_participant_map(data        = country_data,
                        country_col = "COUNTRY")
 ```
+
 This visualises the example data, along with legend and the total number, n, of participants. Although, perhaps you do not want n to be displayed and you'll note that Antarctica is not present, using extra parameters we can change that.
 
 ```{r}
@@ -125,5 +127,3 @@ create_participant_map(data        = country_data,
 ```
 
 This does not intend to be the only solution and we encourage you to use the code in the GitHub to develop graphs more specific to your needs, this hopes to provide some inspiration, without spending hours to see if it works. If you have suggestions, issues or want to contribute to the package contact us or see more on the GitHub page.
-
-#when you dont have 3 digit
