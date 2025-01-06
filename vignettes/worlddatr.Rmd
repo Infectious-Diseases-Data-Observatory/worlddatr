@@ -1,11 +1,10 @@
 ---
-title: "worlddatr"
+title: "worlddatr" 
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{worlddatr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-
 ---
 
 ```{r, include = FALSE}
