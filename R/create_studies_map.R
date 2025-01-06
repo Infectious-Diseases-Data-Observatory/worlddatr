@@ -28,6 +28,9 @@
 #' @param colour_background Colour of the plot background, either using the name
 #'   of a base colour or the HEX code, i.e. "red" or "#F9250C". Default is
 #'   "#FFFFFF" (white).
+#' @param colour_text Colour of the legend title, text and 'n = ' (if include_n
+#'   == TRUE), either using the name of a base colour or the HEX code, i.e.
+#'   "red" or "#F9250C". Default is black.
 #' @param scale_breaks Numeric list. Specify custom scale breaks for the legend,
 #'   i.e. c(100, 500, 1000, 2000). Default is pretty_breaks from the scales
 #'   package.
@@ -63,6 +66,7 @@
 #'                    colour_default = "#FDF3F4",
 #'                    colour_borders = "black",
 #'                    colour_background = "#FFFFFF",
+#'                    colour_text = "black",
 #'                    scale_breaks = c(25, 50, 100, 150, 175, 200),
 #'                    log_scale = FALSE
 #' )
