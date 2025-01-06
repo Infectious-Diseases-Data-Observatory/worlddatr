@@ -28,7 +28,7 @@ You can install the `worlddatr` package from
 
 ``` r
 # install.packages("devtools") #if you have not previously installed 'devtools' on your machine
-devtools::install_github("Infectious-Diseases-Data-Observatory/worlddatr")
+devtools::install_github("Infectious-Diseases-Data-Observatory/worlddatr", dependencies = TRUE, build_vignettes = TRUE)
 library(worlddatr)
 ```
 
@@ -37,7 +37,7 @@ We recommend updating the install when a new version of the package is available
 ``` r
 detach("package:worlddatr", unload = TRUE)
 
-devtools::install_github("Infectious-Diseases-Data-Observatory/worlddatr")
+devtools::install_github("Infectious-Diseases-Data-Observatory/worlddatr", dependencies = TRUE, build_vignettes = TRUE)
 library(worlddatr)
 ```
 
