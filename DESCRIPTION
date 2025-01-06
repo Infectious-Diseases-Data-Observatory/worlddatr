@@ -1,6 +1,6 @@
 Package: worlddatr
 Title: A package for global spatial data analysis and choropleth maps
-Version: 1.3.0
+Version: 1.3.1
 Authors@R: 
     person("Rhys", "Peploe", , "rhys.peploe@iddo.org", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0001-1669-3716"))
