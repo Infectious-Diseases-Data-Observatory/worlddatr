@@ -50,7 +50,7 @@ There are two datasets in the `worlddatr` package:
 
 -   `world_income`
 
-    -   [250 rows x 5 columns]
+    -   [250 rows x 7 columns]
 
     -   One row per country or territory, with country/territory name,
         ISO code ([ISO Online Browsing
@@ -60,7 +60,7 @@ There are two datasets in the `worlddatr` package:
 
 -   `world_map`
 
-    -   [99,338 rows x 11 columns]
+    -   [99,338 rows x 13 columns]
 
     -   Contains the information in `world_income` joined with
         `map_data("world")` from `ggplot2` which has the coordinate information of the
