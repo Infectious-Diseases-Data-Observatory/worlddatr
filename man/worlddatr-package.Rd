@@ -8,6 +8,13 @@
 \description{
 Data and functions for working with country and territory data including ISO codes, World Bank income groups, longitude and latitude.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://infectious-diseases-data-observatory.github.io/worlddatr/}
+}
+
+}
 \author{
 \strong{Maintainer}: Rhys Peploe \email{rhys.peploe@iddo.org} (\href{https://orcid.org/0009-0001-1669-3716}{ORCID})
 
