@@ -22,7 +22,7 @@ By using worlddatr, researchers can efficiently visualise and analyse global dat
 
 ## Installation
 
-You can install the `worlddatr` package from [GitHub](https://github.com/) with:
+You can install the `worlddatr` package from [GitHub](https://github.com/Infectious-Diseases-Data-Observatory/worlddatr) with:
 
 ``` r
 # install.packages("devtools") #if you have not previously installed 'devtools' on your machine
