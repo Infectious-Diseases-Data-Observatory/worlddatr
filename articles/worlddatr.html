@@ -96,8 +96,6 @@ tool for the entire research community.</li>
 </h2>
 <p>You can install the <code>worlddatr</code> package from <a href="https://github.com/Infectious-Diseases-Data-Observatory/worlddatr" class="external-link">GitHub</a>,
 there you can find the code required.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://infectious-diseases-data-observatory.github.io/worlddatr/">worlddatr</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a>
@@ -114,7 +112,7 @@ entity. <code>redcap_number</code> is also included as a classification
 number for IDDO REDCap databases, which is an alphabetical, English list
 of countries, note this is not standardised so check that you data
 matches this list before using the <code>redcap_number</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">world_income</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 7</span></span></span>
 <span><span class="co">#&gt;   alpha_3_code alpha_2_code numeric country   economy income_group redcap_number</span></span>
@@ -132,7 +130,7 @@ dataset which, in addition, contains the longitude and latitude of the
 borders of the countries and territories which we desire to plot.
 <code>region</code>, <code>subregion</code>, <code>group</code> and
 <code>order</code> are used to identify the country borders.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">world_map</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   alpha_3_code alpha_2_code numeric      long      lat group order region</span></span>
 <span><span class="co">#&gt; 1          ABW           AW     533 -69.89912 12.45200     1     1  Aruba</span></span>
@@ -180,7 +178,7 @@ have the <code>alpha_3_code</code> in your data and use this as the
 <div class="section level4">
 <h4 id="create-synthetic-data-for-example">Create Synthetic Data for Example<a class="anchor" aria-label="anchor" href="#create-synthetic-data-for-example"></a>
 </h4>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span> <span class="co"># for reproducibility</span></span>
 <span></span>
 <span><span class="va">countries</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">world_income</span><span class="op">$</span><span class="va">alpha_3_code</span>, <span class="fl">100</span>, replace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -196,7 +194,7 @@ have the <code>alpha_3_code</code> in your data and use this as the
 <p>Now we can take our data, <code>country_data</code>, indicate the
 name of the column where the three digit ISO country code exists
 (<code>country_col</code>) and run the command.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_participant_map.html">create_participant_map</a></span><span class="op">(</span>data        <span class="op">=</span> <span class="va">country_data</span>,</span>
 <span>                       country_col <span class="op">=</span> <span class="st">"COUNTRY"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="worlddatr_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;"></p>
@@ -204,7 +202,7 @@ name of the column where the three digit ISO country code exists
 number, n, of participants. Although, perhaps you do not want n to be
 displayed and you’ll note that Antarctica is not present, using extra
 parameters we can change that.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_participant_map.html">create_participant_map</a></span><span class="op">(</span>data        <span class="op">=</span> <span class="va">country_data</span>,</span>
 <span>                       country_col <span class="op">=</span> <span class="st">"COUNTRY"</span>,</span>
 <span>                       include_n   <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -213,7 +211,7 @@ parameters we can change that.</p>
 <p>The title and subtitle can be added to the plot to provide more
 information about your graphic, and the legend title can be changed, or
 removed by leaving the option blank.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_participant_map.html">create_participant_map</a></span><span class="op">(</span>data        <span class="op">=</span> <span class="va">country_data</span>,</span>
 <span>                       country_col <span class="op">=</span> <span class="st">"COUNTRY"</span>,</span>
 <span>                       title       <span class="op">=</span> <span class="st">"Number of Participants in Studies across Countries"</span>,</span>
@@ -222,7 +220,7 @@ removed by leaving the option blank.</p>
 <p><img src="worlddatr_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>Blue not your colour? No problem, customise the colours of the
 countries, borders, text and background easily.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_participant_map.html">create_participant_map</a></span><span class="op">(</span>data        <span class="op">=</span> <span class="va">country_data</span>,</span>
 <span>                       country_col <span class="op">=</span> <span class="st">"COUNTRY"</span>,</span>
 <span>                       colour_high <span class="op">=</span> <span class="st">"#FF3C38"</span>,</span>
@@ -235,12 +233,12 @@ countries, borders, text and background easily.</p>
 <p>You can change the scale breaks on the legend using
 <code>scale_breaks</code> and log transform the scale using
 <code>log_scale</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_participant_map.html">create_participant_map</a></span><span class="op">(</span>data        <span class="op">=</span> <span class="va">country_data</span>,</span>
 <span>                       country_col <span class="op">=</span> <span class="st">"COUNTRY"</span>,</span>
 <span>                       scale_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">50</span>, <span class="fl">100</span>, <span class="fl">180</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="worlddatr_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/create_participant_map.html">create_participant_map</a></span><span class="op">(</span>data        <span class="op">=</span> <span class="va">country_data</span>,</span>
 <span>                       country_col <span class="op">=</span> <span class="st">"COUNTRY"</span>,</span>
