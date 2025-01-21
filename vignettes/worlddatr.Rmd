@@ -30,7 +30,7 @@ Typically, each researcher wanting to plot the globe would need to go through th
 
 ## Installing worlddatr
 
-You can install the `worlddatr` package from [GitHub](https://github.com/), there you can find the code required.
+You can install the `worlddatr` package from [GitHub](https://github.com/Infectious-Diseases-Data-Observatory/worlddatr), there you can find the code required.
 
 ```{r setup}
 library(worlddatr)
