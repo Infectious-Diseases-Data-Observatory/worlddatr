@@ -55,7 +55,7 @@ There are two datasets in the `worlddatr` package:
 
     -   Contains the information in `world_income` joined with `map_data("world")` from `ggplot2` which has the coordinate information of the perimeter of each region in the world. Combined this allows for income data to be mapped.
 
-```{r}
+``` r
 head(world_income)
 
 head(world_map)
