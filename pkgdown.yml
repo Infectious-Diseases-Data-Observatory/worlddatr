@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   worlddatr: worlddatr.html
-last_built: 2025-01-21T17:05Z
+last_built: 2025-01-21T17:07Z
 urls:
   reference: https://infectious-diseases-data-observatory.github.io/worlddatr/reference
   article: https://infectious-diseases-data-observatory.github.io/worlddatr/articles
