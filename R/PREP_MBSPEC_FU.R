@@ -62,44 +62,44 @@ PREP_MBSPEC_FU <- function(DATA_MB, DISEASE = "", VARS = NULL) {
   colnames(DATA) <- gsub("MBLOC", "LOC", colnames(DATA))
   colnames(DATA) <- gsub("MBSPEC", "SPEC", colnames(DATA))
 
-  if ("AFB_LOC" %in% names(DATA) | "MTB_LOC" %in% names(DATA)) {
-    if ("AFB_LOC" %in% names(DATA) & "MTB_LOC" %in% names(DATA)) {
-      DATA <- DATA %>%
-        mutate(
-          TB_LOC = as.character(.data$MTB_LOC),
-          TB_SPEC = as.character(.data$MTB_SPEC),
-          AFB_LOC = as.character(.data$AFB_LOC),
-          AFB_SPEC = as.character(.data$AFB_SPEC),
-          MB_IND = NA
-        )
-
-      DATA[which(!is.na(DATA$MTB_LOC) | !is.na(DATA$MTB_SPEC)), "MB_IND"] <- "MTB"
-
-      DATA[which(is.na(DATA$MB_IND)), "TB_LOC"] <-
-        DATA[which(is.na(DATA$MB_IND)), "AFB_LOC"]
-
-      DATA[which(is.na(DATA$MB_IND)), "TB_SPEC"] <-
-        DATA[which(is.na(DATA$MB_IND)), "AFB_SPEC"]
-
-      DATA <- DATA %>%
-        dplyr::select(
-          -"AFB_LOC", -"MTB_LOC", -"MB_IND",
-          -"AFB_SPEC", -"MTB_SPEC"
-        )
-    } else if ("AFB_LOC" %in% names(DATA) & "MTB_LOC" %!in% names(DATA)) {
-      DATA <- DATA %>%
-        rename(
-          "TB_LOC" = "AFB_LOC",
-          "TB_SPEC" = "AFB_SPEC"
-        )
-    } else if ("AFB_LOC" %!in% names(DATA) & "MTB_LOC" %in% names(DATA)) {
-      DATA <- DATA %>%
-        rename(
-          "TB_LOC" = "MTB_LOC",
-          "TB_SPEC" = "MTB_SPEC"
-        )
-    }
-  }
+  # if ("AFB_LOC" %in% names(DATA) | "MTB_LOC" %in% names(DATA)) {
+  #   if ("AFB_LOC" %in% names(DATA) & "MTB_LOC" %in% names(DATA)) {
+  #     DATA <- DATA %>%
+  #       mutate(
+  #         TB_LOC = as.character(.data$MTB_LOC),
+  #         TB_SPEC = as.character(.data$MTB_SPEC),
+  #         AFB_LOC = as.character(.data$AFB_LOC),
+  #         AFB_SPEC = as.character(.data$AFB_SPEC),
+  #         MB_IND = NA
+  #       )
+  #
+  #     DATA[which(!is.na(DATA$MTB_LOC) | !is.na(DATA$MTB_SPEC)), "MB_IND"] <- "MTB"
+  #
+  #     DATA[which(is.na(DATA$MB_IND)), "TB_LOC"] <-
+  #       DATA[which(is.na(DATA$MB_IND)), "AFB_LOC"]
+  #
+  #     DATA[which(is.na(DATA$MB_IND)), "TB_SPEC"] <-
+  #       DATA[which(is.na(DATA$MB_IND)), "AFB_SPEC"]
+  #
+  #     DATA <- DATA %>%
+  #       dplyr::select(
+  #         -"AFB_LOC", -"MTB_LOC", -"MB_IND",
+  #         -"AFB_SPEC", -"MTB_SPEC"
+  #       )
+  #   } else if ("AFB_LOC" %in% names(DATA) & "MTB_LOC" %!in% names(DATA)) {
+  #     DATA <- DATA %>%
+  #       rename(
+  #         "TB_LOC" = "AFB_LOC",
+  #         "TB_SPEC" = "AFB_SPEC"
+  #       )
+  #   } else if ("AFB_LOC" %!in% names(DATA) & "MTB_LOC" %in% names(DATA)) {
+  #     DATA <- DATA %>%
+  #       rename(
+  #         "TB_LOC" = "MTB_LOC",
+  #         "TB_SPEC" = "MTB_SPEC"
+  #       )
+  #   }
+  # }
 
   return(DATA)
 }
