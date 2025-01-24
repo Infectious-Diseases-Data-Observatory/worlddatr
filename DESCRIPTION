@@ -1,5 +1,5 @@
 Package: iddoverse
-Title: Converting IDDO-SDTM data to analysis datasets
+Title: Converting IDDO-SDTM Data To Analysis Datasets
 Version: 0.6.2
 Authors@R: 
     person("Rhys", "Peploe", , "rhys.peploe@iddo.org", role = c("aut", "cre"),
