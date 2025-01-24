@@ -25,11 +25,12 @@ PREP_SC_FU <- function(DATA_SC, VARS = NULL) {
     convert_blanks_to_na() %>%
     filter(.data$SCTESTCD %in% SC_VARS) %>%
     mutate(
-      SCSTRES = as.character(str_to_upper(.data$SCSTRESC)),
-      SCORRES = as.character(str_to_upper(.data$SCORRES)),
-      DAY = .data$SCDY,
-      SCUNITS = as.character(str_to_upper(.data$SCSTRESN)),
-      SCORRESU = as.character(str_to_upper(.data$SCORRESU))
+      SCSTRES = str_to_upper(as.character(.data$SCSTRESC)),
+      SCORRES = str_to_upper(as.character(.data$SCORRES)),
+      DAY = .data$SCDY
+      # ,
+      # SCUNITS = as.character(str_to_upper(.data$SCSTRESN)),
+      # SCORRESU = as.character(str_to_upper(.data$SCORRESU))
     )
 
   DATA_EMPTY <- DATA_SC %>%
@@ -42,8 +43,8 @@ PREP_SC_FU <- function(DATA_SC, VARS = NULL) {
   DATA[which(is.na(DATA$SCSTRES)), "SCSTRES"] <-
     DATA[which(is.na(DATA$SCSTRES)), "SCORRES"]
 
-  DATA[which(is.na(DATA$SCUNITS)), "SCUNITS"] <-
-    DATA[which(is.na(DATA$SCUNITS)), "SCORRESU"]
+  # DATA[which(is.na(DATA$SCUNITS)), "SCUNITS"] <-
+  #   DATA[which(is.na(DATA$SCUNITS)), "SCORRESU"]
 
   if ("DSTHOSP" %in% SC_VARS) {
     DATA <- DATA %>%
@@ -53,7 +54,7 @@ PREP_SC_FU <- function(DATA_SC, VARS = NULL) {
           .data$STUDYID, .data$USUBJID, .data$VISITDY,
           .data$VISITNUM, .data$DAY, .data$EMPTY_TIME
         ),
-        names_from = .data$SCTESTCD, values_from = c(.data$SCSTRES, .data$SCUNITS),
+        names_from = .data$SCTESTCD, values_from = c(.data$SCSTRES),#, .data$SCUNITS
         names_sort = T, names_vary = "slowest",
         values_fn = first
       )
