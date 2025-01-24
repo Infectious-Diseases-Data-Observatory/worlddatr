@@ -18,7 +18,7 @@ PREP_ER_FIRST <- function(DATA_ER) {
   DATA <- DATA_ER %>%
     convert_blanks_to_na() %>%
     mutate(
-      ERSTRES = as.character(.data$ERDECOD),
+      ERSTRES = str_to_upper(as.character(.data$ERDECOD)),
       ERPRESP = str_to_upper(.data$ERPRESP),
       EROCCUR = str_to_upper(.data$EROCCUR),
       DAY = .data$ERDY

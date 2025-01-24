@@ -23,9 +23,9 @@ PREP_VS_TEMP_FU <- function(DATA_VS) {
     convert_blanks_to_na() %>%
     filter(.data$VSTESTCD == "TEMP") %>%
     mutate(
-      VSSTRES = as.character(.data$VSSTRESN),
-      VSSTRESC = as.character(.data$VSSTRESC),
-      VSORRES = as.character(.data$VSORRES),
+      VSSTRES = str_to_upper(as.character(.data$VSSTRESN)),
+      VSSTRESC = str_to_upper(as.character(.data$VSSTRESC)),
+      VSORRES = str_to_upper(as.character(.data$VSORRES)),
       VISIT = as.character(.data$VISIT),
       DAY = .data$VSDY,
       VSUNITS = as.character(NA)
@@ -34,7 +34,6 @@ PREP_VS_TEMP_FU <- function(DATA_VS) {
   DATA_EMPTY <- DATA_VS %>%
     filter(is.na(.data$VISITDY) & is.na(.data$VISITNUM) & is.na(.data$DAY)) %>%
     DERIVE_EMPTY_TIME()
-
 
   DATA <- DATA_VS %>%
     left_join(DATA_EMPTY)

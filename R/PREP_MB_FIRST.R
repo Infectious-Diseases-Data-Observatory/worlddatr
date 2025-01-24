@@ -55,9 +55,9 @@ PREP_MB_FIRST <- function(DATA_MB, DISEASE = "", VARS = NULL) {
     convert_blanks_to_na() %>%
     filter(.data$MBTESTCD %in% MB_VARS) %>%
     mutate(
-      MBSTRES = as.character(.data$MBSTRESN),
-      MBSTRESC = as.character(.data$MBSTRESC),
-      MBORRES = as.character(.data$MBORRES),
+      MBSTRES = str_to_upper(as.character(.data$MBSTRESN)),
+      MBSTRESC = str_to_upper(as.character(.data$MBSTRESC)),
+      MBORRES = str_to_upper(as.character(.data$MBORRES)),
       DAY = .data$MBDY,
       MBUNITS = as.character(NA)
     )
@@ -75,7 +75,6 @@ PREP_MB_FIRST <- function(DATA_MB, DISEASE = "", VARS = NULL) {
   DATA <- DATA[order(DATA$USUBJID, DATA$VISITNUM, DATA$VISITDY, DATA$DAY), ]
 
   DATA <- DATA %>%
-    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
     pivot_wider(
       id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,
       names_glue = "{MBTESTCD}_{.value}", values_from = c(.data$MBSTRES, .data$MBUNITS, .data$DAY),

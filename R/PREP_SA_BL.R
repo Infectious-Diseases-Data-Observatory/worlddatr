@@ -66,9 +66,10 @@ PREP_SA_BL <- function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_
   DATA_SA <- DATA_SA %>%
     convert_blanks_to_na() %>%
     mutate(
-      SASTRES = as.character(.data$SADECOD),
-      SAMODIFY = as.character(.data$SAMODIFY),
-      SATERM = as.character(.data$SATERM)
+      SASTRES = str_to_upper(as.character(.data$SADECOD)),
+      SAMODIFY = str_to_upper(as.character(.data$SAMODIFY)),
+      SATERM = str_to_upper(as.character(.data$SATERM)),
+      SACAT = str_to_upper(.data$SACAT)
     )
 
   DATA_SA[which(is.na(DATA_SA$SASTRES)), "SASTRES"] <-
@@ -77,7 +78,6 @@ PREP_SA_BL <- function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_
     DATA_SA[which(is.na(DATA_SA$SASTRES)), "SATERM"]
 
   DATA_SA <- DATA_SA %>%
-    mutate(SASTRES = str_to_upper(.data$SASTRES)) %>%
     filter(.data$SASTRES %in% SA_VARS) %>%
     DERIVE_TIMING() %>%
     mutate(
@@ -109,7 +109,7 @@ PREP_SA_BL <- function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_
 
       DATA_SAE <- DATA_SA %>%
         filter((.data$SACAT != "MEDICAL HISTORY" | is.na(.data$SACAT)) &
-          (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+          (.data$TIMING == "1" | .data$TIMING == "BASELINE")) %>%
         mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -121,7 +121,7 @@ PREP_SA_BL <- function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_
       DATA <- full_join(DATA_HIST, DATA_SAE)
     } else {
       DATA <- DATA_SA %>%
-        filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+        filter(.data$TIMING == "1" | .data$TIMING == "BASELINE") %>%
         mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -150,7 +150,7 @@ PREP_SA_BL <- function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_
 
       DATA_SAE <- DATA_SA %>%
         filter((.data$SACAT != "MEDICAL HISTORY" | is.na(.data$SACAT)) &
-          (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+          (.data$TIMING == "1" | .data$TIMING == "BASELINE")) %>%
         mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -163,7 +163,7 @@ PREP_SA_BL <- function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_
       DATA <- full_join(DATA_HIST, DATA_SAE)
     } else {
       DATA <- DATA_SA %>%
-        filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+        filter(.data$TIMING == "1" | .data$TIMING == "BASELINE") %>%
         mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -193,7 +193,7 @@ PREP_SA_BL <- function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_
 
       DATA_SAE <- DATA_SA %>%
         filter((.data$SACAT != "MEDICAL HISTORY" | is.na(.data$SACAT)) &
-          (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+          (.data$TIMING == "1" | .data$TIMING == "BASELINE")) %>%
         mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -206,7 +206,7 @@ PREP_SA_BL <- function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_
       DATA <- full_join(DATA_HIST, DATA_SAE)
     } else {
       DATA <- DATA_SA %>%
-        filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+        filter(.data$TIMING == "1" | .data$TIMING == "BASELINE") %>%
         mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -239,7 +239,7 @@ PREP_SA_BL <- function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_
 
       DATA_SAE <- DATA_SA %>%
         filter((.data$SACAT != "MEDICAL HISTORY" | is.na(.data$SACAT)) &
-          (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+          (.data$TIMING == "1" | .data$TIMING == "BASELINE")) %>%
         mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -252,7 +252,7 @@ PREP_SA_BL <- function(DATA_SA, DISEASE = "", VARS = NULL, inc_DUR = FALSE, inc_
       DATA <- full_join(DATA_HIST, DATA_SAE)
     } else {
       DATA <- DATA_SA %>%
-        filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+        filter(.data$TIMING == "1" | .data$TIMING == "BASELINE") %>%
         mutate(SAOCCUR = as.factor(.data$SAOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),

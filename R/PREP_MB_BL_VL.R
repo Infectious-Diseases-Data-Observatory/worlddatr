@@ -26,11 +26,11 @@ PREP_MB_BL_VL <- function(DATA_MB) {
     DERIVE_TIMING() %>%
     CLEAN_MB_VL() %>%
     mutate(
-      MBSTRES = as.character(.data$MBSTRESN),
+      MBSTRES = str_to_upper(as.character(.data$MBSTRESN)),
       MBUNITS = as.character(.data$MBSTRESU),
-      MBSTRESC = as.character(.data$MBSTRESC),
-      MBMODIFY = as.character(.data$MBMODIFY),
-      MBORRES = as.character(.data$MBORRES),
+      MBSTRESC = str_to_upper(as.character(.data$MBSTRESC)),
+      MBMODIFY = str_to_upper(as.character(.data$MBMODIFY)),
+      MBORRES = str_to_upper(as.character(.data$MBORRES)),
       MBUNITS = as.character(NA)
     )
 
@@ -50,7 +50,6 @@ PREP_MB_BL_VL <- function(DATA_MB) {
   DATA$MBSTRES <- str_replace_all(DATA$MBSTRES, "01-OCT", "1-10")
 
   DATA <- DATA %>%
-    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
     filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
     pivot_wider(
       id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,

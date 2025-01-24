@@ -13,9 +13,9 @@ PREP_VS_MIMBA_FU <- function(DATA_VS, VARS = NULL){
     convert_blanks_to_na() %>%
     filter(.data$VSTESTCD %in% VS_VARS) %>%
     mutate(
-      VSSTRES = as.character(.data$VSSTRESN),
-      VSSTRESC = as.character(.data$VSSTRESC),
-      VSORRES = as.character(.data$VSORRES),
+      VSSTRES = str_to_upper(as.character(.data$VSSTRESN)),
+      VSSTRESC = str_to_upper(as.character(.data$VSSTRESC)),
+      VSORRES = str_to_upper(as.character(.data$VSORRES)),
       VSORRESU = as.character(.data$VSORRESU),
       DAY = .data$VSDY,
       VSUNITS = as.character(NA)

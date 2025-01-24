@@ -15,8 +15,8 @@ PREP_APRS_FU <- function(DATA_RS, VARS = NULL) {
     convert_blanks_to_na() %>%
     filter(.data$RSTESTCD %in% RS_VARS) %>%
     mutate(
-      RSSTRES = as.character(.data$RSSTRESC),
-      RSORRES = as.character(.data$RSORRES),
+      RSSTRES = str_to_upper(as.character(.data$RSSTRESC)),
+      RSORRES = str_to_upper(as.character(.data$RSORRES)),
       DAY = .data$RSDY
     )
 
@@ -30,11 +30,8 @@ PREP_APRS_FU <- function(DATA_RS, VARS = NULL) {
   DATA[which(is.na(DATA$RSSTRES)), "RSSTRES"] <-
     DATA[which(is.na(DATA$RSSTRES)), "RSORRES"]
 
-
-
     DATA <- DATA %>%
-      mutate(RSSTRES = str_to_upper(.data$RSSTRES),
-             RSTEST_TIME = paste(.data$RSTESTCD, .data$RSEVINTX)) %>%
+      mutate(RSTEST_TIME = paste(.data$RSTESTCD, .data$RSEVINTX)) %>%
       pivot_wider(
         id_cols = c(
           .data$STUDYID, .data$APID, .data$RSUBJID
@@ -42,8 +39,6 @@ PREP_APRS_FU <- function(DATA_RS, VARS = NULL) {
         values_from = .data$RSSTRES,
         names_sort = TRUE, names_vary = "slowest", values_fn = min
       )
-
-
 
     colnames(DATA) <- gsub(" 1 MINUTE POST BIRTH", "-1M", colnames(DATA))
     colnames(DATA) <- gsub(" 10 MINUTES POST BIRTH", "-10M", colnames(DATA))

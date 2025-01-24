@@ -33,10 +33,10 @@ PREP_MB_FU_MAL <- function(DATA_MB) {
     convert_blanks_to_na() %>%
     filter(.data$MBTESTCD %in% MB_VARS) %>%
     mutate(
-      MBSTRES = as.character(.data$MBSTRESN),
-      MBSTRESC = as.character(.data$MBSTRESC),
-      MBMODIFY = as.character(.data$MBMODIFY),
-      MBORRES = as.character(.data$MBORRES),
+      MBSTRES = str_to_upper(as.character(.data$MBSTRESN)),
+      MBSTRESC = str_to_upper(as.character(.data$MBSTRESC)),
+      MBMODIFY = str_to_upper(as.character(.data$MBMODIFY)),
+      MBORRES = str_to_upper(as.character(.data$MBORRES)),
       DAY = .data$MBDY,
       MBUNITS = as.character(NA)
     )
@@ -61,7 +61,6 @@ PREP_MB_FU_MAL <- function(DATA_MB) {
     DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBORRESU"]
 
   DATA <- DATA %>%
-    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
     pivot_wider(
       id_cols = c(
         .data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,

@@ -33,10 +33,10 @@ PREP_MB_BL_MAL <- function(DATA_MB) {
     filter(.data$MBTESTCD %in% MB_VARS) %>%
     DERIVE_TIMING() %>%
     mutate(
-      MBSTRES = as.character(.data$MBSTRESN),
-      MBSTRESC = as.character(.data$MBSTRESC),
-      MBMODIFY = as.character(.data$MBMODIFY),
-      MBORRES = as.character(.data$MBORRES),
+      MBSTRES = str_to_upper(as.character(.data$MBSTRESN)),
+      MBSTRESC = str_to_upper(as.character(.data$MBSTRESC)),
+      MBMODIFY = str_to_upper(as.character(.data$MBMODIFY)),
+      MBORRES = str_to_upper(as.character(.data$MBORRES)),
       MBUNITS = as.character(NA)
     )
 
@@ -53,7 +53,6 @@ PREP_MB_BL_MAL <- function(DATA_MB) {
     DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBORRESU"]
 
   DATA <- DATA %>%
-    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
     filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
     pivot_wider(
       id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,

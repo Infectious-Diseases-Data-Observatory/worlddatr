@@ -45,13 +45,11 @@ PREP_MP_BL <- function(DATA_MP, MPTEST = "LENGTH", VARS = NULL) {
   DATA[which(is.na(DATA$MPSTRESC) & is.na(DATA$MPSTRESN)), "MPUNITS"] <-
     DATA[which(is.na(DATA$MPSTRESC) & is.na(DATA$MPSTRESN)), "MPORRESU"]
 
-
-
   if (MPTEST == "WIDTH") {
     DATA <- DATA %>%
       filter(
         .data$MPTESTCD == "WIDTH",
-        .data$TIMING == 1 | .data$TIMING == "BASELINE"
+        .data$TIMING == "1" | .data$TIMING == "BASELINE"
       ) %>%
       pivot_wider(
         id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -61,7 +59,7 @@ PREP_MP_BL <- function(DATA_MP, MPTEST = "LENGTH", VARS = NULL) {
       )
   } else if (MPTEST == "BOTH") {
     DATA <- DATA %>%
-      filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+      filter(.data$TIMING == "1" | .data$TIMING == "BASELINE") %>%
       pivot_wider(
         id_cols = c(.data$STUDYID, .data$USUBJID),
         names_from = c(.data$MPLOC, .data$MPTESTCD), values_from = c(.data$MPSTRES, .data$MPUNITS),
@@ -72,7 +70,7 @@ PREP_MP_BL <- function(DATA_MP, MPTEST = "LENGTH", VARS = NULL) {
     DATA <- DATA %>%
       filter(
         .data$MPTESTCD == "LENGTH",
-        .data$TIMING == 1 | .data$TIMING == "BASELINE"
+        .data$TIMING == "1" | .data$TIMING == "BASELINE"
       ) %>%
       pivot_wider(
         id_cols = c(.data$STUDYID, .data$USUBJID),

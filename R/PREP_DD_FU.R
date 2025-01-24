@@ -7,8 +7,8 @@ PREP_DD_FU <- function(DATA_DD, VARS = NULL) {
     convert_blanks_to_na() %>%
     filter(.data$DDTESTCD %in% DD_VARS) %>%
     mutate(
-      DDSTRES = as.character(.data$DDSTRESC),
-      DDORRES = as.character(.data$DDORRES),
+      DDSTRES = str_to_upper(as.character(.data$DDSTRESC)),
+      DDORRES = str_to_upper(as.character(.data$DDORRES)),
       DAY = .data$DDDY
     )
 
@@ -23,7 +23,6 @@ PREP_DD_FU <- function(DATA_DD, VARS = NULL) {
     DATA[which(is.na(DATA$DDSTRES)), "DDORRES"]
 
   DATA <- DATA %>%
-    mutate(DDSTRES = str_to_upper(.data$DDSTRES)) %>%
     pivot_wider(
       id_cols = c(
         .data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,

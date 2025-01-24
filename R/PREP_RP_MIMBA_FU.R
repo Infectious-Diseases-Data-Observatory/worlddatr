@@ -13,9 +13,9 @@ PREP_RP_MIMBA_FU <- function(DATA_RP, VARS = NULL) {
     convert_blanks_to_na() %>%
     filter(.data$RPTESTCD %in% RP_VARS) %>%
     mutate(
-      RPSTRES = as.character(.data$RPSTRESN),
-      RPSTRESC = as.character(.data$RPSTRESC),
-      RPORRES = as.character(.data$RPORRES),
+      RPSTRES = str_to_upper(as.character(.data$RPSTRESN)),
+      RPSTRESC = str_to_upper(as.character(.data$RPSTRESC)),
+      RPORRES = str_to_upper(as.character(.data$RPORRES)),
       DAY = .data$RPDY,
       RPUNITS = as.character(NA)
     )

@@ -27,7 +27,8 @@ PREP_IN_BMV_BL <- function(DATA_IN, inc_DUR = FALSE, inc_TIME = FALSE) {
     mutate(
       INSTRES = str_to_upper(as.character(.data$INDECOD)),
       INMODIFY = str_to_upper(as.character(.data$INMODIFY)),
-      INTRT = str_to_upper(as.character(.data$INTRT))
+      INTRT = str_to_upper(as.character(.data$INTRT)),
+      INCAT = str_to_upper(as.character(.data$INCAT))
     ) %>%
     CLEAN_IN()
 
@@ -83,8 +84,8 @@ PREP_IN_BMV_BL <- function(DATA_IN, inc_DUR = FALSE, inc_TIME = FALSE) {
   }
 
   if (inc_DUR == TRUE & inc_TIME == FALSE) {
-    DATA_IN <- DATA_IN %>%
-      mutate(INDUR = str_to_upper(.data$INDUR))
+    # DATA_IN <- DATA_IN %>%
+    #   mutate(INDUR = str_to_upper(.data$INDUR))
 
     if ("INCAT" %in% names(DATA_IN)) {
       DATA_HIST <- DATA_IN %>%
@@ -126,8 +127,8 @@ PREP_IN_BMV_BL <- function(DATA_IN, inc_DUR = FALSE, inc_TIME = FALSE) {
   }
 
   if (inc_DUR == FALSE & inc_TIME == TRUE) {
-    DATA_IN <- DATA_IN %>%
-      mutate(INEVINTX = str_to_upper(.data$INEVINTX))
+    # DATA_IN <- DATA_IN %>%
+    #   mutate(INEVINTX = str_to_upper(.data$INEVINTX))
 
     if ("INCAT" %in% names(DATA_IN)) {
       DATA_HIST <- DATA_IN %>%
@@ -169,11 +170,11 @@ PREP_IN_BMV_BL <- function(DATA_IN, inc_DUR = FALSE, inc_TIME = FALSE) {
   }
 
   if (inc_DUR == TRUE & inc_TIME == TRUE) {
-    DATA_IN <- DATA_IN %>%
-      mutate(
-        INDUR = str_to_upper(.data$INDUR),
-        INEVINTX = str_to_upper(.data$INEVINTX)
-      )
+    # DATA_IN <- DATA_IN %>%
+    #   mutate(
+    #     INDUR = str_to_upper(.data$INDUR),
+    #     INEVINTX = str_to_upper(.data$INEVINTX)
+    #   )
 
     if ("INCAT" %in% names(DATA_IN)) {
       DATA_HIST <- DATA_IN %>%

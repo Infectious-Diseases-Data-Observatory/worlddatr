@@ -45,7 +45,8 @@ PREP_IN_FIRST <- function(DATA_IN, DISEASE = "", VARS = NULL) {
       INSTRES = as.character(.data$INDECOD),
       INPRESP = str_to_upper(.data$INPRESP),
       INOCCUR = str_to_upper(.data$INOCCUR),
-      DAY = .data$INDY
+      DAY = .data$INDY,
+      INCAT = str_to_upper(.data$INCAT)
     ) %>%
     filter(
       (.data$INCAT != "MEDICAL HISTORY" | is.na(.data$INCAT)),

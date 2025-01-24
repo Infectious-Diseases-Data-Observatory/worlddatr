@@ -29,8 +29,9 @@ PREP_IN_BL <- function(DATA_IN, VARS = NULL, inc_DUR = FALSE, inc_TIME = FALSE) 
     convert_blanks_to_na() %>%
     mutate(
       INSTRES = str_to_upper(as.character(.data$INDECOD)),
-      INMODIFY = as.character(.data$INMODIFY),
-      INTRT = as.character(.data$INTRT)
+      INMODIFY = str_to_upper(as.character(.data$INMODIFY)),
+      INTRT = str_to_upper(as.character(.data$INTRT)),
+      INCAT = str_to_upper(as.character(.data$INCAT))
     )
 
   DATA_IN[which(is.na(DATA_IN$INSTRES)), "INSTRES"] <-
@@ -70,7 +71,7 @@ PREP_IN_BL <- function(DATA_IN, VARS = NULL, inc_DUR = FALSE, inc_TIME = FALSE) 
 
       DATA_INT <- DATA_IN %>%
         filter((.data$INCAT != "MEDICAL HISTORY" | is.na(.data$INCAT)) &
-          (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+          (.data$TIMING == "1" | .data$TIMING == "BASELINE")) %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -82,7 +83,7 @@ PREP_IN_BL <- function(DATA_IN, VARS = NULL, inc_DUR = FALSE, inc_TIME = FALSE) 
       DATA <- full_join(DATA_HIST, DATA_INT)
     } else {
       DATA <- DATA_IN %>%
-        filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+        filter(.data$TIMING == "1" | .data$TIMING == "BASELINE") %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -94,8 +95,8 @@ PREP_IN_BL <- function(DATA_IN, VARS = NULL, inc_DUR = FALSE, inc_TIME = FALSE) 
   }
 
   if (inc_DUR == TRUE & inc_TIME == FALSE) {
-    DATA_IN <- DATA_IN %>%
-      mutate(INDUR = str_to_upper(.data$INDUR))
+    # DATA_IN <- DATA_IN %>%
+    #   mutate(INDUR = str_to_upper(.data$INDUR))
 
     if ("INCAT" %in% names(DATA_IN)) {
       DATA_HIST <- DATA_IN %>%
@@ -111,7 +112,7 @@ PREP_IN_BL <- function(DATA_IN, VARS = NULL, inc_DUR = FALSE, inc_TIME = FALSE) 
 
       DATA_INT <- DATA_IN %>%
         filter((.data$INCAT != "MEDICAL HISTORY" | is.na(.data$INCAT)) &
-          (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+          (.data$TIMING == "1" | .data$TIMING == "BASELINE")) %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -124,7 +125,7 @@ PREP_IN_BL <- function(DATA_IN, VARS = NULL, inc_DUR = FALSE, inc_TIME = FALSE) 
       DATA <- full_join(DATA_HIST, DATA_INT)
     } else {
       DATA <- DATA_IN %>%
-        filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+        filter(.data$TIMING == "1" | .data$TIMING == "BASELINE") %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -136,8 +137,8 @@ PREP_IN_BL <- function(DATA_IN, VARS = NULL, inc_DUR = FALSE, inc_TIME = FALSE) 
   }
 
   if (inc_DUR == FALSE & inc_TIME == TRUE) {
-    DATA_IN <- DATA_IN %>%
-      mutate(INEVINTX = str_to_upper(.data$INEVINTX))
+    # DATA_IN <- DATA_IN %>%
+    #   mutate(INEVINTX = str_to_upper(.data$INEVINTX))
 
     if ("INCAT" %in% names(DATA_IN)) {
       DATA_HIST <- DATA_IN %>%
@@ -153,7 +154,7 @@ PREP_IN_BL <- function(DATA_IN, VARS = NULL, inc_DUR = FALSE, inc_TIME = FALSE) 
 
       DATA_INT <- DATA_IN %>%
         filter((.data$INCAT != "MEDICAL HISTORY" | is.na(.data$INCAT)) &
-          (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+          (.data$TIMING == "1" | .data$TIMING == "BASELINE")) %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -166,7 +167,7 @@ PREP_IN_BL <- function(DATA_IN, VARS = NULL, inc_DUR = FALSE, inc_TIME = FALSE) 
       DATA <- full_join(DATA_HIST, DATA_INT)
     } else {
       DATA <- DATA_IN %>%
-        filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+        filter(.data$TIMING == "1" | .data$TIMING == "BASELINE") %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -179,11 +180,11 @@ PREP_IN_BL <- function(DATA_IN, VARS = NULL, inc_DUR = FALSE, inc_TIME = FALSE) 
   }
 
   if (inc_DUR == TRUE & inc_TIME == TRUE) {
-    DATA_IN <- DATA_IN %>%
-      mutate(
-        INDUR = str_to_upper(.data$INDUR),
-        INEVINTX = str_to_upper(.data$INEVINTX)
-      )
+    # DATA_IN <- DATA_IN %>%
+    #   mutate(
+    #     INDUR = str_to_upper(.data$INDUR),
+    #     INEVINTX = str_to_upper(.data$INEVINTX)
+    #   )
 
     if ("INCAT" %in% names(DATA_IN)) {
       DATA_HIST <- DATA_IN %>%
@@ -199,7 +200,7 @@ PREP_IN_BL <- function(DATA_IN, VARS = NULL, inc_DUR = FALSE, inc_TIME = FALSE) 
 
       DATA_INT <- DATA_IN %>%
         filter((.data$INCAT != "MEDICAL HISTORY" | is.na(.data$INCAT)) &
-          (.data$TIMING == 1 | .data$TIMING == "BASELINE")) %>%
+          (.data$TIMING == "1" | .data$TIMING == "BASELINE")) %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),
@@ -212,7 +213,7 @@ PREP_IN_BL <- function(DATA_IN, VARS = NULL, inc_DUR = FALSE, inc_TIME = FALSE) 
       DATA <- full_join(DATA_HIST, DATA_INT)
     } else {
       DATA <- DATA_IN %>%
-        filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+        filter(.data$TIMING == "1" | .data$TIMING == "BASELINE") %>%
         mutate(INOCCUR = as.factor(.data$INOCCUR)) %>%
         pivot_wider(
           id_cols = c(.data$STUDYID, .data$USUBJID),

@@ -17,7 +17,7 @@
 DERIVE_TIMING <- function(DOMAIN) {
   DATA <- DOMAIN %>%
     mutate(
-      TIMING = as.character(.data$EPOCH),
+      TIMING = str_to_upper(as.character(.data$EPOCH)),
       VISITDY = as.character(.data$VISITDY)
     )
 

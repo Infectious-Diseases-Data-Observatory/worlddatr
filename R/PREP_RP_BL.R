@@ -27,9 +27,9 @@ PREP_RP_BL <- function(DATA_RP, VARS = NULL) {
     filter(.data$RPTESTCD %in% RP_VARS) %>%
     DERIVE_TIMING() %>%
     mutate(
-      RPSTRES = as.character(.data$RPSTRESN),
-      RPSTRESC = as.character(.data$RPSTRESC),
-      RPORRES = as.character(.data$RPORRES),
+      RPSTRES = str_to_upper(as.character(.data$RPSTRESN)),
+      RPSTRESC = str_to_upper(as.character(.data$RPSTRESC)),
+      RPORRES = str_to_upper(as.character(.data$RPORRES)),
       RPUNITS = as.character(NA)
     )
 
@@ -46,7 +46,7 @@ PREP_RP_BL <- function(DATA_RP, VARS = NULL) {
     DATA[which(is.na(DATA$RPSTRESC) & is.na(DATA$RPSTRESN)), "RPORRESU"]
 
   DATA <- DATA %>%
-    filter(.data$TIMING == 1 | .data$TIMING == "BASELINE") %>%
+    filter(.data$TIMING == "1" | .data$TIMING == "BASELINE") %>%
     pivot_wider(
       id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$RPTESTCD,
       values_from = c(.data$RPSTRES, .data$RPUNITS), names_vary = "slowest",

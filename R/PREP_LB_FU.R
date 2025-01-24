@@ -60,9 +60,9 @@ PREP_LB_FU <- function(DATA_LB, DISEASE = "", VARS = NULL) {
     convert_blanks_to_na() %>%
     filter(.data$LBTESTCD %in% LB_VARS) %>%
     mutate(
-      LBSTRES = as.character(.data$LBSTRESN),
-      LBSTRESC = as.character(.data$LBSTRESC),
-      LBORRES = as.character(.data$LBORRES),
+      LBSTRES = str_to_upper(as.character(.data$LBSTRESN)),
+      LBSTRESC = str_to_upper(as.character(.data$LBSTRESC)),
+      LBORRES = str_to_upper(as.character(.data$LBORRES)),
       DAY = .data$LBDY,
       LBUNITS = as.character(NA)
     )
@@ -85,7 +85,6 @@ PREP_LB_FU <- function(DATA_LB, DISEASE = "", VARS = NULL) {
     DATA[which(is.na(DATA$LBSTRESC) & is.na(DATA$LBSTRESN)), "LBORRESU"]
 
   DATA <- DATA %>%
-    mutate(LBSTRES = str_to_upper(.data$LBSTRES)) %>%
     pivot_wider(
       id_cols = c(
         .data$STUDYID, .data$USUBJID, .data$VISITDY, .data$VISITNUM,

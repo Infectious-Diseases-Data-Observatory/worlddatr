@@ -20,8 +20,8 @@ JOIN_MV <- function(DATA) {
   if (("HISTORY_MALARIA_SAOCCUR" %in% names(DATA)) & ("HISTORY_MALARIA_INOCCUR" %in% names(DATA))) {
     DATA <- DATA %>%
       mutate(
-        HISTORY_MALARIA = as.character(.data$HISTORY_MALARIA_SAOCCUR),
-        HISTORY_MALARIA_INOCCUR = as.character(.data$HISTORY_MALARIA_INOCCUR)
+        HISTORY_MALARIA = str_to_upper(as.character(.data$HISTORY_MALARIA_SAOCCUR)),
+        HISTORY_MALARIA_INOCCUR = str_to_upper(as.character(.data$HISTORY_MALARIA_INOCCUR))
       )
 
     DATA[which(is.na(DATA$HISTORY_MALARIA)), "HISTORY_MALARIA"] <-
@@ -35,8 +35,8 @@ JOIN_MV <- function(DATA) {
   if (("HISTORY_VL_SAOCCUR" %in% names(DATA)) & ("HISTORY_VL_INOCCUR" %in% names(DATA))) {
     DATA <- DATA %>%
       mutate(
-        HISTORY_VL = as.character(.data$HISTORY_VL_SAOCCUR),
-        HISTORY_VL_INOCCUR = as.character(.data$HISTORY_VL_INOCCUR)
+        HISTORY_VL = str_to_upper(as.character(.data$HISTORY_VL_SAOCCUR)),
+        HISTORY_VL_INOCCUR = str_to_upper(as.character(.data$HISTORY_VL_INOCCUR))
       )
 
     DATA[which(is.na(DATA$HISTORY_VL)), "HISTORY_VL"] <-

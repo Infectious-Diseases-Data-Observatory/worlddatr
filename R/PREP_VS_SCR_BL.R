@@ -44,9 +44,9 @@ PREP_VS_SCR_BL <- function(DATA_VS, DISEASE = "", VARS = NULL) {
     filter(.data$VSTESTCD %in% VS_VARS) %>%
     DERIVE_TIMING() %>%
     mutate(
-      VSSTRES = as.character(.data$VSSTRESN),
-      VSSTRESC = as.character(.data$VSSTRESC),
-      VSORRES = as.character(.data$VSORRES),
+      VSSTRES = str_to_upper(as.character(.data$VSSTRESN)),
+      VSSTRESC = str_to_upper(as.character(.data$VSSTRESC)),
+      VSORRES = str_to_upper(as.character(.data$VSORRES)),
       VSUNITS = as.character(NA)
     )
 
@@ -63,7 +63,7 @@ PREP_VS_SCR_BL <- function(DATA_VS, DISEASE = "", VARS = NULL) {
     DATA[which(is.na(DATA$VSSTRESC) & is.na(DATA$VSSTRESN)), "VSORRESU"]
 
   DATA <- DATA %>%
-    filter(.data$TIMING == 1 | .data$TIMING == "SCREENING") %>%
+    filter(.data$TIMING == "1" | .data$TIMING == "SCREENING") %>%
     pivot_wider(
       id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$VSTESTCD,
       values_from = c(.data$VSSTRES, .data$VSUNITS),

@@ -47,12 +47,13 @@ PREP_SA_FIRST <- function(DATA_SA, DISEASE = "", VARS = NULL) {
   DATA <- DATA_SA %>%
     convert_blanks_to_na() %>%
     mutate(
-      SATERM = str_to_upper(.data$SATERM),
-      SAMODIFY = str_to_upper(.data$SAMODIFY),
-      SASTRES = as.character(.data$SADECOD),
+      SATERM = str_to_upper(as.character(.data$SATERM)),
+      SAMODIFY = str_to_upper(as.character(.data$SAMODIFY)),
+      SASTRES = str_to_upper(as.character(.data$SADECOD)),
       SAPRESP = str_to_upper(.data$SAPRESP),
       SAOCCUR = str_to_upper(.data$SAOCCUR),
-      DAY = .data$SADY
+      DAY = .data$SADY,
+      SACAT = str_to_upper(.data$SACAT)
     ) %>%
     filter(
       (.data$SACAT != "MEDICAL HISTORY" | is.na(.data$SACAT)),

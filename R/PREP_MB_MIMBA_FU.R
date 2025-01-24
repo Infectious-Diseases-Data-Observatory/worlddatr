@@ -19,10 +19,10 @@ PREP_MB_MIMBA_FU <- function(DATA_MB, VARS = NULL) {
     convert_blanks_to_na() %>%
     filter(.data$MBTESTCD %in% MB_VARS) %>%
     mutate(
-      MBSTRES = as.character(.data$MBSTRESN),
-      MBSTRESC = as.character(.data$MBSTRESC),
-      MBMODIFY = as.character(.data$MBMODIFY),
-      MBORRES = as.character(.data$MBORRES),
+      MBSTRES = str_to_upper(as.character(.data$MBSTRESN)),
+      MBSTRESC = str_to_upper(as.character(.data$MBSTRESC)),
+      MBMODIFY = str_to_upper(as.character(.data$MBMODIFY)),
+      MBORRES = str_to_upper(as.character(.data$MBORRES)),
       DAY = .data$MBDY,
       MBUNITS = as.character(NA)
     )
@@ -47,7 +47,6 @@ PREP_MB_MIMBA_FU <- function(DATA_MB, VARS = NULL) {
     DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBORRESU"]
 
   DATA <- DATA %>%
-    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
     filter(.data$MBSTRES == "POSITIVE") %>%
     dplyr::arrange(.data$USUBJID, .data$MBTESTCD, .data$MBDTC, .data$MBDY) %>%
     pivot_wider(
