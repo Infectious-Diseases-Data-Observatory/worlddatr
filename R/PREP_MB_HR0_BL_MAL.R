@@ -35,13 +35,12 @@ PREP_MB_HR0_BL_MAL <- function(DATA_MB) {
     convert_blanks_to_na() %>%
     filter(.data$MBTESTCD %in% MB_VARS) %>%
     mutate(
-      MBSTRES = as.character(.data$MBSTRESN),
-      MBSTRESC = as.character(.data$MBSTRESC),
-      MBMODIFY = as.character(.data$MBMODIFY),
-      MBORRES = as.character(.data$MBORRES),
+      MBSTRES = str_to_upper(as.character(.data$MBSTRESN)),
+      MBSTRESC = str_to_upper(as.character(.data$MBSTRESC)),
+      MBMODIFY = str_to_upper(as.character(.data$MBMODIFY)),
+      MBORRES = str_to_upper(as.character(.data$MBORRES)),
       MBUNITS = as.character(NA),
-      TIMING = str_to_upper(as.character(.data$VISIT)),
-      EPOCH = str_to_upper(as.character(.data$EPOCH))
+      TIMING = str_to_upper(as.character(.data$VISIT))
     )
 
   DATA[which(is.na(DATA$MBSTRES)), "MBSTRES"] <-
@@ -57,7 +56,6 @@ PREP_MB_HR0_BL_MAL <- function(DATA_MB) {
     DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBORRESU"]
 
   DATA <- DATA %>%
-    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
     filter(.data$TIMING == "HOUR 0") %>% # .data$TIMING == "BASELINE"
     pivot_wider(
       id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,

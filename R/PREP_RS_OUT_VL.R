@@ -27,15 +27,16 @@ PREP_RS_OUT_VL <- function(DATA_RS, TOC_OVRLRESP = "TOC", expand_cols = FALSE) {
 
   DATA_RS <- DATA_RS %>%
     convert_blanks_to_na() %>%
-    filter(is.na(.data$RSSCAT) | (.data$RSSCAT != "ADDITIONAL OUTCOME PROVIDED" &
-      .data$RSSCAT != "ADDITIONAL OUTCOMES PROVIDED" &
-      .data$RSSCAT != "MEDICAL HISTORY")) %>%
     mutate(
       RSSTRES = str_to_upper(as.character(.data$RSSTRESN)),
       RSSTRESC = str_to_upper(as.character(.data$RSSTRESC)),
       RSORRES = str_to_upper(as.character(.data$RSORRES)),
-      DAY = .data$RSDY
-    )
+      DAY = .data$RSDY,
+      RSSCAT = str_to_upper(.data$RSSCAT)
+    ) %>%
+    filter(is.na(.data$RSSCAT) | (.data$RSSCAT != "ADDITIONAL OUTCOME PROVIDED" &
+      .data$RSSCAT != "ADDITIONAL OUTCOMES PROVIDED" &
+      .data$RSSCAT != "MEDICAL HISTORY"))
 
   DATA_RS$RSSTRESC <- str_replace_all(DATA_RS$RSSTRESC, "RELPASE", "RELAPSE")
   DATA_RS$RSSTRESC <- str_replace_all(DATA_RS$RSSTRESC, "FAILURE - ADVERSE EVENT", "FAILURE-ADVERSE EVENT")

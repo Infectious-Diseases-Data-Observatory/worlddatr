@@ -26,7 +26,8 @@ PREP_SA_MV_FU <- function(DATA_SA) {
       SATERM = str_to_upper(as.character(.data$SATERM)),
       DAY = .data$SADY,
       START_DAY = .data$SASTDY,
-      END_DAY = .data$SAENDY
+      END_DAY = .data$SAENDY,
+      SACAT = str_to_upper(.data$SACAT)
     ) %>%
     CLEAN_SA()
 
