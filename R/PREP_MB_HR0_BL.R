@@ -77,7 +77,6 @@ PREP_MB_HR0_BL <- function(DATA_MB, DISEASE = "", VARS = NULL) {
     DATA[which(is.na(DATA$MBSTRESC) & is.na(DATA$MBSTRESN)), "MBORRESU"]
 
   DATA <- DATA %>%
-    mutate(MBSTRES = str_to_upper(.data$MBSTRES)) %>%
     filter(.data$TIMING == "HOUR 0") %>% # .data$TIMING == "BASELINE"
     pivot_wider(
       id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$MBTESTCD,

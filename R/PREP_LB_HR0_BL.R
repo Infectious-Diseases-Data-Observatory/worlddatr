@@ -85,7 +85,6 @@ PREP_LB_HR0_BL <- function(DATA_LB, DISEASE = "", VARS = NULL) {
     DATA[which(is.na(DATA$LBSTRESC) & is.na(DATA$LBSTRESN)), "LBORRESU"]
 
   DATA <- DATA %>%
-    mutate(LBSTRES = str_to_upper(.data$LBSTRES)) %>%
     filter(.data$TIMING == "HOUR 0") %>% # .data$TIMING == "BASELINE"
     pivot_wider(
       id_cols = c(.data$STUDYID, .data$USUBJID), names_from = .data$LBTESTCD,
