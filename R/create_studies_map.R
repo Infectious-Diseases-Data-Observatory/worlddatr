@@ -56,6 +56,10 @@
 #' country_data <- data.frame(COUNTRY = sample(countries, 10000, replace = TRUE, prob = probabilities))
 #'
 #' create_studies_map(data        = country_data,
+#'                    country_col = "COUNTRY"
+#'                    )
+#'
+#' create_studies_map(data        = country_data,
 #'                    country_col = "COUNTRY",
 #'                    include_ATA = FALSE,
 #'                    include_n   = TRUE,
