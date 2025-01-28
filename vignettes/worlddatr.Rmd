@@ -56,7 +56,7 @@ These datasets are also stored as csv files in the GitHub for use.
 
 As well as the data, we introduce some functions which can assist making the maps, so that regular users and beginners alike can utilise this tool. We'll show `create_participant_map()` which allows the user to make a choropleth for the number of participants per country in a dataset, there is also `create_studies_map()` which is very similar but the default legend refers to studies as opposed to particiapnts, the rest of the parameters work the same way.
 
-Your dataset will need to include what country the participant or study (or other entity) is from, in the 3 digit ISO code format. The function will group the data by the country and then summarise the data in a `ggplot` using the `geom_polygon()` function. If your data does not have the 3 digit ISO code, `left_join()` your dataset with `world_income` with the key being the country code or name you do have, then you'll have the `alpha_3_code` in your data and use this as the `country_col` below. 
+Your dataset will need to include what country the participant or study (or other entity) is from, in the 3 digit ISO code format. The function will group the data by the country and then summarise the data in a `ggplot` using the `geom_polygon()` function. If your data does not have the 3 digit ISO code, `left_join()` your dataset with `world_income` with the key being the country code or name you do have, then you'll have the `alpha_3_code` in your data and use this as the `country_col` below.
 
 #### Create Synthetic Data for Example
 
@@ -99,7 +99,7 @@ create_participant_map(data        = country_data,
                        legend      = "Some Legend")
 ```
 
-Blue not your colour? No problem, customise the colours of the countries, borders, text and background easily.
+Blue not your colour? No problem, customise the colour of the countries, borders, text and background easily.
 
 ```{r}
 create_participant_map(data        = country_data,
