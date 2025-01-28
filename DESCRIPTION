@@ -1,0 +1,25 @@
+Package: worlddatr
+Title: A Package For Global Choropleth Maps
+Version: 1.3.1
+Authors@R: 
+    person("Rhys", "Peploe", , "rhyspeploe1998@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0001-1669-3716"))
+Description: Data and functions for working with country and territory data including ISO codes, World Bank income groups, longitude and latitude.
+License: CC BY 4.0
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Depends: 
+    R (>= 2.10)
+LazyData: true
+Imports: 
+    dplyr,
+    ggplot2,
+    magrittr,
+    scales,
+    stringr
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+URL: https://infectious-diseases-data-observatory.github.io/worlddatr/

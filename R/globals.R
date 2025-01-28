@@ -1,0 +1,10 @@
+globalVariables(c(
+  "long",
+  "lat",
+  "group",
+  "COUNTRY",
+  "world_map",
+  "n_participants",
+  "n_trials",
+  "alpha_3_code"
+  ))
