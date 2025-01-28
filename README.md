@@ -4,7 +4,10 @@
 
 <img src="man/figures/worlddatr_logo.png" align="right" height="120"/>
 
-[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable) [![CRAN status](https://www.r-pkg.org/badges/version/iddoverse)](https://CRAN.R-project.org/package=iddoverse) [![R-CMD-check](https://github.com/taxonomicallyinformedannotation/tima/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/taxonomicallyinformedannotation/tima/actions/workflows/R-CMD-check.yaml) [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Finfectious-diseases-data-observatory.github.io%2Fworlddatr%2F&count_bg=%2314B1E7&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable) 
+[![CRAN status](https://www.r-pkg.org/badges/version/iddoverse)](https://CRAN.R-project.org/package=iddoverse) 
+[![R-CMD-check](https://github.com/taxonomicallyinformedannotation/tima/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/taxonomicallyinformedannotation/tima/actions/workflows/R-CMD-check.yaml) 
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Finfectious-diseases-data-observatory.github.io%2Fworlddatr%2F&count_bg=%2314B1E7&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 <!-- badges: end -->
 
@@ -85,4 +88,8 @@ Improvements to the code are constantly being made, if you notice errors, bugs, 
 
 ## Contact
 
+<<<<<<< HEAD
 Please contact Rhys Peploe ([rhys.peploe\@iddo.org](mailto:rhys.peploe@iddo.org) or [rhyspeploe1998\@gmail.com](mailto:rhyspeploe1998@gmail.com)) if you would like to know more.
+=======
+Please contact Rhys Peploe ([rhys.peploe\@iddo.org](mailto:rhys.peploe@iddo.org){.email} or [rhyspeploe1998\@gmail.com](mailto:rhyspeploe1998@gmail.com){.email}) if you would like to know more.
+>>>>>>> c1b0609a041d8af2b0a25c97402763138597e509
