@@ -16,8 +16,8 @@ PREP_PF_BL = function(DATA_PF, VARS = NULL){
     filter(.data$PFGENTRG %in% PF_VARS) %>%
     mutate(
       # PFSTRES = as.character(.data$PFSTRESN),
-      PFSTRES = as.character(.data$PFSTRESC),
-      PFORRES = as.character(.data$PFORRES)
+      PFSTRES = str_to_upper(as.character(.data$PFSTRESC)),
+      PFORRES = str_to_upper(as.character(.data$PFORRES))
       # DAY = .data$PFDY,
       # PFUNITS = as.character(NA)
     )
