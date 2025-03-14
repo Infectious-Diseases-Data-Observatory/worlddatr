@@ -64,7 +64,7 @@ head(world_income)
 head(world_map)
 ```
 
-A vignette demonstrating the package can be found [here.](https://infectious-diseases-data-observatory.github.io/worlddatr/articles/worlddatr.html)
+A vignette demonstrating the package can be found on the [package website.](https://infectious-diseases-data-observatory.github.io/worlddatr/articles/worlddatr.html)
 
 ## Citation
 
