@@ -11,7 +11,7 @@
 
 <!-- badges: end -->
 
-Country and Territory data including ISO codes, World Bank income groups, longitude and latitude. These can be used to plot choropleth maps and other spatial statistical analysis.
+Country and Territory data including ISO codes, World Bank income groups, and longitude & latitude of borders and centroids. These can be used to plot choropleth maps and other spatial statistical analysis.
 
 Creating maps to showcase the global distribution of studies or participants is a powerful way to visualise data, however, extracting the necessary information and data cleaning can often be time-consuming and burdensome. Some datasets use 3 digit ISO codes, while others use 2 digit or the just the name of the country. Country name is often problematic as they are not standardised, for instance, North Korea can be recorded as N. Korea or Democratic People's Republic of Korea, likewise Spain and España. Accents and other special characters which are not machine readable also prevent smooth merging of data. Some data sources may group territories, such as Jersey & Guernsey represented as simply 'Channel Islands'.
 
@@ -72,13 +72,13 @@ To cite `worlddatr`, see [CITATION](https://github.com/Infectious-Diseases-Data-
 
 Data comes from the following sources:
 
--   World Bank (<https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups>)
+-   World Bank (<https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups>) [extracted: 09/09/2025].
 
--   ISO (<https://www.iso.org/obp/ui/#search>)
+-   ISO (<https://www.iso.org/obp/ui/#search>) [extracted: 09/09/2025].
 
--   IDDO REDCap
+-   IDDO REDCap [extracted: 15/11/2024].
 
--   world-countries-centroids (<https://github.com/gavinr/world-countries-centroids>)
+-   world-countries-centroids (<https://github.com/gavinr/world-countries-centroids>), adapted using information from (<https://www.maps.ie/coordinates.html>) [extracted: 09/09/2025].
 
 Thanks to the owners and contributors to these sources and for making them accessible for reuse.
 
