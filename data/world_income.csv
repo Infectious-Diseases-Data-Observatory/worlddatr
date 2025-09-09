@@ -14,7 +14,7 @@
 "AUS","AU",36,"Australia","Australia","High income",14
 "AUT","AT",40,"Austria","Austria","High income",15
 "AZE","AZ",31,"Azerbaijan","Azerbaijan","Upper middle income",16
-"BHS","BS",44,"Bahamas","Bahamas, The","High income",17
+"BHS","BS",44,"Bahamas (The)","Bahamas, The","High income",17
 "BHR","BH",48,"Bahrain","Bahrain","High income",18
 "BGD","BD",50,"Bangladesh","Bangladesh","Lower middle income",19
 "BRB","BB",52,"Barbados","Barbados","High income",20
@@ -24,34 +24,34 @@
 "BEN","BJ",204,"Benin","Benin","Lower middle income",24
 "BMU","BM",60,"Bermuda","Bermuda","High income",25
 "BTN","BT",64,"Bhutan","Bhutan","Lower middle income",26
-"BOL","BO",68,"Bolivia","Bolivia","Lower middle income",27
+"BOL","BO",68,"Bolivia (Plurinational State of)","Bolivia","Lower middle income",27
 "BES","BQ",535,"Bonaire, Sint Eustatius and Saba",NA,NA,28
 "BIH","BA",70,"Bosnia and Herzegovina","Bosnia and Herzegovina","Upper middle income",29
 "BWA","BW",72,"Botswana","Botswana","Upper middle income",30
 "BVT","BV",74,"Bouvet Island",NA,NA,31
 "BRA","BR",76,"Brazil","Brazil","Upper middle income",32
-"IOT","IO",86,"British Indian Ocean Territory",NA,NA,33
+"IOT","IO",86,"British Indian Ocean Territory (the)",NA,NA,33
 "BRN","BN",96,"Brunei Darussalam","Brunei Darussalam","High income",34
 "BGR","BG",100,"Bulgaria","Bulgaria","High income",35
 "BFA","BF",854,"Burkina Faso","Burkina Faso","Low income",36
 "BDI","BI",108,"Burundi","Burundi","Low income",37
-"CPV","CV",132,"Cabo Verde","Cabo Verde","Lower middle income",41
+"CPV","CV",132,"Cabo Verde","Cabo Verde","Upper middle income",41
 "KHM","KH",116,"Cambodia","Cambodia","Lower middle income",38
 "CMR","CM",120,"Cameroon","Cameroon","Lower middle income",39
 "CAN","CA",124,"Canada","Canada","High income",40
-"CYM","KY",136,"Cayman Islands","Cayman Islands","High income",42
-"CAF","CF",140,"Central African Republic","Central African Republic","Low income",43
+"CYM","KY",136,"Cayman Islands (the)","Cayman Islands","High income",42
+"CAF","CF",140,"Central African Republic (the)","Central African Republic","Low income",43
 "TCD","TD",148,"Chad","Chad","Low income",44
 "CHL","CL",152,"Chile","Chile","High income",45
 "CHN","CN",156,"China","China","Upper middle income",46
 "CXR","CX",162,"Christmas Island",NA,NA,47
-"CCK","CC",166,"Cocos (Keeling) Islands",NA,NA,48
+"CCK","CC",166,"Cocos (Keeling) Islands (the)",NA,NA,48
 "COL","CO",170,"Colombia","Colombia","Upper middle income",49
-"COM","KM",174,"Comoros","Comoros","Lower middle income",50
+"COM","KM",174,"Comoros (the)","Comoros","Lower middle income",50
 "COD","CD",180,"Congo (the Democratic Republic of the)","Congo, Dem. Rep.","Low income",52
-"COG","CG",178,"Congo","Congo, Rep.","Lower middle income",51
-"COK","CK",184,"Cook Islands",NA,NA,53
-"CRI","CR",188,"Costa Rica","Costa Rica","Upper middle income",54
+"COG","CG",178,"Congo (the)","Congo, Rep.","Lower middle income",51
+"COK","CK",184,"Cook Islands (the)",NA,NA,53
+"CRI","CR",188,"Costa Rica","Costa Rica","High income",54
 "HRV","HR",191,"Croatia","Croatia","High income",56
 "CUB","CU",192,"Cuba","Cuba","Upper middle income",57
 "CUW","CW",531,"Curacao","Curaçao","High income",58
@@ -61,7 +61,7 @@
 "DNK","DK",208,"Denmark","Denmark","High income",61
 "DJI","DJ",262,"Djibouti","Djibouti","Lower middle income",62
 "DMA","DM",212,"Dominica","Dominica","Upper middle income",63
-"DOM","DO",214,"Dominican Republic","Dominican Republic","Upper middle income",64
+"DOM","DO",214,"Dominican Republic (the)","Dominican Republic","Upper middle income",64
 "ECU","EC",218,"Ecuador","Ecuador","Upper middle income",65
 "EGY","EG",818,"Egypt","Egypt, Arab Rep.","Lower middle income",66
 "SLV","SV",222,"El Salvador","El Salvador","Upper middle income",67
@@ -69,17 +69,17 @@
 "ERI","ER",232,"Eritrea","Eritrea","Low income",69
 "EST","EE",233,"Estonia","Estonia","High income",70
 "SWZ","SZ",748,"Eswatini","Eswatini","Lower middle income",214
-"ETH","ET",231,"Ethiopia","Ethiopia","Low income",71
-"FLK","FK",238,"Falkland Islands [Malvinas]",NA,NA,72
-"FRO","FO",234,"Faroe Islands","Faroe Islands","High income",73
+"ETH","ET",231,"Ethiopia","Ethiopia",NA,71
+"FLK","FK",238,"Falkland Islands (the) [Malvinas]",NA,NA,72
+"FRO","FO",234,"Faroe Islands (the)","Faroe Islands","High income",73
 "FJI","FJ",242,"Fiji","Fiji","Upper middle income",74
 "FIN","FI",246,"Finland","Finland","High income",75
 "FRA","FR",250,"France","France","High income",76
 "GUF","GF",254,"French Guiana",NA,NA,77
 "PYF","PF",258,"French Polynesia","French Polynesia","High income",78
-"ATF","TF",260,"French Southern Territories",NA,NA,79
+"ATF","TF",260,"French Southern Territories (the)",NA,NA,79
 "GAB","GA",266,"Gabon","Gabon","Upper middle income",80
-"GMB","GM",270,"Gambia","Gambia, The","Low income",81
+"GMB","GM",270,"Gambia (the)","Gambia, The","Low income",81
 "GEO","GE",268,"Georgia","Georgia","Upper middle income",82
 "DEU","DE",276,"Germany","Germany","High income",83
 "GHA","GH",288,"Ghana","Ghana","Lower middle income",84
@@ -96,14 +96,14 @@
 "GUY","GY",328,"Guyana","Guyana","High income",95
 "HTI","HT",332,"Haiti","Haiti","Lower middle income",96
 "HMD","HM",334,"Heard Island and McDonald Islands",NA,NA,97
-"VAT","VA",336,"Holy See",NA,NA,98
+"VAT","VA",336,"Holy See (the)",NA,NA,98
 "HND","HN",340,"Honduras","Honduras","Lower middle income",99
 "HKG","HK",344,"Hong Kong","Hong Kong SAR, China","High income",100
 "HUN","HU",348,"Hungary","Hungary","High income",101
 "ISL","IS",352,"Iceland","Iceland","High income",102
 "IND","IN",356,"India","India","Lower middle income",103
 "IDN","ID",360,"Indonesia","Indonesia","Upper middle income",104
-"IRN","IR",364,"Iran","Iran, Islamic Rep.","Upper middle income",105
+"IRN","IR",364,"Iran (Islamic Republic of)","Iran, Islamic Rep.","Upper middle income",105
 "IRQ","IQ",368,"Iraq","Iraq","Upper middle income",106
 "IRL","IE",372,"Ireland","Ireland","High income",107
 "IMN","IM",833,"Isle of Man","Isle of Man","High income",108
@@ -116,11 +116,11 @@
 "KAZ","KZ",398,"Kazakhstan","Kazakhstan","Upper middle income",115
 "KEN","KE",404,"Kenya","Kenya","Lower middle income",116
 "KIR","KI",296,"Kiribati","Kiribati","Lower middle income",117
-"PRK","KP",408,"N. Korea","Korea, Dem. People's Rep.","Low income",118
-"KOR","KR",410,"S. Korea","Korea, Rep.","High income",119
+"PRK","KP",408,"Korea (the Democratic People's Republic of)","Korea, Dem. People's Rep.","Low income",118
+"KOR","KR",410,"Korea (the Republic of)","Korea, Rep.","High income",119
 "KWT","KW",414,"Kuwait","Kuwait","High income",120
 "KGZ","KG",417,"Kyrgyzstan","Kyrgyz Republic","Lower middle income",121
-"LAO","LA",418,"Lao People's Democratic Republic","Lao PDR","Lower middle income",122
+"LAO","LA",418,"Lao People's Democratic Republic (the)","Lao PDR","Lower middle income",122
 "LVA","LV",428,"Latvia","Latvia","High income",123
 "LBN","LB",422,"Lebanon","Lebanon","Lower middle income",124
 "LSO","LS",426,"Lesotho","Lesotho","Lower middle income",125
@@ -136,7 +136,7 @@
 "MDV","MV",462,"Maldives","Maldives","Upper middle income",136
 "MLI","ML",466,"Mali","Mali","Low income",137
 "MLT","MT",470,"Malta","Malta","High income",138
-"MHL","MH",584,"Marshall Islands","Marshall Islands","Upper middle income",139
+"MHL","MH",584,"Marshall Islands (the)","Marshall Islands","Upper middle income",139
 "MTQ","MQ",474,"Martinique",NA,NA,140
 "MRT","MR",478,"Mauritania","Mauritania","Lower middle income",141
 "MUS","MU",480,"Mauritius","Mauritius","Upper middle income",142
@@ -151,18 +151,19 @@
 "MAR","MA",504,"Morocco","Morocco","Lower middle income",151
 "MOZ","MZ",508,"Mozambique","Mozambique","Low income",152
 "MMR","MM",104,"Myanmar","Myanmar","Lower middle income",153
-"NAM",NA,516,"Namibia","Namibia","Upper middle income",154
+"NAM",NA,516,"Namibia","Namibia","Lower middle income",154
 "NRU","NR",520,"Nauru","Nauru","High income",155
 "NPL","NP",524,"Nepal","Nepal","Lower middle income",156
-"NLD","NL",528,"Netherlands","Netherlands","High income",157
+"NLD","NL",528,"Netherlands (Kingdom of the)","Netherlands","High income",157
 "NCL","NC",540,"New Caledonia","New Caledonia","High income",158
 "NZL","NZ",554,"New Zealand","New Zealand","High income",159
 "NIC","NI",558,"Nicaragua","Nicaragua","Lower middle income",160
-"NER","NE",562,"Niger","Niger","Low income",161
+"NER","NE",562,"Niger (the)","Niger","Low income",161
 "NGA","NG",566,"Nigeria","Nigeria","Lower middle income",162
 "NIU","NU",570,"Niue",NA,NA,163
 "NFK","NF",574,"Norfolk Island",NA,NA,164
-"MNP","MP",580,"Northern Mariana Islands","Northern Mariana Islands","High income",165
+"MKD","MK",807,"North Macedonia","North Macedonia","Upper middle income",132
+"MNP","MP",580,"Northern Mariana Islands (the)","Northern Mariana Islands","High income",165
 "NOR","NO",578,"Norway","Norway","High income",166
 "OMN","OM",512,"Oman","Oman","High income",167
 "PAK","PK",586,"Pakistan","Pakistan","Lower middle income",168
@@ -172,15 +173,14 @@
 "PNG","PG",598,"Papua New Guinea","Papua New Guinea","Lower middle income",172
 "PRY","PY",600,"Paraguay","Paraguay","Upper middle income",173
 "PER","PE",604,"Peru","Peru","Upper middle income",174
-"PHL","PH",608,"Philippines","Philippines","Lower middle income",175
+"PHL","PH",608,"Philippines (the)","Philippines","Lower middle income",175
 "PCN","PN",612,"Pitcairn",NA,NA,176
 "POL","PL",616,"Poland","Poland","High income",177
 "PRT","PT",620,"Portugal","Portugal","High income",178
-"PRI","PR",630,"Puerto Rico","Puerto Rico","High income",179
+"PRI","PR",630,"Puerto Rico","Puerto Rico (U.S.)","High income",179
 "QAT","QA",634,"Qatar","Qatar","High income",180
-"MKD","MK",807,"Republic of North Macedonia","North Macedonia","Upper middle income",132
 "ROU","RO",642,"Romania","Romania","High income",182
-"RUS","RU",643,"Russian Federation","Russian Federation","High income",183
+"RUS","RU",643,"Russian Federation (the)","Russian Federation","High income",183
 "RWA","RW",646,"Rwanda","Rwanda","Low income",184
 "REU","RE",638,"Reunion",NA,NA,181
 "BLM","BL",652,"Saint Barthelemy",NA,NA,185
@@ -190,7 +190,7 @@
 "MAF","MF",663,"Saint Martin (French part)","St. Martin (French part)","High income",189
 "SPM","PM",666,"Saint Pierre and Miquelon",NA,NA,190
 "VCT","VC",670,"Saint Vincent and the Grenadines","St. Vincent and the Grenadines","Upper middle income",191
-"WSM","WS",882,"Samoa","Samoa","Lower middle income",192
+"WSM","WS",882,"Samoa","Samoa","Upper middle income",192
 "SMR","SM",674,"San Marino","San Marino","High income",193
 "STP","ST",678,"Sao Tome and Principe","São Tomé and Príncipe","Lower middle income",194
 "SAU","SA",682,"Saudi Arabia","Saudi Arabia","High income",195
@@ -209,15 +209,15 @@
 "SSD","SS",728,"South Sudan","South Sudan","Low income",208
 "ESP","ES",724,"Spain","Spain","High income",209
 "LKA","LK",144,"Sri Lanka","Sri Lanka","Lower middle income",210
-"SDN","SD",729,"Sudan","Sudan","Low income",211
+"SDN","SD",729,"Sudan (the)","Sudan","Low income",211
 "SUR","SR",740,"Suriname","Suriname","Upper middle income",212
 "SJM","SJ",744,"Svalbard and Jan Mayen",NA,NA,213
 "SWE","SE",752,"Sweden","Sweden","High income",215
 "CHE","CH",756,"Switzerland","Switzerland","High income",216
-"SYR","SY",760,"Syrian Arab Republic","Syrian Arab Republic","Low income",217
+"SYR","SY",760,"Syrian Arab Republic (the)","Syrian Arab Republic","Low income",217
 "TWN","TW",158,"Taiwan (Province of China)","Taiwan, China","High income",218
 "TJK","TJ",762,"Tajikistan","Tajikistan","Lower middle income",219
-"TZA","TZ",834,"Tanzania, United Republic of","Tanzania","Lower middle income",220
+"TZA","TZ",834,"Tanzania, the United Republic of","Tanzania","Lower middle income",220
 "THA","TH",764,"Thailand","Thailand","Upper middle income",221
 "TLS","TL",626,"Timor-Leste","Timor-Leste","Lower middle income",222
 "TGO","TG",768,"Togo","Togo","Low income",223
@@ -225,20 +225,20 @@
 "TON","TO",776,"Tonga","Tonga","Upper middle income",225
 "TTO","TT",780,"Trinidad and Tobago","Trinidad and Tobago","High income",226
 "TUN","TN",788,"Tunisia","Tunisia","Lower middle income",227
-"TUR","TR",792,"Turkey","Türkiye","Upper middle income",228
 "TKM","TM",795,"Turkmenistan","Turkmenistan","Upper middle income",229
-"TCA","TC",796,"Turks and Caicos Islands","Turks and Caicos Islands","High income",230
+"TCA","TC",796,"Turks and Caicos Islands (the)","Turks and Caicos Islands","High income",230
 "TUV","TV",798,"Tuvalu","Tuvalu","Upper middle income",231
+"TUR","TR",792,"Turkiye","Türkiye","Upper middle income",228
 "UGA","UG",800,"Uganda","Uganda","Low income",232
 "UKR","UA",804,"Ukraine","Ukraine","Upper middle income",233
-"ARE","AE",784,"United Arab Emirates","United Arab Emirates","High income",234
-"GBR","GB",826,"United Kingdom of Great Britain and Northern Ireland","United Kingdom","High income",235
-"UMI","UM",581,"United States Minor Outlying Islands",NA,NA,237
-"USA","US",840,"United States of America","United States","High income",236
+"ARE","AE",784,"United Arab Emirates (the)","United Arab Emirates","High income",234
+"GBR","GB",826,"United Kingdom of Great Britain and Northern Ireland (the)","United Kingdom","High income",235
+"UMI","UM",581,"United States Minor Outlying Islands (the)",NA,NA,237
+"USA","US",840,"United States of America (the)","United States","High income",236
 "URY","UY",858,"Uruguay","Uruguay","High income",238
 "UZB","UZ",860,"Uzbekistan","Uzbekistan","Lower middle income",239
 "VUT","VU",548,"Vanuatu","Vanuatu","Lower middle income",240
-"VEN","VE",862,"Venezuela (Bolivarian Republic of)",NA,NA,241
+"VEN","VE",862,"Venezuela (Bolivarian Republic of)","Venezuela, RB",NA,241
 "VNM","VN",704,"Viet Nam","Vietnam","Lower middle income",242
 "VGB","VG",92,"Virgin Islands (British)","British Virgin Islands","High income",243
 "VIR","VI",850,"Virgin Islands (U.S.)","Virgin Islands (U.S.)","High income",244
@@ -248,4 +248,4 @@
 "ZMB","ZM",894,"Zambia","Zambia","Lower middle income",248
 "ZWE","ZW",716,"Zimbabwe","Zimbabwe","Lower middle income",249
 "ALA","AX",248,"Aland Islands",NA,NA,2
-"XKX",NA,NA,"Kosovo","Kosovo","Upper middle income",NA
+"XKX","UNASSIGNED",999,"Kosovo","Kosovo","Upper middle income",NA
