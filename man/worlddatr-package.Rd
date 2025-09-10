@@ -4,7 +4,7 @@
 \name{worlddatr-package}
 \alias{worlddatr}
 \alias{worlddatr-package}
-\title{worlddatr: A package for global spatial data analysis and choropleth maps}
+\title{worlddatr: A Package For Global Choropleth Maps}
 \description{
 Data and functions for working with country and territory data including ISO codes, World Bank income groups, longitude and latitude.
 }
@@ -16,7 +16,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Rhys Peploe \email{rhys.peploe@iddo.org} (\href{https://orcid.org/0009-0001-1669-3716}{ORCID})
+\strong{Maintainer}: Rhys Peploe \email{rhyspeploe1998@gmail.com} (\href{https://orcid.org/0009-0001-1669-3716}{ORCID})
 
 }
 \keyword{internal}
