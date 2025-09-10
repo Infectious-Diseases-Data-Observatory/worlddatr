@@ -40,8 +40,9 @@ Note that region refers to the area which the points create a perimeter for.
 
 Dates that data was accessed on:
 \itemize{
-\item World Bank: 11/11/2024
-\item ISO:        18/06/2024
+\item World Bank: 09/09/2025
+\item ISO:        09/09/2025
+\item Centroids:  09/09/2025
 \item REDCap:     15/11/2024
 \item map_data:   18/11/2024 (ggplot2 v3.4.3)
 }
