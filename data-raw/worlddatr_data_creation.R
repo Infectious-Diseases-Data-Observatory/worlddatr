@@ -133,7 +133,8 @@ world_income <- left_join(country_codes,
 world_map <- map_df %>%
   left_join(world_income, by = "alpha_3_code") %>%
   select(alpha_3_code, alpha_2_code, numeric, long, lat, group, order, region, subregion, country, economy, income_group, redcap_number) %>%
-  left_join(centroids, by = c("alpha_3_code" = "alpha_3_code"))
+  left_join(centroids %>%
+              select(-country), by = c("alpha_3_code", "alpha_2_code"))
 
 ### Create datasets for worlddatr package
 write.csv(world_income,"data/world_income.csv", row.names = FALSE)
