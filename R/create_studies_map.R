@@ -45,7 +45,7 @@
 #' @author Rhys Peploe
 #'
 #' @examples
-#' #' library(worlddatr)
+#' library(worlddatr)
 #' set.seed(123) # for reproducibility
 #'
 #' countries <- sample(world_income$alpha_3_code, 100, replace = FALSE)
