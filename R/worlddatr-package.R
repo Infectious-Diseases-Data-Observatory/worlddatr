@@ -8,6 +8,7 @@
 #' @importFrom dplyr mutate
 #' @importFrom dplyr n
 #' @importFrom dplyr right_join
+#' @importFrom dplyr select
 #' @importFrom dplyr summarise
 #' @importFrom dplyr ungroup
 #' @importFrom ggplot2 aes
