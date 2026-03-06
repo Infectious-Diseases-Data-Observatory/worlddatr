@@ -1,4 +1,9 @@
+#' `r lifecycle::badge("superseded")`
+#'
 #' Create a cloropleth map of the number of participants in a dataset
+#'
+#' This function is superseded, create_map replaces this function and is the
+#' recommended alternative.
 #'
 #' @param data Data frame with includes a column with 3 letter ISO country codes
 #'   which are to plotted on the map. The Demographics (DM) domain in SDTM and

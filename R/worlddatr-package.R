@@ -25,6 +25,7 @@
 #' @importFrom ggplot2 scale_fill_gradient
 #' @importFrom ggplot2 theme
 #' @importFrom ggplot2 unit
+#' @importFrom lifecycle deprecated
 #' @importFrom magrittr %>%
 #' @importFrom scales pretty_breaks
 #' @importFrom stringr str_c

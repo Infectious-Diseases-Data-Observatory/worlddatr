@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_participant_map.R
 \name{create_participant_map}
 \alias{create_participant_map}
-\title{Create a cloropleth map of the number of participants in a dataset}
+\title{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}}
 \usage{
 create_participant_map(
   data,
@@ -81,6 +81,10 @@ country
 }
 \description{
 Create a cloropleth map of the number of participants in a dataset
+}
+\details{
+This function is superseded, create_map replaces this function and is the
+recommended alternative.
 }
 \examples{
 library(worlddatr)

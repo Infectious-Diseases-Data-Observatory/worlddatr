@@ -16,6 +16,7 @@ Imports:
     admiraldev,
     dplyr,
     ggplot2,
+    lifecycle,
     magrittr,
     scales,
     stringr
