@@ -103,6 +103,10 @@ create_map <- function(data, country_col,
       ungroup()
 
   } else{
+    if(is.null(grouped_sums_col)){
+      stop("The parameter `grouped_sums_col` must be specified if using grouped data")
+    }
+
     group_df = data %>%
       select(all_of(country_col), everything())
 
