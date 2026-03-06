@@ -2,6 +2,9 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @importFrom admiraldev assert_data_frame
+#' @importFrom dplyr all_of
+#' @importFrom dplyr everything
 #' @importFrom dplyr filter
 #' @importFrom dplyr group_by
 #' @importFrom dplyr group_by_at
