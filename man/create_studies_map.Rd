@@ -82,7 +82,7 @@ A cloropleth map displaying the number of studies in each country
 Create a cloropleth map of the number of trials in a dataset
 }
 \examples{
-#' library(worlddatr)
+library(worlddatr)
 set.seed(123) # for reproducibility
 
 countries <- sample(world_income$alpha_3_code, 100, replace = FALSE)
