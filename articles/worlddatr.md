@@ -103,21 +103,21 @@ These datasets are also stored as csv files in the GitHub for use.
 As well as the data, we introduce some functions which can assist making
 the maps, so that regular users and beginners alike can utilise this
 tool. We’ll show
-[`create_participant_map()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/create_participant_map.md)
-which allows the user to make a choropleth for the number of
-participants per country in a dataset, there is also
-[`create_studies_map()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/create_studies_map.md)
-which is very similar but the default legend refers to studies as
-opposed to particiapnts, the rest of the parameters work the same way.
+[`create_map()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/create_map.md),
+which generalises two earlier functions (`create_participant_map` &
+`create_studies_map`).
+[`create_map()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/create_map.md)
+allows the user to make a choropleth using either the count of rows per
+country (for long, ungrouped data) or a dataset with one row per country
+and a count already calculated (grouped data).
 
-Your dataset will need to include what country the participant or study
-(or other entity) is from, in the 3 digit ISO code format. The function
-will group the data by the country and then summarise the data in a
-`ggplot` using the `geom_polygon()` function. If your data does not have
-the 3 digit ISO code, `left_join()` your dataset with `world_income`
-with the key being the country code or name you do have, then you’ll
-have the `alpha_3_code` in your data and use this as the `country_col`
-below.
+Your dataset will need to include what country from which the map is
+going to visualise, in the 3 digit ISO code format (i.e. GBR, USA, KEN,
+AUS). The function will (if grouped_data = FALSE) group the data by the
+country and then summarise the data in a `ggplot` using the
+`geom_polygon()` function. If your data does not have the 3 digit ISO
+code, see the section ‘Standardising data to ISO codes’ at the end of
+this page.
 
 #### Create Synthetic Data for Example
 
@@ -129,89 +129,148 @@ countries <- sample(world_income$alpha_3_code, 100, replace = FALSE)
 probabilities <- runif(length(countries))
 probabilities <- probabilities / sum(probabilities)
 
-country_data <- data.frame(COUNTRY = sample(countries, 10000, replace = TRUE, prob = probabilities))
+country_data <- data.frame(
+  COUNTRY = sample(countries, 10000, replace = TRUE, prob = probabilities)
+  )
+
+country_data_grouped <- data.frame(
+  country_code = sample(countries, 75, replace = FALSE),
+  count = round(runif(75, 1, 200))
+)
 ```
 
 #### Using the Functions
 
-Now we can take our data, `country_data`, indicate the name of the
-column where the three digit ISO country code exists (`country_col`) and
-run the command.
+Now we can take our ungrouped data, `country_data`, indicate the name of
+the column where the three digit ISO country code exists (`country_col`)
+and run the command.
 
 ``` r
-create_participant_map(data        = country_data,
-                       country_col = "COUNTRY")
+create_map(data = country_data,
+           country_col = "COUNTRY")
 ```
 
 ![](worlddatr_files/figure-html/unnamed-chunk-5-1.png)
 
 This visualises the example data, along with legend and the total
-number, n, of participants. Although, perhaps you do not want n to be
+number, n, of rows of data. Although, perhaps you do not want n to be
 displayed and you’ll note that Antarctica is not present, using extra
 parameters we can change that.
 
 ``` r
-create_participant_map(data        = country_data,
-                       country_col = "COUNTRY",
-                       include_n   = FALSE,
-                       include_ATA = TRUE)
+create_map(data = country_data, 
+           country_col = "COUNTRY",
+           include_n   = FALSE,
+           include_ATA = TRUE)
 ```
 
 ![](worlddatr_files/figure-html/unnamed-chunk-6-1.png)
+
+If you have data which is already grouped and summarised by country,
+like in the dataset below:
+
+``` r
+head(country_data_grouped)
+#>   country_code count
+#> 1          NER   165
+#> 2          BVT   180
+#> 3          GUM   101
+#> 4          XKX   149
+#> 5          URY   182
+#> 6          GIB    50
+```
+
+We can add two extra parameters to visualise this data,
+`grouped_data = TRUE` & we need to provide the column name of the counts
+to visualise in \``grouped_sums_col`.
+
+``` r
+create_map(data = country_data_grouped,
+           country_col = "country_code",
+           grouped_data = TRUE,
+           grouped_sums_col = "count")
+```
+
+![](worlddatr_files/figure-html/unnamed-chunk-8-1.png)
 
 The title and subtitle can be added to the plot to provide more
 information about your graphic, and the legend title can be changed, or
 removed by leaving the option blank.
 
 ``` r
-create_participant_map(data        = country_data,
-                       country_col = "COUNTRY",
-                       title       = "Number of Participants in Studies across Countries",
-                       subtitle    = "Data from studies registered between 2000 - 2024",
-                       legend      = "Some Legend")
+create_map(data = country_data,
+           country_col = "COUNTRY",
+           title       = "Number of Participants in Studies across Countries",
+           subtitle    = "Data from studies registered between 2000 - 2024",
+           legend      = "Some Legend")
 ```
 
-![](worlddatr_files/figure-html/unnamed-chunk-7-1.png)
+![](worlddatr_files/figure-html/unnamed-chunk-9-1.png)
 
 Blue not your colour? No problem, customise the colour of the countries,
 borders, text and background easily.
 
 ``` r
-create_participant_map(data        = country_data,
-                       country_col = "COUNTRY",
-                       colour_high = "#FF3C38",
-                       colour_low  = "#FFCFCF",
-                       colour_default = "#F0DFEE",
-                       colour_borders = "#20A39E",
-                       colour_background = "#DAEDBD",
-                       colour_text = "purple")
+create_map(data = country_data,
+           country_col = "COUNTRY",
+           colour_high = "#FF3C38",
+           colour_low  = "#FFCFCF",
+           colour_default = "#ffffff",
+           colour_borders = "navy",
+           colour_background = "grey90",
+           colour_text = "navy")
 ```
 
-![](worlddatr_files/figure-html/unnamed-chunk-8-1.png)
+![](worlddatr_files/figure-html/unnamed-chunk-10-1.png)
 
 You can change the scale breaks on the legend using `scale_breaks` and
 log transform the scale using `log_scale`.
 
 ``` r
-create_participant_map(data        = country_data,
-                       country_col = "COUNTRY",
-                       scale_breaks = c(10, 50, 100, 180, 200))
+create_map(data = country_data,
+           country_col = "COUNTRY",
+           scale_breaks = c(10, 50, 100, 180, 200))
 ```
 
-![](worlddatr_files/figure-html/unnamed-chunk-9-1.png)
+![](worlddatr_files/figure-html/unnamed-chunk-11-1.png)
 
 ``` r
 
-create_participant_map(data        = country_data,
-                       country_col = "COUNTRY",
-                       log_scale   = TRUE,
-                       legend      = "Log Scale of Participants")
+create_map(data = country_data,
+           country_col = "COUNTRY",
+           log_scale   = TRUE,
+           legend      = "Log Scale of Participants")
 ```
 
-![](worlddatr_files/figure-html/unnamed-chunk-9-2.png)
+![](worlddatr_files/figure-html/unnamed-chunk-11-2.png)
 
 This does not intend to be the only solution and we encourage you to use
 the code in the GitHub to develop graphs more specific to your needs,
 this hopes to provide some inspiration, without spending hours to see if
 it works. If you have suggestions, issues or want to contribute to the
 package contact us or see more on the GitHub page.
+
+#### Standardising data to ISO codes
+
+If your dataset only has country name or doesn’t include the ISO three
+letter code required for the `create_map` function to work, there are
+two solutions. Firstly, you can `left_join()` your dataset with
+`world_income` with the key being the country code or name you do have,
+then you’ll have the `alpha_3_code` in your data and use this as the
+`country_col` below. This works if your country names are the same as
+that in `world_income.`
+
+Alternatively, we have created a bank of alternative spellings of
+countries, designed to cover a wide range of naming structures and
+created
+[`convert_country_to_iso()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/convert_country_to_iso.md).
+This function left joins your data with that bank of spellings, so your
+data is matched and appended with the ISO codes required if there is a
+match. The function reports in the R console who many rows did not
+successfully match, these should be checked by the user and manually
+standardised if appropriate.
+
+If you find spellings or alternatives not covered in our data bank,
+please raise this as an issue in the [worlddatr
+github](https://github.com/Infectious-Diseases-Data-Observatory/worlddatr/issues)
+and we will add them and strengthen the function and data bank further.

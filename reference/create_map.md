@@ -1,18 +1,21 @@
-# **\[superseded\]**
+# Create a cloropleth map
 
-Create a cloropleth map of the number of trials in a dataset
+Create a visualisation of the world map, where each country is coloured
+by a variable, such as the number of participants, samples or studies
 
 ## Usage
 
 ``` r
-create_studies_map(
+create_map(
   data,
   country_col,
+  grouped_data = FALSE,
+  grouped_sums_col = NULL,
   include_ATA = FALSE,
   include_n = TRUE,
   title = "",
   subtitle = "",
-  legend = "Number of Studies",
+  legend = "",
   colour_high = "#14B1E7",
   colour_low = "#CCECF9",
   colour_default = "#FDF3F4",
@@ -29,12 +32,23 @@ create_studies_map(
 - data:
 
   Data frame with includes a column with 3 letter ISO country codes
-  which are to plotted on the map.
+  which are to plotted on the map. The Demographics (DM) domain in SDTM
+  and IDDO-SDTM for example.
 
 - country_col:
 
   Character. The name of the column containing the 3 letter ISO country
   codes.
+
+- grouped_data:
+
+  Boolean. Is the data currently summarised/grouped by country? Default
+  is `FALSE`.
+
+- grouped_sums_col:
+
+  Character. The name of the column containing the total sum by country.
+  This is required is if `grouped_data = TRUE`.
 
 - include_ATA:
 
@@ -47,16 +61,15 @@ create_studies_map(
 
 - title:
 
-  Character. Title of the choropleth map. Default in blank.
+  Character. Title of the choropleth map.
 
 - subtitle:
 
-  Character. Subtitle of the choropleth map. Default in blank.
+  Character. Subtitle of the choropleth map.
 
 - legend:
 
-  Character. Legend title of the choropleth map. Default is 'Nuber of
-  Studies'
+  Character. Legend title of the choropleth map.
 
 - colour_high:
 
@@ -74,9 +87,9 @@ create_studies_map(
 
 - colour_default:
 
-  Colour of the other countries without trial data, either using the
-  name of a base colour or the HEX code, i.e. "red" or "#F9250C. Default
-  is IDDO branded red at 5% tint, "#FDF3F4".
+  Colour of the other countries without participant data, either using
+  the name of a base colour or the HEX code, i.e. "red" or "#F9250C.
+  Default is IDDO branded red at 5% tint, "#FDF3F4".
 
 - colour_borders:
 
@@ -102,22 +115,13 @@ create_studies_map(
 
 - log_scale:
 
-  Boolean. Should the number of trials be transformed into the log scale
-  for when the distribution of values is very uneven. Default is
+  Boolean. Should the number of participants be transformed into the log
+  scale for when the distribution of values is very uneven. Default is
   `FALSE`.
 
 ## Value
 
-A cloropleth map displaying the number of studies in each country
-
-## Details
-
-This function is superseded, create_map replaces this function and is
-the recommended alternative.
-
-## Author
-
-Rhys Peploe
+A cloropleth map displaying the number of a variable in each country
 
 ## Examples
 
@@ -132,25 +136,34 @@ probabilities <- probabilities / sum(probabilities)
 
 country_data <- data.frame(COUNTRY = sample(countries, 10000, replace = TRUE, prob = probabilities))
 
-create_studies_map(data        = country_data,
-                   country_col = "COUNTRY"
-                   )
+# Ungrouped data
+create_map(data = country_data,
+           country_col = "COUNTRY"
+           )
 
 
-create_studies_map(data        = country_data,
-                   country_col = "COUNTRY",
-                   include_ATA = FALSE,
-                   include_n   = TRUE,
-                   title       = "Number of Participants in Studies across Countries",
-                   subtitle    = "Data from studies registered between 2000 - 2024",
-                   colour_high = "#14B1E7",
-                   colour_low  = "#CCECF9",
-                   colour_default = "#FDF3F4",
-                   colour_borders = "black",
-                   colour_background = "#FFFFFF",
-                   colour_text = "black",
-                   scale_breaks = c(25, 50, 100, 150, 175, 200),
-                   log_scale = FALSE
-)
+create_map(data   = country_data,
+           country_col = "COUNTRY",
+           grouped_data= FALSE,
+           include_ATA = FALSE,
+           include_n   = TRUE,
+           title       = "Number of Participants in Studies across Countries",
+           subtitle    = "Data from studies registered between 2000 - 2024",
+           colour_high = "#14B1E7",
+           colour_low  = "#CCECF9",
+           colour_default = "#FDF3F4",
+           colour_borders = "black",
+           colour_background = "#FFFFFF",
+           colour_text = "black",
+           scale_breaks = c(25, 50, 100, 150, 175, 200),
+           log_scale = FALSE
+                       )
+
+
+# Grouped data
+create_map(data = dplyr::count(country_data, COUNTRY),
+           country_col = "COUNTRY",
+           grouped_data = TRUE,
+           grouped_sums_col = "n")
 
 ```

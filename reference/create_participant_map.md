@@ -1,4 +1,4 @@
-# Create a cloropleth map of the number of participants in a dataset
+# **\[superseded\]**
 
 Create a cloropleth map of the number of participants in a dataset
 
@@ -109,6 +109,11 @@ create_participant_map(
 ## Value
 
 A cloropleth map displaying the number of participants in each country
+
+## Details
+
+This function is superseded, create_map replaces this function and is
+the recommended alternative.
 
 ## Author
 
