@@ -60,6 +60,7 @@
 #'
 #' country_data <- data.frame(COUNTRY = sample(countries, 10000, replace = TRUE, prob = probabilities))
 #'
+#' # Ungrouped data
 #' create_map(data = country_data,
 #'            country_col = "COUNTRY"
 #'            )
@@ -81,6 +82,11 @@
 #'            log_scale = FALSE
 #'                        )
 #'
+#' # Grouped data
+#' create_map(data = dplyr::count(country_data, COUNTRY),
+#'            country_col = "COUNTRY",
+#'            grouped_data = TRUE,
+#'            grouped_sums_col = "n")
 create_map <- function(data, country_col,
                        grouped_data = FALSE, grouped_sums_col = NULL,
                        include_ATA = FALSE, include_n = TRUE,
