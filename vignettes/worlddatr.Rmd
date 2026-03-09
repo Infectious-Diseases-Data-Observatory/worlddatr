@@ -59,7 +59,7 @@ As well as the data, we introduce some functions which can assist making the map
 
 Your dataset will need to include what country from which the map is going to visualise, in the 3 digit ISO code format (i.e. GBR, USA, KEN, AUS). The function will (if grouped_data = FALSE) group the data by the country and then summarise the data in a `ggplot` using the `geom_polygon()` function. If your data does not have the 3 digit ISO code, see the section 'Standardising data to ISO codes' at the end of this page.
 
-#### Create Synthetic Data for Example
+### Create Synthetic Data for Example
 
 ```{r}
 set.seed(123) # for reproducibility
@@ -79,7 +79,7 @@ country_data_grouped <- data.frame(
 )
 ```
 
-#### Using the Functions
+### Using the Functions
 
 Now we can take our ungrouped data, `country_data`, indicate the name of the column where the three digit ISO country code exists (`country_col`) and run the command.
 
@@ -151,7 +151,7 @@ create_map(data = country_data,
 
 This does not intend to be the only solution and we encourage you to use the code in the GitHub to develop graphs more specific to your needs, this hopes to provide some inspiration, without spending hours to see if it works. If you have suggestions, issues or want to contribute to the package contact us or see more on the GitHub page.
 
-#### Standardising data to ISO codes
+### Standardising data to ISO codes
 
 If your dataset only has country name or doesn't include the ISO three letter code required for the `create_map` function to work, there are two solutions. Firstly, you can `left_join()` your dataset with `world_income` with the key being the country code or name you do have, then you'll have the `alpha_3_code` in your data and use this as the `country_col` below. This works if your country names are the same as that in `world_income.` 
 
