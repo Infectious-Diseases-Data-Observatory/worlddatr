@@ -101,25 +101,28 @@ probabilities <- probabilities / sum(probabilities)
 
 country_data <- data.frame(COUNTRY = sample(countries, 10000, replace = TRUE, prob = probabilities))
 
-create_map(data        = country_data,
-                       country_col = "COUNTRY"
+# Ungrouped data
+create_map(data = country_data,
+           country_col = "COUNTRY"
+           )
+
+create_map(data   = country_data,
+           country_col = "COUNTRY",
+           grouped_data= FALSE,
+           include_ATA = FALSE,
+           include_n   = TRUE,
+           title       = "Number of Participants in Studies across Countries",
+           subtitle    = "Data from studies registered between 2000 - 2024",
+           colour_high = "#14B1E7",
+           colour_low  = "#CCECF9",
+           colour_default = "#FDF3F4",
+           colour_borders = "black",
+           colour_background = "#FFFFFF",
+           colour_text = "black",
+           scale_breaks = c(25, 50, 100, 150, 175, 200),
+           log_scale = FALSE
                        )
 
-create_map(data        = country_data,
-                       country_col = "COUNTRY",
-                       grouped_data= FALSE,
-                       include_ATA = FALSE,
-                       include_n   = TRUE,
-                       title       = "Number of Participants in Studies across Countries",
-                       subtitle    = "Data from studies registered between 2000 - 2024",
-                       colour_high = "#14B1E7",
-                       colour_low  = "#CCECF9",
-                       colour_default = "#FDF3F4",
-                       colour_borders = "black",
-                       colour_background = "#FFFFFF",
-                       colour_text = "black",
-                       scale_breaks = c(25, 50, 100, 150, 175, 200),
-                       log_scale = FALSE
-                       )
-
+# Grouped data
+create_map(data = count(country_data, COUNTRY))
 }
