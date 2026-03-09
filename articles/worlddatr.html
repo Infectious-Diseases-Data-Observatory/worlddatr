@@ -174,9 +174,9 @@ country and then summarise the data in a <code>ggplot</code> using the
 <code>geom_polygon()</code> function. If your data does not have the 3
 digit ISO code, see the section ‘Standardising data to ISO codes’ at the
 end of this page.</p>
-<div class="section level4">
-<h4 id="create-synthetic-data-for-example">Create Synthetic Data for Example<a class="anchor" aria-label="anchor" href="#create-synthetic-data-for-example"></a>
-</h4>
+<div class="section level3">
+<h3 id="create-synthetic-data-for-example">Create Synthetic Data for Example<a class="anchor" aria-label="anchor" href="#create-synthetic-data-for-example"></a>
+</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span> <span class="co"># for reproducibility</span></span>
 <span></span>
@@ -194,9 +194,9 @@ end of this page.</p>
 <span>  count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">75</span>, <span class="fl">1</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="using-the-functions">Using the Functions<a class="anchor" aria-label="anchor" href="#using-the-functions"></a>
-</h4>
+<div class="section level3">
+<h3 id="using-the-functions">Using the Functions<a class="anchor" aria-label="anchor" href="#using-the-functions"></a>
+</h3>
 <p>Now we can take our ungrouped data, <code>country_data</code>,
 indicate the name of the column where the three digit ISO country code
 exists (<code>country_col</code>) and run the command.</p>
@@ -277,9 +277,9 @@ needs, this hopes to provide some inspiration, without spending hours to
 see if it works. If you have suggestions, issues or want to contribute
 to the package contact us or see more on the GitHub page.</p>
 </div>
-<div class="section level4">
-<h4 id="standardising-data-to-iso-codes">Standardising data to ISO codes<a class="anchor" aria-label="anchor" href="#standardising-data-to-iso-codes"></a>
-</h4>
+<div class="section level3">
+<h3 id="standardising-data-to-iso-codes">Standardising data to ISO codes<a class="anchor" aria-label="anchor" href="#standardising-data-to-iso-codes"></a>
+</h3>
 <p>If your dataset only has country name or doesn’t include the ISO
 three letter code required for the <code>create_map</code> function to
 work, there are two solutions. Firstly, you can <code>left_join()</code>

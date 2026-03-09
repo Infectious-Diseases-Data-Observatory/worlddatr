@@ -119,7 +119,7 @@ country and then summarise the data in a `ggplot` using the
 code, see the section ‘Standardising data to ISO codes’ at the end of
 this page.
 
-#### Create Synthetic Data for Example
+### Create Synthetic Data for Example
 
 ``` r
 set.seed(123) # for reproducibility
@@ -139,7 +139,7 @@ country_data_grouped <- data.frame(
 )
 ```
 
-#### Using the Functions
+### Using the Functions
 
 Now we can take our ungrouped data, `country_data`, indicate the name of
 the column where the three digit ISO country code exists (`country_col`)
@@ -250,7 +250,7 @@ this hopes to provide some inspiration, without spending hours to see if
 it works. If you have suggestions, issues or want to contribute to the
 package contact us or see more on the GitHub page.
 
-#### Standardising data to ISO codes
+### Standardising data to ISO codes
 
 If your dataset only has country name or doesn’t include the ISO three
 letter code required for the `create_map` function to work, there are
