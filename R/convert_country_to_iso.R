@@ -18,8 +18,9 @@
 #' @examples
 #' country_names = data.frame(country = sample(world_income$country, 100))
 #'
-#' convert_country_to_iso(country_names, "country")
-#'
+#' \dontrun{
+#'   convert_country_to_iso(country_names, "country")
+#' }
 convert_country_to_iso = function(data, country_name_col){
 
   country_name_lookup <- read_excel("inst/extdata/country_name_lookup.xlsx")

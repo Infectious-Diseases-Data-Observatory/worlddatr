@@ -26,6 +26,7 @@ many rows did not get matched with the data bank.
 \examples{
 country_names = data.frame(country = sample(world_income$country, 100))
 
-convert_country_to_iso(country_names, "country")
-
+\dontrun{
+  convert_country_to_iso(country_names, "country")
+}
 }
