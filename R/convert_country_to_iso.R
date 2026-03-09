@@ -22,14 +22,14 @@
 #'
 convert_country_to_iso = function(data, country_name_col){
 
-  country_name_lookup <- readxl::read_excel("inst/extdata/country_name_lookup.xlsx")
+  country_name_lookup <- read_excel("inst/extdata/country_name_lookup.xlsx")
 
   country_col_index = which(names(data) == country_name_col)
 
   colnames(data)[country_col_index] = "country_name"
 
   data_merge = data %>%
-    dplyr::left_join(country_name_lookup, by = "country_name")
+    left_join(country_name_lookup, by = "country_name")
 
   n_missing = data_merge %>%
     filter(is.na(alpha_3_code)) %>%
