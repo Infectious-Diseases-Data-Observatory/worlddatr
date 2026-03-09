@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_studies_map.R
 \name{create_studies_map}
 \alias{create_studies_map}
-\title{Create a cloropleth map of the number of trials in a dataset}
+\title{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}}
 \usage{
 create_studies_map(
   data,
@@ -81,8 +81,12 @@ A cloropleth map displaying the number of studies in each country
 \description{
 Create a cloropleth map of the number of trials in a dataset
 }
+\details{
+This function is superseded, create_map replaces this function and is the
+recommended alternative.
+}
 \examples{
-#' library(worlddatr)
+library(worlddatr)
 set.seed(123) # for reproducibility
 
 countries <- sample(world_income$alpha_3_code, 100, replace = FALSE)
