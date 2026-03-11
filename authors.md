@@ -8,7 +8,7 @@
 ## Citation
 
 R. Peploe (2024), 'worlddatr', Infectious Disease Data Observatory,
-University of Oxford. Available:
+University of Oxford, Oxford, UK. Available:
 https://github.com/Infectious-Diseases-Data-Observatory/worlddatr
 
     @Misc{,
@@ -17,5 +17,5 @@ https://github.com/Infectious-Diseases-Data-Observatory/worlddatr
       institution = {Infectious Disease Data Observatory (IDDO), University of Oxford, Oxford, UK},
       year = {2024},
       url = {https://github.com/Infectious-Diseases-Data-Observatory/worlddatr},
-      note = {Package Version 1.4.1},
+      note = {Package Version 2.0.1},
     }

@@ -165,5 +165,4 @@ create_map(data = dplyr::count(country_data, COUNTRY),
            country_col = "COUNTRY",
            grouped_data = TRUE,
            grouped_sums_col = "n")
-
 ```

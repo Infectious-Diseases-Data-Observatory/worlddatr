@@ -261,14 +261,11 @@ then you’ll have the `alpha_3_code` in your data and use this as the
 that in `world_income.`
 
 Alternatively, we have created a bank of alternative spellings of
-countries, designed to cover a wide range of naming structures and
-created
-[`convert_country_to_iso()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/convert_country_to_iso.md).
-This function left joins your data with that bank of spellings, so your
-data is matched and appended with the ISO codes required if there is a
-match. The function reports in the R console who many rows did not
-successfully match, these should be checked by the user and manually
-standardised if appropriate.
+countries, `country_name_lookup.xlsx` (see [inst/extdata in
+GitHub](https://github.com/Infectious-Diseases-Data-Observatory/worlddatr/tree/main/inst/extdata)),
+designed to cover a wide range of naming structures. Users can left join
+your data with that bank of spellings, so your data is matched and
+appended with the ISO codes if there is a match.
 
 If you find spellings or alternatives not covered in our data bank,
 please raise this as an issue in the [worlddatr

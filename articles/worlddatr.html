@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">worlddatr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -289,13 +289,10 @@ country code or name you do have, then you’ll have the
 <code>country_col</code> below. This works if your country names are the
 same as that in <code>world_income.</code></p>
 <p>Alternatively, we have created a bank of alternative spellings of
-countries, designed to cover a wide range of naming structures and
-created <code><a href="../reference/convert_country_to_iso.html">convert_country_to_iso()</a></code>. This function left joins
-your data with that bank of spellings, so your data is matched and
-appended with the ISO codes required if there is a match. The function
-reports in the R console who many rows did not successfully match, these
-should be checked by the user and manually standardised if
-appropriate.</p>
+countries, <code>country_name_lookup.xlsx</code> (see <a href="https://github.com/Infectious-Diseases-Data-Observatory/worlddatr/tree/main/inst/extdata" class="external-link">inst/extdata
+in GitHub</a>), designed to cover a wide range of naming structures.
+Users can left join your data with that bank of spellings, so your data
+is matched and appended with the ISO codes if there is a match.</p>
 <p>If you find spellings or alternatives not covered in our data bank,
 please raise this as an issue in the <a href="https://github.com/Infectious-Diseases-Data-Observatory/worlddatr/issues" class="external-link">worlddatr
 github</a> and we will add them and strengthen the function and data

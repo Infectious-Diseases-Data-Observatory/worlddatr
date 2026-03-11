@@ -27,6 +27,11 @@ convert_country_to_iso(data, country_name_col)
 The input data frame with two new columns alpha_3_code and alpha_2_code
 representing the ISO standardised 3 & 2 letter country codes
 
+## Details
+
+Path to extdata does not work outside of package project. Fix unresolved
+so the function is not currently exported
+
 ## Examples
 
 ``` r
