@@ -6,14 +6,15 @@
 #' instead of messy country names. The function reports in the R console how
 #' many rows did not get matched with the data bank.
 #'
+#' Path to extdata does not work outside of package project. Fix unresolved so
+#' the function is not currently exported
+#'
 #' @param data Data frame with a column of country names
 #' @param country_name_col Character. The name of the column containing the
 #'   country names.
 #'
 #' @returns The input data frame with two new columns alpha_3_code and
 #'   alpha_2_code representing the ISO standardised 3 & 2 letter country codes
-#'
-#' @export
 #'
 #' @examples
 #' country_names = data.frame(country = sample(world_income$country, 100))

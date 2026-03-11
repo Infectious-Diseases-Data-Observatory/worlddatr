@@ -23,6 +23,10 @@ columns for the ISO 3 and 2 letter codes in order to use standardised codes
 instead of messy country names. The function reports in the R console how
 many rows did not get matched with the data bank.
 }
+\details{
+Path to extdata does not work outside of package project. Fix unresolved so
+the function is not currently exported
+}
 \examples{
 country_names = data.frame(country = sample(world_income$country, 100))
 
