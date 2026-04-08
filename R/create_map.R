@@ -153,7 +153,7 @@ create_map <- function(data, country_col,
                  mapping = aes(x = long, y = lat, group = group, fill = n),
                  alpha = 0.85, colour = colour_borders, linewidth = 0.1) +
     scale_fill_gradient(high = colour_high, low = colour_low,
-                        breaks = scale_breaks) +
+                        breaks = scale_breaks, na.value = colour_default) +
     theme(panel.background = element_rect(fill = colour_background),
           plot.background = element_rect(fill = colour_background),
           panel.grid = element_blank(),
