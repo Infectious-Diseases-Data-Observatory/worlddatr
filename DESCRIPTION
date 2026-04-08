@@ -1,6 +1,6 @@
 Package: worlddatr
 Title: A Package For Global Choropleth Maps
-Version: 2.0.1
+Version: 2.0.2
 Authors@R: 
     person("Rhys", "Peploe", , "rhyspeploe1998@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0001-1669-3716"))
