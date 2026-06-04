@@ -17,5 +17,5 @@ https://github.com/Infectious-Diseases-Data-Observatory/worlddatr
       institution = {Infectious Diseases Data Observatory (IDDO), University of Oxford, Oxford, UK},
       year = {2024},
       url = {https://github.com/Infectious-Diseases-Data-Observatory/worlddatr},
-      note = {Package Version 2.0.2},
+      note = {Package Version 2.1.0},
     }
