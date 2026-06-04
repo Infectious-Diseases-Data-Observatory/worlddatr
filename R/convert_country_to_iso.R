@@ -6,9 +6,6 @@
 #' instead of messy country names. The function reports in the R console how
 #' many rows did not get matched with the data bank.
 #'
-#' Path to extdata does not work outside of package project. Fix unresolved so
-#' the function is not currently exported
-#'
 #' @param data Data frame with a column of country names
 #' @param country_name_col Character. The name of the column containing the
 #'   country names.
@@ -30,7 +27,10 @@ convert_country_to_iso = function(data, country_name_col){
   colnames(data)[country_col_index] = "country_name"
 
   data_merge = data %>%
-    left_join(country_name_lookup, by = "country_name")
+    mutate(country_name_lower = str_to_lower(country_name)) %>%
+    left_join(country_name_lookup,
+              by = c("country_name_lower" = "country_name")) %>%
+    select(-country_name_lower)
 
   n_missing = data_merge %>%
     filter(is.na(alpha_3_code)) %>%
