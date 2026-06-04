@@ -16,15 +16,14 @@
 #' @returns The input data frame with two new columns alpha_3_code and
 #'   alpha_2_code representing the ISO standardised 3 & 2 letter country codes
 #'
+#' @export
+#'
 #' @examples
 #' country_names = data.frame(country = sample(world_income$country, 100))
 #'
-#' \dontrun{
-#'   convert_country_to_iso(country_names, "country")
-#' }
+#' convert_country_to_iso(country_names, "country")
+#'
 convert_country_to_iso = function(data, country_name_col){
-
-  country_name_lookup <- read_excel("inst/extdata/country_name_lookup.xlsx")
 
   country_col_index = which(names(data) == country_name_col)
 
