@@ -30,7 +30,6 @@ the function is not currently exported
 \examples{
 country_names = data.frame(country = sample(world_income$country, 100))
 
-\dontrun{
-  convert_country_to_iso(country_names, "country")
-}
+convert_country_to_iso(country_names, "country")
+
 }
