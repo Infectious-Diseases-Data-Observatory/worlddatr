@@ -264,21 +264,40 @@ package contact us or see more on the GitHub page.
 ### Standardising data to ISO codes
 
 If your dataset only has country name or doesn’t include the ISO three
-letter code required for the `create_map` function to work, there are
-two solutions. Firstly, you can `left_join()` your dataset with
-`world_income` with the key being the country code or name you do have,
-then you’ll have the `alpha_3_code` in your data and use this as the
-`country_col` below. This works if your country names are the same as
-that in `world_income.`
+letter code required for the `create_map` function to work, the
+[`convert_country_to_iso()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/convert_country_to_iso.md)
+function takes various spellings of country names and matches them with
+the standardised ISO code.
 
-Alternatively, we have created a bank of alternative spellings of
-countries, `country_name_lookup.xlsx` (see [inst/extdata in
-GitHub](https://github.com/Infectious-Diseases-Data-Observatory/worlddatr/tree/main/inst/extdata)),
-designed to cover a wide range of naming structures. Users can left join
-your data with that bank of spellings, so your data is matched and
-appended with the ISO codes if there is a match.
-
-If you find spellings or alternatives not covered in our data bank,
-please raise this as an issue in the [worlddatr
+Should the spelling of any country not match with a standardised ISO
+code, the R console will report the number of unmatched rows. If you
+find spellings or alternatives not covered in our data bank, please
+raise this as an issue in the [worlddatr
 github](https://github.com/Infectious-Diseases-Data-Observatory/worlddatr/issues)
 and we will add them and strengthen the function and data bank further.
+
+``` r
+
+country_name_data = data.frame(
+  countries = c("UAE", "United Arab Emirates", "United Arab Emirates, the", 
+              "the Commonwealth of the Bahamas", "Bahamas",
+              "Brasil", "Brazil",
+              "Cabo Verde", "Cape Verde",
+              "unknown country")
+)
+
+convert_country_to_iso(data = country_name_data, 
+                       country_name_col = "countries")
+#> [1] "Number of rows missing an ISO country code after convert_country_to_iso: 1"
+#>                       country_name alpha_3_code alpha_2_code
+#> 1                              UAE          ARE           AE
+#> 2             United Arab Emirates          ARE           AE
+#> 3        United Arab Emirates, the          ARE           AE
+#> 4  the Commonwealth of the Bahamas          BHS           BS
+#> 5                          Bahamas          BHS           BS
+#> 6                           Brasil          BRA           BR
+#> 7                           Brazil          BRA           BR
+#> 8                       Cabo Verde          CPV           CV
+#> 9                       Cape Verde          CPV           CV
+#> 10                 unknown country         <NA>         <NA>
+```

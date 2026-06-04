@@ -282,21 +282,38 @@ to the package contact us or see more on the GitHub page.</p>
 </h3>
 <p>If your dataset only has country name or doesn’t include the ISO
 three letter code required for the <code>create_map</code> function to
-work, there are two solutions. Firstly, you can <code>left_join()</code>
-your dataset with <code>world_income</code> with the key being the
-country code or name you do have, then you’ll have the
-<code>alpha_3_code</code> in your data and use this as the
-<code>country_col</code> below. This works if your country names are the
-same as that in <code>world_income.</code></p>
-<p>Alternatively, we have created a bank of alternative spellings of
-countries, <code>country_name_lookup.xlsx</code> (see <a href="https://github.com/Infectious-Diseases-Data-Observatory/worlddatr/tree/main/inst/extdata" class="external-link">inst/extdata
-in GitHub</a>), designed to cover a wide range of naming structures.
-Users can left join your data with that bank of spellings, so your data
-is matched and appended with the ISO codes if there is a match.</p>
-<p>If you find spellings or alternatives not covered in our data bank,
-please raise this as an issue in the <a href="https://github.com/Infectious-Diseases-Data-Observatory/worlddatr/issues" class="external-link">worlddatr
+work, the <code><a href="../reference/convert_country_to_iso.html">convert_country_to_iso()</a></code> function takes various
+spellings of country names and matches them with the standardised ISO
+code.</p>
+<p>Should the spelling of any country not match with a standardised ISO
+code, the R console will report the number of unmatched rows. If you
+find spellings or alternatives not covered in our data bank, please
+raise this as an issue in the <a href="https://github.com/Infectious-Diseases-Data-Observatory/worlddatr/issues" class="external-link">worlddatr
 github</a> and we will add them and strengthen the function and data
 bank further.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">country_name_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  countries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UAE"</span>, <span class="st">"United Arab Emirates"</span>, <span class="st">"United Arab Emirates, the"</span>, </span>
+<span>              <span class="st">"the Commonwealth of the Bahamas"</span>, <span class="st">"Bahamas"</span>,</span>
+<span>              <span class="st">"Brasil"</span>, <span class="st">"Brazil"</span>,</span>
+<span>              <span class="st">"Cabo Verde"</span>, <span class="st">"Cape Verde"</span>,</span>
+<span>              <span class="st">"unknown country"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/convert_country_to_iso.html">convert_country_to_iso</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">country_name_data</span>, </span>
+<span>                       country_name_col <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Number of rows missing an ISO country code after convert_country_to_iso: 1"</span></span>
+<span><span class="co">#&gt;                       country_name alpha_3_code alpha_2_code</span></span>
+<span><span class="co">#&gt; 1                              UAE          ARE           AE</span></span>
+<span><span class="co">#&gt; 2             United Arab Emirates          ARE           AE</span></span>
+<span><span class="co">#&gt; 3        United Arab Emirates, the          ARE           AE</span></span>
+<span><span class="co">#&gt; 4  the Commonwealth of the Bahamas          BHS           BS</span></span>
+<span><span class="co">#&gt; 5                          Bahamas          BHS           BS</span></span>
+<span><span class="co">#&gt; 6                           Brasil          BRA           BR</span></span>
+<span><span class="co">#&gt; 7                           Brazil          BRA           BR</span></span>
+<span><span class="co">#&gt; 8                       Cabo Verde          CPV           CV</span></span>
+<span><span class="co">#&gt; 9                       Cape Verde          CPV           CV</span></span>
+<span><span class="co">#&gt; 10                 unknown country         &lt;NA&gt;         &lt;NA&gt;</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
