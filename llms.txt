@@ -39,6 +39,7 @@ You can install the `worlddatr` package from
 with:
 
 ``` r
+
 # install.packages("devtools") #if you have not previously installed 'devtools' on your machine
 devtools::install_github("Infectious-Diseases-Data-Observatory/worlddatr", dependencies = TRUE, build_vignettes = TRUE)
 library(worlddatr)
@@ -49,6 +50,7 @@ available. It is best to remove the package and reinstall the current
 version:
 
 ``` r
+
 detach("package:worlddatr", unload = TRUE)
 
 devtools::install_github("Infectious-Diseases-Data-Observatory/worlddatr", dependencies = TRUE, build_vignettes = TRUE)
@@ -79,6 +81,7 @@ There are two datasets in the `worlddatr` package:
     this allows for income data to be mapped.
 
 ``` r
+
 head(world_income)
 
 head(world_map)

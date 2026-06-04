@@ -52,6 +52,7 @@ so check that you data matches this list before using the
 `redcap_number`.
 
 ``` r
+
 head(world_income)
 #> # A tibble: 6 × 7
 #>   alpha_3_code alpha_2_code numeric country   economy income_group redcap_number
@@ -72,6 +73,7 @@ territories which we desire to plot. `region`, `subregion`, `group` and
 `order` are used to identify the country borders.
 
 ``` r
+
 head(world_map)
 #>   alpha_3_code alpha_2_code numeric      long      lat group order region
 #> 1          ABW           AW     533 -69.89912 12.45200     1     1  Aruba
@@ -122,6 +124,7 @@ this page.
 ### Create Synthetic Data for Example
 
 ``` r
+
 set.seed(123) # for reproducibility
 
 countries <- sample(world_income$alpha_3_code, 100, replace = FALSE)
@@ -146,6 +149,7 @@ the column where the three digit ISO country code exists (`country_col`)
 and run the command.
 
 ``` r
+
 create_map(data = country_data,
            country_col = "COUNTRY")
 ```
@@ -158,6 +162,7 @@ displayed and you’ll note that Antarctica is not present, using extra
 parameters we can change that.
 
 ``` r
+
 create_map(data = country_data, 
            country_col = "COUNTRY",
            include_n   = FALSE,
@@ -170,6 +175,7 @@ If you have data which is already grouped and summarised by country,
 like in the dataset below:
 
 ``` r
+
 head(country_data_grouped)
 #>   country_code count
 #> 1          NER   165
@@ -185,6 +191,7 @@ We can add two extra parameters to visualise this data,
 to visualise in \``grouped_sums_col`.
 
 ``` r
+
 create_map(data = country_data_grouped,
            country_col = "country_code",
            grouped_data = TRUE,
@@ -198,6 +205,7 @@ information about your graphic, and the legend title can be changed, or
 removed by leaving the option blank.
 
 ``` r
+
 create_map(data = country_data,
            country_col = "COUNTRY",
            title       = "Number of Participants in Studies across Countries",
@@ -211,6 +219,7 @@ Blue not your colour? No problem, customise the colour of the countries,
 borders, text and background easily.
 
 ``` r
+
 create_map(data = country_data,
            country_col = "COUNTRY",
            colour_high = "#FF3C38",
@@ -227,6 +236,7 @@ You can change the scale breaks on the legend using `scale_breaks` and
 log transform the scale using `log_scale`.
 
 ``` r
+
 create_map(data = country_data,
            country_col = "COUNTRY",
            scale_breaks = c(10, 50, 100, 180, 200))
@@ -235,6 +245,7 @@ create_map(data = country_data,
 ![](worlddatr_files/figure-html/unnamed-chunk-11-1.png)
 
 ``` r
+
 
 create_map(data = country_data,
            country_col = "COUNTRY",
