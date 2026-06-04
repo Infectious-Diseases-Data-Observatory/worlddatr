@@ -32,5 +32,6 @@
 #' @importFrom readxl read_excel
 #' @importFrom scales pretty_breaks
 #' @importFrom stringr str_c
+#' @importFrom stringr str_to_lower
 ## usethis namespace: end
 NULL
