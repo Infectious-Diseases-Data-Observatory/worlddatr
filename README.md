@@ -86,5 +86,5 @@ Improvements to the code are constantly being made, if you notice errors, bugs, 
 
 ## Contact
 
-Please contact Rhys Peploe ([rhys.peploe\@iddo.org](mailto:rhys.peploe@iddo.org) or [rhyspeploe1998\@gmail.com](mailto:rhyspeploe1998@gmail.com)) if you would like to know more.
+Please contact Rhys Peploe ([rhys.peploe\@ndm.ox.ac.uk](mailto:rhys.peploe@ndm.ox.ac.uk) or [rhyspeploe1998\@gmail.com](mailto:rhyspeploe1998@gmail.com)) if you would like to know more.
 
