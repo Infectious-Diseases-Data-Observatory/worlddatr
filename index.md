@@ -20,7 +20,8 @@ Key features of worlddatr include:
 
 - Pre-processed Datasets: Access to pre-cleaned datasets that are ready
   to merge with your data, reducing the time spent on data preparation.
-- One-command Utilty: Functions that allow you to produce maps with a
+- One-command Utilty: Functions that convert messy country names to
+  standardised codes and functions that allow you to produce maps with a
   single command, while still providing control over customisation
   options such as colours, titles, and legends.
 - Open Source and Community-driven: Being open-source, worlddatr invites
