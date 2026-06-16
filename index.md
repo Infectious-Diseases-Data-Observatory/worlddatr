@@ -123,5 +123,5 @@ functionality, please describe them in
 
 ## Contact
 
-Please contact Rhys Peploe (<rhys.peploe@iddo.org> or
+Please contact Rhys Peploe (<rhys.peploe@ndm.ox.ac.uk> or
 <rhyspeploe1998@gmail.com>) if you would like to know more.
