@@ -18,5 +18,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Rhys Peploe \email{rhyspeploe1998@gmail.com} (\href{https://orcid.org/0009-0001-1669-3716}{ORCID})
 
+Authors:
+\itemize{
+  \item Rhys Peploe \email{rhyspeploe1998@gmail.com} (\href{https://orcid.org/0009-0001-1669-3716}{ORCID})
+}
+
 }
 \keyword{internal}
