@@ -6,5 +6,7 @@ globalVariables(c(
   "world_map",
   "n_participants",
   "n_trials",
-  "alpha_3_code"
+  "alpha_3_code",
+  "country_name",
+  "country_name_lower"
   ))
