@@ -13,3 +13,8 @@ Useful links:
 
 **Maintainer**: Rhys Peploe <rhyspeploe1998@gmail.com>
 ([ORCID](https://orcid.org/0009-0001-1669-3716))
+
+Authors:
+
+- Rhys Peploe <rhyspeploe1998@gmail.com>
+  ([ORCID](https://orcid.org/0009-0001-1669-3716))
