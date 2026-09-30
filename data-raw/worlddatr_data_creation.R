@@ -57,9 +57,10 @@ centroids[which(centroids$alpha_3_code == "TUR"), "country"] = "Turkiye"
 centroids[which(centroids$alpha_3_code == "ALA"), "country"] = "Aland Islands"
 
 #-------------------------------------------------------------------------------
-### Import coordinate data for countries and regions
+### Import country names look up table
 country_name_lookup <- read_excel("inst/extdata/country_name_lookup.xlsx")
 
+### Join with coordinate data
 map_df = left_join(map_data("world"), country_name_lookup, by = c("region" = "country_name"))
 
 # Standardise country and regions to match country_codes and income_class
