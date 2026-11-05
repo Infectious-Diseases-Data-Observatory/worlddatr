@@ -70,9 +70,9 @@ To cite `worlddatr`, see [CITATION](https://github.com/Infectious-Diseases-Data-
 
 Data comes from the following sources:
 
--   World Bank (<https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups>) [extracted: 09/09/2025].
+-   World Bank (<https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups>) [extracted: 05/11/2026].
 
--   ISO (<https://www.iso.org/obp/ui/#search>) [extracted: 09/09/2025].
+-   ISO (<https://www.iso.org/obp/ui/#search>) [extracted: 05/11/2026].
 
 -   IDDO REDCap [extracted: 15/11/2024].
 

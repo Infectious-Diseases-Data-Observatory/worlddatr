@@ -1,5 +1,6 @@
 Country,Alpha-2 code,Alpha-3 code,Numeric
 Afghanistan,AF,AFG,4
+Åland Islands,AX,ALA,248
 Albania,AL,ALB,8
 Algeria,DZ,DZA,12
 American Samoa,AS,ASM,16
@@ -52,12 +53,12 @@ Congo (the Democratic Republic of the),CD,COD,180
 Congo (the),CG,COG,178
 Cook Islands (the),CK,COK,184
 Costa Rica,CR,CRI,188
+Côte d'Ivoire,CI,CIV,384
 Croatia,HR,HRV,191
 Cuba,CU,CUB,192
 Curaçao,CW,CUW,531
 Cyprus,CY,CYP,196
 Czechia,CZ,CZE,203
-Côte d'Ivoire,CI,CIV,384
 Denmark,DK,DNK,208
 Djibouti,DJ,DJI,262
 Dominica,DM,DMA,212
@@ -152,7 +153,7 @@ Morocco,MA,MAR,504
 Mozambique,MZ,MOZ,508
 Myanmar,MM,MMR,104
 Namibia,NA,NAM,516
-Nauru,NR,NRU,520
+Naoero,NR,NRU,520
 Nepal,NP,NPL,524
 Netherlands (Kingdom of the),NL,NLD,528
 New Caledonia,NC,NCL,540
@@ -179,10 +180,10 @@ Poland,PL,POL,616
 Portugal,PT,PRT,620
 Puerto Rico,PR,PRI,630
 Qatar,QA,QAT,634
+Réunion,RE,REU,638
 Romania,RO,ROU,642
 Russian Federation (the),RU,RUS,643
 Rwanda,RW,RWA,646
-Réunion,RE,REU,638
 Saint Barthélemy,BL,BLM,652
 "Saint Helena, Ascension and Tristan da Cunha",SH,SHN,654
 Saint Kitts and Nevis,KN,KNA,659
@@ -225,10 +226,10 @@ Tokelau,TK,TKL,772
 Tonga,TO,TON,776
 Trinidad and Tobago,TT,TTO,780
 Tunisia,TN,TUN,788
+Türkiye,TR,TUR,792
 Turkmenistan,TM,TKM,795
 Turks and Caicos Islands (the),TC,TCA,796
 Tuvalu,TV,TUV,798
-Türkiye,TR,TUR,792
 Uganda,UG,UGA,800
 Ukraine,UA,UKR,804
 United Arab Emirates (the),AE,ARE,784
@@ -247,4 +248,3 @@ Western Sahara*,EH,ESH,732
 Yemen,YE,YEM,887
 Zambia,ZM,ZMB,894
 Zimbabwe,ZW,ZWE,716
-Åland Islands,AX,ALA,248
