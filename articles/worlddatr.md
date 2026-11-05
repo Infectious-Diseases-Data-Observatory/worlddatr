@@ -58,11 +58,11 @@ head(world_income)
 #>   alpha_3_code alpha_2_code numeric country   economy income_group redcap_number
 #>   <chr>        <chr>          <dbl> <chr>     <chr>   <fct>                <dbl>
 #> 1 AFG          AF                 4 Afghanis… Afghan… Low income               1
-#> 2 ALB          AL                 8 Albania   Albania Upper middl…             3
-#> 3 DZA          DZ                12 Algeria   Algeria Upper middl…             4
-#> 4 ASM          AS                16 American… Americ… High income              5
-#> 5 AND          AD                20 Andorra   Andorra High income              6
-#> 6 AGO          AO                24 Angola    Angola  Lower middl…             7
+#> 2 ALA          AX               248 Aland Is… NA      NA                       2
+#> 3 ALB          AL                 8 Albania   Albania Upper middl…             3
+#> 4 DZA          DZ                12 Algeria   Algeria Upper middl…             4
+#> 5 ASM          AS                16 American… Americ… High income              5
+#> 6 AND          AD                20 Andorra   Andorra High income              6
 ```
 
 The second dataset merges the previous `world_income` with the `ggplot2`
@@ -178,12 +178,12 @@ like in the dataset below:
 
 head(country_data_grouped)
 #>   country_code count
-#> 1          NER   165
-#> 2          BVT   180
-#> 3          GUM   101
+#> 1          NIC   165
+#> 2          BWA   180
+#> 3          GLP   101
 #> 4          XKX   149
-#> 5          URY   182
-#> 6          GIB    50
+#> 5          USA   182
+#> 6          GHA    50
 ```
 
 We can add two extra parameters to visualise this data,

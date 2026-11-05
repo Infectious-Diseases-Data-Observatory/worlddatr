@@ -118,11 +118,11 @@ matches this list before using the <code>redcap_number</code>.</p>
 <span><span class="co">#&gt;   alpha_3_code alpha_2_code numeric country   economy income_group redcap_number</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> AFG          AF                 4 Afghanis… Afghan… Low income               1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ALB          AL                 8 Albania   Albania Upper middl…             3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> DZA          DZ                12 Algeria   Algeria Upper middl…             4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ASM          AS                16 American… Americ… High income              5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> AND          AD                20 Andorra   Andorra High income              6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> AGO          AO                24 Angola    Angola  Lower middl…             7</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> ALA          AX               248 Aland Is… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>                       2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ALB          AL                 8 Albania   Albania Upper middl…             3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> DZA          DZ                12 Algeria   Algeria Upper middl…             4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> ASM          AS                16 American… Americ… High income              5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> AND          AD                20 Andorra   Andorra High income              6</span></span></code></pre></div>
 <p>The second dataset merges the previous <code>world_income</code> with
 the <code>ggplot2</code> <code>map_data()</code> function, with cleaning
 steps applied to the latter, resulting in a 99,338 row, 13 column
@@ -219,12 +219,12 @@ like in the dataset below:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">country_data_grouped</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   country_code count</span></span>
-<span><span class="co">#&gt; 1          NER   165</span></span>
-<span><span class="co">#&gt; 2          BVT   180</span></span>
-<span><span class="co">#&gt; 3          GUM   101</span></span>
+<span><span class="co">#&gt; 1          NIC   165</span></span>
+<span><span class="co">#&gt; 2          BWA   180</span></span>
+<span><span class="co">#&gt; 3          GLP   101</span></span>
 <span><span class="co">#&gt; 4          XKX   149</span></span>
-<span><span class="co">#&gt; 5          URY   182</span></span>
-<span><span class="co">#&gt; 6          GIB    50</span></span></code></pre></div>
+<span><span class="co">#&gt; 5          USA   182</span></span>
+<span><span class="co">#&gt; 6          GHA    50</span></span></code></pre></div>
 <p>We can add two extra parameters to visualise this data,
 <code>grouped_data = TRUE</code> &amp; we need to provide the column
 name of the counts to visualise in `<code>grouped_sums_col</code>.</p>
