@@ -40,6 +40,7 @@ country_codes[which(country_codes$alpha_3_code == "CIV"), "country"] = "Cote d'I
 country_codes[which(country_codes$alpha_3_code == "TUR"), "country"] = "Turkiye"
 country_codes[which(country_codes$alpha_3_code == "ALA"), "country"] = "Aland Islands"
 country_codes[which(country_codes$alpha_3_code == "ESH"), "country"] = "Western Sahara"
+country_codes[which(country_codes$alpha_3_code == "NAM"), "alpha_2_code"] = "NA"
 
 #-------------------------------------------------------------------------------
 # Import REDCap country codes (countries numbered in English alphabetical order)
